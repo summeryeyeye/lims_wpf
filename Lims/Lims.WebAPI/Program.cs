@@ -162,6 +162,7 @@ public class AppConfigurtaionServices
 }
 
 //fortest
+// Uncomment the following code if you want to use a custom type converter for DateTime to handle UTC to local time conversion.
 
 /*
 public class UtcToLocalConverter : AutoMapper.ITypeConverter<DateTime, DateTime>
