@@ -1,0 +1,327 @@
+﻿<UserControl
+    x:Class="Lims.WPF.Views.TasksSecondCheckView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Lims.WPF.Views"
+    mc:Ignorable="d"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    x:Name="TasksSecondCheckUserControl"
+    xmlns:viewModels="clr-namespace:Lims.WPF.ViewModels"
+    d:DataContext="{d:DesignInstance Type=viewModels:TasksSecondCheckViewModel}"
+    xmlns:export="clr-namespace:Lims.WPF.Resources.UserControls.Export"
+    xmlns:mycontrols="clr-namespace:Lims.WPF.Resources.UserControls"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <UserControl.Resources>
+        <dxb:PopupMenu
+            x:Key="sampleViewPopupMenu">
+            <dxb:PopupMenu.Items>
+                <dxb:BarButtonItem
+                    Style="{StaticResource RefreshSampleDatasButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource SearchByCurrentCellValueButtonStyle}" />
+                <dxb:BarCheckItem
+                    Style="{StaticResource OnlyViewUrgentButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource ShowReportsDataPreviewButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource CopySampleInfoToClipBoradButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource PrintSelectedSamplesButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource ExportSelectedSamplesButtonStyle}" />
+
+                <!--<dxb:BarButtonItem Content="预览选中项数据页"
+                                   KeyGesture="F2"
+                                   IsEnabled="{Binding SelectedSamples.Count}"
+                                   Glyph="{dx:DXImage 'Images/Business Objects/BOReport2_16x16.png'}"
+                                   Command="{Binding ShowReportsDataPreviewCommand}"
+                                   CommandParameter="{Binding SelectedSamples}" />-->
+            </dxb:PopupMenu.Items>
+        </dxb:PopupMenu>
+        <dxb:PopupMenu
+            x:Key="itemViewPopupMenu">
+            <dxb:BarButtonItem
+                Command="{Binding ReturnTaskComfirmWindowCommand}"
+                CommandParameter="{Binding FocusedItem}"
+                IsVisible="{Binding CurrentUser.CanSecondCheck}"
+                Glyph="{dx:DXImage 'Images/Actions/Reset_16x16.png'}"
+                Content="退回任务">
+                <dxb:BarButtonItem.IsEnabled>
+                    <MultiBinding
+                        Converter="{StaticResource ReturnableToIsEnabledConverter}">
+                        <Binding
+                            Path="RelativeProgress" />
+                        <Binding
+                            Path="FocusedItem.TestProgress" />
+                    </MultiBinding>
+                </dxb:BarButtonItem.IsEnabled>
+            </dxb:BarButtonItem>
+        </dxb:PopupMenu>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="1*" />
+            <ColumnDefinition
+                Width="8" />
+            <ColumnDefinition
+                Width="1.618*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="auto" />
+            <RowDefinition
+                Height="8" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <GridSplitter
+            Grid.Column="1"
+            Grid.Row="2"
+            Width="3"
+            HorizontalAlignment="Stretch" />
+        <GridSplitter
+            Grid.Row="1"
+            IsEnabled="False"
+            Grid.ColumnSpan="3"
+            Height="3"
+            HorizontalAlignment="Stretch" />
+        <Grid
+            Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <!--<dxb:BarContainerControl ContainerType="Top">
+                <dxb:MainMenuControl>
+                    <dxb:BarSubItem Content="多选工具"
+                                    BarItemDisplayMode="ContentAndGlyph"
+                                    Glyph="{dx:DXImage 'Images/Filter/MultipleMasterFilter_16x16.png'}"
+                                    IsEnabled="{Binding SelectedSamples.Count}"
+                                    IsVisible="{Binding CurrentUser.CanSecondCheck}">
+                        <dxb:BarButtonItem Content="预览报告数据页"
+                                           Glyph="{dx:DXImage 'Images/Business Objects/BOReport2_16x16.png'}"
+                                           Command="{Binding ShowReportsDataPreviewCommand}" />
+                    </dxb:BarSubItem>
+                </dxb:MainMenuControl>
+            </dxb:BarContainerControl>-->
+
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Left"
+                Orientation="Horizontal">
+                <dxe:HyperlinkEdit
+                    Command="{Binding ShowAllItemsOfCurrentSampleCommand}"
+                    Text="{Binding FocusedSample.SampleCode}"
+                    DisplayFormatString="🔍 {0}"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    FontSize="20"
+                    FontFamily="黑体"
+                    Foreground="{Binding FocusedSample.IsUrgent,Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Red|Black'}"
+                    CommandParameter="{Binding FocusedSample}"
+                    Background="Transparent"
+                    ToolTip="查看该样品下所有项目" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    FontFamily="黑体"
+                    FontSize="20"
+                    Foreground="{Binding FocusedSample.IsUrgent,Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Red|Black'}"
+                    Text="{Binding FocusedSample.SampleName}" />
+            </StackPanel>
+
+            <dx:SimpleButton
+                Grid.Column="2"
+                Content="审核通过"
+                Visibility="{Binding CurrentUser.CanSecondCheck, Converter={StaticResource BooleanToVisibilityConverter}}"
+                CornerRadius="10"
+                Margin="5,2"
+                Command="{Binding ShowCheckTaskPreviewCommand}"
+                CommandParameter="{Binding FocusedSample}"
+                Glyph="{dx:DXImage 'Images/Spreadsheet/MovePivotTable_32x32.png'}">
+                <dx:SimpleButton.IsEnabled>
+                    <MultiBinding
+                        Converter="{StaticResource TasksCheckableToIsEnableConverter}">
+                        <Binding
+                            Path="FocusedSample"
+                            Mode="TwoWay" />
+                        <Binding
+                            RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"
+                            Path="DataContext.RelativeProgress" />
+                    </MultiBinding>
+                </dx:SimpleButton.IsEnabled>
+            </dx:SimpleButton>
+        </Grid>
+
+
+        <dxg:GridControl
+            Grid.Row="2"
+            Style="{StaticResource SamplesGridControlStyle}">
+            <dxg:GridControl.GroupSummary>
+                <dxg:GridSummaryItem
+                    SummaryType="Count"
+                    DisplayFormat="样品数量：0" />
+            </dxg:GridControl.GroupSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    Style="{StaticResource SamplesTableViewStyle}"
+                    ShowCheckBoxSelectorColumn="True"
+                    CellValueChangedCommand="{Binding EditChekingRemarkCommand}"
+                    RowIndicatorContentTemplate="{StaticResource CheckTaskIndicatorTemplate}"
+                    dxb:BarManager.DXContextMenu="{StaticResource sampleViewPopupMenu}" />
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn
+                    FieldName="SampleCode"
+                    Header="样品编号"
+                    Fixed="Left" />
+                <dxg:GridColumn
+                    FieldName="SampleName"
+                    Header="样品名称"
+                    Fixed="Left" />
+                <dxg:GridColumn
+                    FieldName="IsUrgent"
+                    Header="是否加急"
+                    Visible="False" />
+                <dxg:GridColumn
+                    FieldName="TaskType"
+                    Width="100"
+                    Header="业务类型" />
+                <dxg:GridColumn
+                    FieldName="CheckRemark"
+                    Header="审核备注"
+                    ReadOnly="{Binding CurrentUser.CanSecondCheck, Converter={StaticResource BooleanChangeOverConverter}}" />
+                <dxg:GridColumn
+                    FieldName="FirstAuditTime"
+                    Header="一审时间"
+                    Style="{StaticResource GridControlDateTimeColumnStyle}" />
+                <dxg:GridColumn
+                    FieldName="CreateTime"
+                    Header="下样时间"
+                    Style="{StaticResource GridControlDateTimeColumnStyle}" />
+                <dxg:GridColumn
+                    Header="未完成项目数"
+                    Width="80"
+                    Binding="{Binding Items, Converter={StaticResource ItemsToTestingItemsCountConverter}}"
+                    CellTemplate="{StaticResource TestingItemsCountAndCompletePercentTemplate}" />
+                <dxg:GridColumn
+                    FieldName="SampleState"
+                    Header="样品状态" />
+                <dxg:GridColumn
+                    FieldName="SampleRemark"
+                    Header="样品备注" />
+
+
+            </dxg:GridControl.Columns>
+
+        </dxg:GridControl>
+        <dxg:GridControl
+            Grid.Column="2"
+            Style="{StaticResource ItemsGridControlStyle}"
+            Grid.Row="2">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn
+                    Header="是否超期补录"
+                    FieldName="IsOverDate"
+                    Fixed="Left"
+                    Visible="False"
+                    Width="70" />
+                <dxg:GridColumn
+                    Header="检测项目"
+                    FieldName="TestItem"
+                    Fixed="Left" />
+                <dxg:GridColumn
+                    Header="报告单位"
+                    FieldName="ReportUnit"
+                    Width="80" />
+                <dxg:GridColumn
+                    Header="检测结果"
+                    Image="{dx:DXImage 'Images/RichEdit/InsertDataField_32x32.png'}"
+                    HeaderStyle="{StaticResource ResultColumnHeaderStyle}"
+                    FieldName="TestResult" />
+                <dxg:GridColumn
+                    Header="修约规则"
+                    FieldName="RoundRule"
+                    Visible="False" />
+                <dxg:GridColumn
+                    Header="指标要求"
+                    FieldName="IndexRequest" />
+                <dxg:GridColumn
+                    Header="单项结论"
+                    FieldName="SingleConclusion"
+                    Visible="False" />
+                <dxg:GridColumn
+                    Header="执行标准"
+                    FieldName="ExecuteStandard"
+                    CellTemplate="{StaticResource ExecuteStandardColumnTemplate}" />
+                <dxg:GridColumn
+                    Header="分析人"
+                    FieldName="Tester" />
+                <dxg:GridColumn
+                    Header="检测备注"
+                    FieldName="TestRemark" />
+
+                <dxg:GridColumn
+                    Header="检测方法"
+                    FieldName="TestMethod"
+                    CellTemplate="{StaticResource MethodColumnTemplate}" />
+                <dxg:GridColumn
+                    Header="检测进度"
+                    FieldName="TestProgress"
+                    CellTemplate="{StaticResource TestProgressTemplate}" />
+                <dxg:GridColumn
+                    Header="下单时间"
+                    FieldName="AppointTime"
+                    Style="{StaticResource GridControlDateTimeColumnStyle}" />
+                <dxg:GridColumn
+                    Header="项目备注"
+                    Visible="False"
+                    FieldName="ItemRemark" />
+
+                <dxg:GridColumn
+                    Header="产品等级"
+                    FieldName="ProductClass"
+                    Visible="False" />
+                <dxg:GridColumn
+                    Header="产品剂型/样品状态"
+                    FieldName="SampleFormOrState"
+                    Visible="False" />
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    Style="{StaticResource ItemsTableViewStyle}"
+                    HorizontalScrollbarVisibility="Auto"
+                    dxb:BarManager.DXContextMenu="{StaticResource itemViewPopupMenu}"
+                    AutoWidth="False">
+                    <dxg:TableView.FormatConditions>
+                        <dxg:FormatCondition
+                            Expression="[TestProgress]&lt;104">
+                            <dx:Format
+                                Foreground="#228B22" />
+                        </dxg:FormatCondition>
+                        <dxg:FormatCondition
+                            FieldName="SingleConclusion"
+                            ValueRule="Equal"
+                            Value1="不符合"
+                            PredefinedFormatName="LightRedFillWithDarkRedText"
+                            ApplyToRow="True" />
+                        <dxg:FormatCondition
+                            FieldName="TestRemark"
+                            ValueRule="NotEqual"
+                            Value1="{x:Null}"
+                            PredefinedFormatName="YellowFillWithDarkYellowText"
+                            ApplyToRow="True" />
+                    </dxg:TableView.FormatConditions>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

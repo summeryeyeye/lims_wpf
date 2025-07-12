@@ -1,0 +1,69 @@
+﻿<UserControl x:Class="Lims.WPF.Views.Dialogs.CreateSubItemsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             mc:Ignorable="d"
+             Height="450" Width="800">
+    <Grid Background="#00000000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+            <Label Content="{Binding TestItem}"
+                               Margin="20,0"
+                               VerticalAlignment="Center"
+                               FontSize="16" />
+        </StackPanel>
+        <dxg:GridControl  ItemsSource="{Binding SubItems}"
+                          Grid.Row="1">
+            <dxg:GridControl.View>
+                <dxg:TableView Style="{StaticResource SubItemsTableViewStyle}">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridColumn Binding="{Binding TestItem ,Mode=TwoWay}"                            
+                            Header="检测项目"
+                             />
+            <!--<dxg:GridColumn Binding="{Binding ReportUnit ,Mode=TwoWay}"
+                            Header="报告单位"
+                             />-->
+            <dxg:GridColumn Header="指标要求"
+                            AllowEditing="True">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit EditMode="InplaceActive"
+                                          AllowSpinOnMouseWheel="False"
+                                          Margin="0"
+                                          BorderThickness="0"
+                                          Text="{Binding RowData.Row.IndexRequest, Mode=TwoWay}">
+                            <dxe:ComboBoxEditItem Content="≥" />
+                            <dxe:ComboBoxEditItem Content="≤" />
+                            <dxe:ComboBoxEditItem Content="＞" />
+                            <dxe:ComboBoxEditItem Content="＜" />
+                            <dxe:ComboBoxEditItem Content="=" />
+                            <dxe:ComboBoxEditItem Content="～" />
+                        </dxe:ComboBoxEdit>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="项目备注"                            
+                            ReadOnly="False"
+                            AllowEditing="True"
+                            >
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:TextEdit Margin="0"
+                                      BorderThickness="0"
+                                      Text="{Binding RowData.Row.ItemRemark, Mode=TwoWay}">
+                        </dxe:TextEdit>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

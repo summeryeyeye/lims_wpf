@@ -1,0 +1,124 @@
+﻿<dx:DXDialogWindow
+    x:Class="Lims.WPF.Views.Dialogs.CheckDatasComfirmView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    mc:Ignorable="d"
+    Title="{Binding FocusedSample.SampleCode}"
+    WindowStartupLocation="CenterScreen"
+    Height="450"
+    Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="9*" />
+            <RowDefinition
+                Height="*" />
+        </Grid.RowDefinitions>
+        <dx:DXTabControl>
+            <dx:DXTabItem
+                Header="主项目"
+                Width="100">
+                <dxg:GridControl
+                    Name="ItemsGrid"
+                    MaxHeight="1600"
+                    AutoExpandAllGroups="True"
+                    ItemsSource="{Binding CheckableDatas}">
+                    <dxg:GridControl.View>
+                        <dxg:TableView
+                            Style="{StaticResource ItemsTableViewStyle}"
+                            Name="ItemsView">
+                        </dxg:TableView>
+                    </dxg:GridControl.View>
+
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn
+                            FieldName="TestItem"
+                            Header="检测项目" />
+                        <dxg:GridColumn
+                            FieldName="Temp_TestResult"
+                            Image="{dx:DXImage 'Images/RichEdit/InsertDataField_32x32.png'}"
+                            HeaderStyle="{StaticResource ResultColumnHeaderStyle}"
+                            Header="检测结果" />
+                        <dxg:GridColumn
+                            FieldName="ReportUnit"
+                            Header="报告单位" />
+                        <dxg:GridColumn
+                            FieldName="RoundRule"
+                            Header="修约规则" />
+                        <dxg:GridColumn
+                            FieldName="IndexRequest"
+                            Header="指标要求" />
+                        <dxg:GridColumn
+                            FieldName="SingleConclusion"
+                            Header="单项结论" />
+                    </dxg:GridControl.Columns>
+                </dxg:GridControl>
+            </dx:DXTabItem>
+            <dx:DXTabItem
+                Header="子项目"
+                Name="SubItemsTab"
+                Width="100">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition
+                            Height="10*" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Text="{Binding ElementName=ItemsView,Path=FocusedRow.TestItem}"
+                        Margin="10,0"
+                        VerticalAlignment="Center"
+                        FontSize="20" />
+
+                    <dxg:GridControl
+                        MaxHeight="1600"
+                        Grid.Row="1"
+                        AutoExpandAllGroups="True"
+                        ItemsSource="{Binding ElementName=ItemsView,Path=FocusedRow.SubItems}">
+                        <dxg:GridControl.View>
+                            <dxg:TableView
+                                Style="{StaticResource DefaultTableView}"
+                                ShowGroupPanel="False"
+                                AllowGrouping="False">
+                            </dxg:TableView>
+                        </dxg:GridControl.View>
+
+                        <dxg:GridControl.Columns>
+                            <dxg:GridColumn
+                                FieldName="TestItem"
+                                Header="检测项目" />
+                            <dxg:GridColumn
+                                FieldName="Temp_TestResult"
+                                Image="{dx:DXImage 'Images/RichEdit/InsertDataField_32x32.png'}"
+                                HeaderStyle="{StaticResource ResultColumnHeaderStyle}"
+                                Header="检测结果" />
+                            <dxg:GridColumn
+                                FieldName="ItemRemark"
+                                Visible="False"
+                                Header="项目备注" />
+                        </dxg:GridControl.Columns>
+                    </dxg:GridControl>
+                </Grid>
+            </dx:DXTabItem>
+        </dx:DXTabControl>
+        <DockPanel
+            Grid.Row="1">
+            <dx:SimpleButton
+                IsDefault="True"
+                Content="确认"
+                Width="80"
+                Height="35"
+                HorizontalAlignment="Right"
+                Command="{Binding PassCheckingCommand}"
+                CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=dx:DXDialogWindow}}"
+                Style="{StaticResource SimpleBtnInfoStyle}" />
+        </DockPanel>
+    </Grid>
+</dx:DXDialogWindow>

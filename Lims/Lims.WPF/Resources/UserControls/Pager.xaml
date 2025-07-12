@@ -1,0 +1,105 @@
+﻿<UserControl x:Class="Lims.WPF.Resources.UserControls.Pager"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Resources.UserControls"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style TargetType="{x:Type Button}">
+            <Setter Property="Width"
+                    Value="22" />
+            <Setter Property="Height"
+                    Value="22" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <dx:SimpleButton Name="FirstPageButton"
+                             Margin="5,0"
+                             Click="FirstPageButton_Click">
+                <Path Width="7"
+                      Height="10"
+                      Data="M0,0L0,10 M0,5L6,2 6,8 0,5"
+                      Stroke="Black"
+                      StrokeThickness="1"
+                      Fill="Black"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center" />
+            </dx:SimpleButton>
+            <dx:SimpleButton x:Name="PreviousPageButton"
+                             Margin="0,0,5,0"
+                             Click="PreviousPageButton_Click">
+                <Path Width="8"
+                      Height="8"
+                      Data="M0,4L8,0 8,8z"
+                      Stroke="Black"
+                      Fill="Black"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center" />
+            </dx:SimpleButton>
+            <TextBlock VerticalAlignment="Center">
+                <Run Text="第" />
+                <Run x:Name="rCurrent"
+                     Text="0" />
+                <Run Text="页" />
+            </TextBlock>
+            <dx:SimpleButton Margin="5,0"
+                             x:Name="NextPageButton"
+                             Click="NextPageButton_Click">
+                <Path Width="8"
+                      Height="8"
+                      Data="M0,4L8,0 8,8z"
+                      Stroke="Black"
+                      Fill="Black"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center">
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="180"
+                                         CenterX="4"
+                                         CenterY="4" />
+                    </Path.RenderTransform>
+                </Path>
+            </dx:SimpleButton>
+            <dx:SimpleButton Margin="0,0,5,0"
+                             x:Name="LastPageButton"
+                             Click="LastPageButton_Click">
+                <Path x:Name="MainPath"
+                      Width="7"
+                      Height="10"
+                      Data="M0,0L0,10 M0,5 L6,2 6,8 0,5"
+                      Stroke="Black"
+                      StrokeThickness="1"
+                      Fill="Black"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center">
+                    <Path.RenderTransform>
+                        <RotateTransform Angle="180"
+                                         CenterX="3"
+                                         CenterY="5" />
+                    </Path.RenderTransform>
+                </Path>
+            </dx:SimpleButton>
+            <TextBlock VerticalAlignment="Center">
+
+                <Run Text="共" />
+                <Run x:Name="rTotalPage"
+                     Text="0" />
+                <Run Text="页" />
+            </TextBlock>
+            <TextBlock VerticalAlignment="Center">
+                <Run Text="" />
+                <Run x:Name="rTotalItem"
+                     Text="0" />
+                <Run Text="项" />
+            </TextBlock>
+
+            <dx:SimpleButton Glyph="{dx:DXImage GrayScaleImages/Actions/Refresh_16x16.png}"
+                             Width="29"
+                             Margin="5,0"
+                             Name="RefreshButton"
+                             Click="RefreshButton_Click" />
+        </StackPanel>
+    </Grid>
+</UserControl>

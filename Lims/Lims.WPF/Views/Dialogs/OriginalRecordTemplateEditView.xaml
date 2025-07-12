@@ -1,0 +1,198 @@
+﻿<UserControl
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    x:Class="Lims.WPF.Views.Dialogs.OriginalRecordTemplateEditView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:viewModels="clr-namespace:Lims.WPF.ViewModels"
+    d:DataContext="{d:DesignInstance viewModels:MySubmittedTasksViewModel}"
+    mc:Ignorable="d"
+    Height="640"
+    Width="1520">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="60" />
+            <RowDefinition />
+
+        </Grid.RowDefinitions>
+        <Grid
+            VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="6*" />
+                <ColumnDefinition
+                    Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Border
+                BorderThickness="1"
+                BorderBrush="Red" />
+            <Border
+                Grid.Column="1"
+                BorderThickness="1"
+                BorderBrush="Blue" />
+            <StackPanel
+                Orientation="Horizontal"
+                Margin="5">
+                <Label
+                    Content="原始记录模板路径："
+                    VerticalAlignment="Center"
+                    Margin="10,0" />
+                <TextBox
+                    Width="400"
+                    Margin="2"
+                    Height="40"
+                    TextWrapping="Wrap"
+                    Padding="1"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding TemplateInfo.FileName,Mode=TwoWay}">
+                    <dxmvvm:Interaction.Behaviors>
+                        <dxmvvm:EventToCommand
+                            Command="{Binding FileOpenDialogCommand}"
+                            EventName="MouseDoubleClick"
+                            PassEventArgsToCommand="True" />
+                    </dxmvvm:Interaction.Behaviors>
+                    <TextBox.Resources>
+                        <VisualBrush
+                            x:Key="HintText"
+                            TileMode="None"
+                            Opacity="0.5"
+                            Stretch="None"
+                            AlignmentX="Center">
+                            <VisualBrush.Visual>
+                                <TextBlock
+                                    FontStyle="Italic"
+                                    Text="双击此处添加模板路径" />
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </TextBox.Resources>
+                    <TextBox.Style>
+                        <Style
+                            TargetType="TextBox">
+                            <Style.Triggers>
+                                <Trigger
+                                    Property="Text"
+                                    Value="{x:Null}">
+                                    <Setter
+                                        Property="Background"
+                                        Value="{StaticResource HintText}" />
+                                </Trigger>
+                                <Trigger
+                                    Property="Text"
+                                    Value="">
+                                    <Setter
+                                        Property="Background"
+                                        Value="{StaticResource HintText}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                <Label
+                    Content="仪器信息："
+                    VerticalAlignment="Center"
+                    Margin="10,0" />
+                <dxe:TextEdit
+                    Width="500"
+                    Height="40"
+                    Margin="2"
+                    TextWrapping="Wrap"
+                    PrintTextWrapping="Wrap"
+                    NullText="请输入仪器编号，同一方法多个检测员不同仪器请用‘|’隔开并用‘姓名：’标识，例（杨升：WZJ-072,WZJ-057|XXX：WZJ-xxx,WZJ-xxx）"
+                    Text="{Binding TemplateInfo.InstrumentsInfo,Mode=TwoWay}">
+                </dxe:TextEdit>
+                <Button
+                    Height="40"
+                    HorizontalAlignment="Right"
+                    Margin="10,0"
+                    Content="保存信息"
+                    IsEnabled="{Binding SelectedStandards.Count}"
+                    Command="{Binding UpdateOriginalRecordTemplatInfoCommand}" />
+            </StackPanel>
+
+            <StackPanel
+                Grid.Column="1"
+                Orientation="Horizontal"
+                HorizontalAlignment="Right"
+                Margin="5">
+                <TextBox
+                    Width="70"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    Text="{Binding TemplateInfo.OriginalRecordGroup,Mode=TwoWay}" />
+                <Button
+                    Height="40"
+                    Margin="10,0"
+                    Content="保存打印标识"
+                    IsEnabled="{Binding SelectedStandards.Count}"
+                    Command="{Binding SaveOriginalRecordGroupCommand}" />
+            </StackPanel>
+        </Grid>
+
+
+
+
+
+        <dxg:GridControl
+            Grid.Row="1"
+            Style="{StaticResource BaseGridControlStyle}"
+            ItemsSource="{Binding MyEdittingStandards}">
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    VerticalScrollbarVisibility="Auto"
+                    AutoWidth="False"
+                    HorizontalScrollbarVisibility="Visible"
+                    RowDoubleClickCommand="{Binding OriginalRecordTemplateRowDoubleClickCommand}"
+                    FocusedRow="{Binding SelectedMethodStandard}"
+                    Style="{StaticResource BaseTableViewStyle}"
+                    SelectedRowsSource="{Binding SelectedStandards,Mode=TwoWay}"
+                    ShowCheckBoxSelectorColumn="True"
+                    RowIndicatorContentTemplate="{StaticResource DefaultIndicatorTemplate}"
+                    IndicatorWidth="40"
+                    CheckBoxSelectorColumnWidth="40"
+                    AllowEditing="False">
+                    <dxb:BarManager.DXContextMenu>
+                        <dxb:PopupMenu />
+                    </dxb:BarManager.DXContextMenu>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn
+                    FieldName="Id"
+                    Visible="False"
+                    Header="Id"
+                    Width="54" />
+                <dxg:GridColumn
+                    FieldName="TestItem"
+                    Width="100"
+                    Header="检测项目" />
+                <dxg:GridColumn
+                    FieldName="TestMethod"
+                    Header="检测方法" />
+                <dxg:GridColumn
+                    FieldName="SampleState"
+                    Header="样品状态"
+                    Width="40" />
+                <dxg:GridColumn
+                    FieldName="OriginalRecordTemplateFilePath"
+                    Width="800"
+                    Header="模板文件路径" />
+
+                <dxg:GridColumn
+                    FieldName="Instruments"
+                    Header="相关仪器" />
+                <dxg:GridColumn
+                    FieldName="OriginalRecordGroup"
+                    Width="80"
+                    Header="打印标识" />
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

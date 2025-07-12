@@ -1,0 +1,119 @@
+﻿<UserControl x:Class="Lims.WPF.Views.Dialogs.ReagentIOManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+             xmlns:browserhelper="clr-namespace:Lims.ToolsForClient;assembly=Lims.ToolsForClient"
+             mc:Ignorable="d"
+             Height="450"
+             Width="1100">
+    <Grid>
+        <dxg:GridControl ItemsSource="{Binding Reagents}">
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True"
+                               HorizontalAlignment="Center"
+                               RowMinHeight="50"
+                               SearchPanelFindMode="Always"
+                               ShowSearchPanelCloseButton="False"
+                               IndicatorWidth="60"
+                               Style="{StaticResource BaseTableViewStyle}">
+                    <dxg:TableView.RowIndicatorContentTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="#A52A2A"
+                                           Margin="5,0"
+                                           Text="{DXBinding Expr='RowHandle.Value>=0?RowHandle.Value+1:null'}" />
+                            </Grid>
+                        </DataTemplate>
+                    </dxg:TableView.RowIndicatorContentTemplate>
+                </dxg:TableView>
+            </dxg:GridControl.View>
+
+
+
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn Header="Id"
+                                Binding="{Binding Id}"
+                                Visible="False" />
+                <dxg:GridColumn Header="名称"
+                                Width="260"
+                                HorizontalHeaderContentAlignment="Center"
+                                Binding="{Binding Name}" />
+                <dxg:GridColumn Header="分子式"
+                                Visible="False"
+                                Binding="{Binding MolecularFormula}" />
+                <dxg:GridColumn Header="CAS号"
+                                Visible="False"
+                                Binding="{Binding CASNumber}">
+
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="别名"
+                                Visible="False"
+                                HorizontalHeaderContentAlignment="Center"
+                                Binding="{Binding Alias}" />
+                <dxg:GridColumn Header="位置"
+                                Width="120"
+                                HorizontalHeaderContentAlignment="Center"
+                                Binding="{Binding Address}">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Row.Address}"
+                                       HorizontalAlignment="Center"
+                                       FontSize="20"
+                                       VerticalAlignment="Center"
+                                       Foreground="OrangeRed" />
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="规格"
+                                Visible="False"
+                                Binding="{Binding Speciffication}" />
+                <dxg:GridColumn Header="纯度"
+                                Visible="False"
+                                HorizontalHeaderContentAlignment="Center"
+                                Binding="{Binding Purity}" />
+                <dxg:GridColumn Header="库存数量"
+                                Width="100"
+                                HorizontalHeaderContentAlignment="Center"
+                                Binding="{Binding Count}" />
+                <dxg:GridColumn Header="操作"
+                                Width="250"
+                                HorizontalHeaderContentAlignment="Center">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+
+                                <dx:SimpleButton Content="入库"
+                                                 Command="{Binding View.DataContext.ReagentInputCommand}"
+                                                 CommandParameter="{Binding RowData.Row}"
+                                                 Style="{StaticResource BtnInfoStyle}" />
+                                <dx:SimpleButton Grid.Column="1"
+                                                 Command="{Binding View.DataContext.ReagentOutputCommand}"
+                                                 CommandParameter="{Binding RowData.Row}"
+                                                 Style="{StaticResource BtnInfoStyle}"
+                                                 Content="出库" />
+                                <dx:SimpleButton Grid.Column="2"
+                                                 Width="auto"
+                                                 Command="{DXCommand '$browserhelper:BrowserHelper.SearchByBaiduBaike(@parameter)'}"
+                                                 CommandParameter="{Binding Row.Name}"
+                                                 Style="{StaticResource BtnInfoStyle}"
+                                                 Content="试剂信息" />
+                            </Grid>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

@@ -1,0 +1,70 @@
+﻿<UserControl x:Class="Lims.WPF.Views.Dialogs.ChangeSampleStateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+             mc:Ignorable="d"
+             Height="160"
+             Width="480">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin"
+                        Value="5" />
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Padding"
+                        Value="5" />
+            </Style>
+            <Style TargetType="Grid">
+                <Setter Property="Margin"
+                        Value="10" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical"
+                Margin="10">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="样品状态：" />
+            <ComboBox SelectedIndex="{Binding SelectedSampleStateIndex, Mode=TwoWay}"
+                      Grid.Column="1">
+                <ComboBoxItem Content="固体" />
+                <ComboBoxItem Content="液体" />
+            </ComboBox>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="业务类型:" />
+            <ComboBox Grid.Column="1"
+                      x:Name="TaskTypeComboBox"
+                      SelectedIndex="{Binding EdittingSample.TaskType, Converter={StaticResource TaskTypeToSelectedIndexConverter}, Mode=TwoWay}">
+                <ComboBoxItem Content="一般检验" />
+                <ComboBoxItem Content="年度检验" />
+                <ComboBoxItem Content="执法检验" />
+                <ComboBoxItem Content="方法验证" />
+                <ComboBoxItem Content="全项检测" />
+            </ComboBox>
+        </Grid>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="是否加急:" />
+            <CheckBox Grid.Column="1"
+                      VerticalAlignment="Center"
+                      HorizontalAlignment="Center"
+                      IsChecked="{Binding EdittingSample.IsUrgent,Mode=TwoWay}" />
+        </Grid>
+    </StackPanel>
+</UserControl>

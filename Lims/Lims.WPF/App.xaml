@@ -1,0 +1,998 @@
+﻿<Application
+    x:Class="Lims.WPF.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dialogs="clr-namespace:Lims.WPF.Views.Dialogs"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:views="clr-namespace:Lims.WPF.Views"
+    StartupUri="/Views/MainView.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/Converters/MyConvertersDictionary.xaml" />
+                <ResourceDictionary Source="/Resources/Style/ControlStyle/MyControlStylesDictionary.xaml" />
+                <ResourceDictionary Source="/Resources/Templates/MyTemplatesDictionary.xaml" />
+                <ResourceDictionary Source="/Resources/Style/ControlStyle/GridControlStyleDictionary.xaml" />
+
+                <!--<materialDesign:BundledTheme
+                    BaseTheme="Inherit"
+                    PrimaryColor="Teal"
+                    SecondaryColor="Lime"
+                    ColorAdjustment="{materialDesign:ColorAdjustment}" />
+
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+                <ResourceDictionary
+                    Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+
+            <dxmvvm:NotificationService
+                x:Key="NotificationService"
+                CustomNotificationPosition="TopRight"
+                PredefinedNotificationTemplate="ShortHeaderAndLongText"
+                UseWin8NotificationsIfAvailable="False" />
+
+            <dx:DialogService
+                x:Key="LoginDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="请登录"
+                UnregisterOnUnloaded="True">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <views:LoginView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="10,0" />
+                                    <Setter Property="Padding" Value="5" />
+                                    <Setter Property="MinWidth" Value="150" />
+                                    <Setter Property="HorizontalAlignment" Value="Center" />
+
+                                    <!--<Setter Property="Background"
+                                            Value="Transparent" />-->
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <!--<dx:DialogService
+                x:Key="ReportPreviewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="报告数据预览"
+                UnregisterOnUnloaded="True">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:ReportPreview />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        --><!--<Setter Property="ResizeMode" Value=" " />--><!--
+                        <Setter Property="Topmost" Value="False" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="Width" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>-->
+
+            <dx:DialogService
+                x:Key="SpinViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="数量"
+                UnregisterOnUnloaded="True">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:SpinView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="Topmost" Value="False" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="Width" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="ReagentIOManagementViewService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="试剂出入库管理"
+                UnregisterOnUnloaded="True">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:ReagentIOManagementView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="Topmost" Value="False" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="Width" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+            
+            <dx:DialogService x:Key="MicroorganismTesterManagementViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="微生物分析人管理"
+                UnregisterOnUnloaded="True">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:MicroorganismTesterManagementView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="Topmost" Value="False" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="Width" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="SearchStandardFileViewService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="请选择标准"
+                UnregisterOnUnloaded="True">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:SearchStandardFileView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="Topmost" Value="False" />
+                        <Setter Property="Width" Value="860" />
+                        <Setter Property="Height" Value="360" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="10  " />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="AllItemsOfSamplePreviewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="项目预览">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:AllItemsOfSamplePreview />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="Width" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="SubItemsViewDialogService"
+                DialogWindowStartupLocation="Manual"
+                SetWindowOwner="False"
+                Title="子项目预览">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:SubItemsView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="MyEdiatbleSubItemsViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="子项目预览">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:MyEdiatbleSubItemsView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="CreateSubItemsViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="子项目预览">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:CreateSubItemsView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="MyItemsOfSamplePreviewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="项目预览">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:MyItemsOfSamplePreview />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="MySubmittedTaskListPreviewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="项目预览">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:MySubmittedTaskListPreview />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="EditItemInfoViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="变更项目信息">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:EditItemInfoView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService x:Key="UpdateTestDateViewDialogService"
+                              DialogWindowStartupLocation="CenterScreen"
+                              SetWindowOwner="False"
+                              Title="同步检验日期">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:UpdateTestDateView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode"
+                                Value="NoResize" />
+                        <Setter Property="SizeToContent"
+                                Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle"
+                                Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight"
+                                            Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize"
+                                            Value="15" />
+                                    <Setter Property="Margin"
+                                            Value="5 -5" />
+                                    <Setter Property="Padding"
+                                            Value="3" />
+                                    <Setter Property="MinWidth"
+                                            Value="100" />
+                                    <Setter Property="ContentTemplate"
+                                            Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector"
+                                            Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+            
+            <dx:DialogService
+                x:Key="ChangeSampleInfoDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="变更样品信息">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:EditSampleInfoView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="ChangeItemTesterDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="变更项目分析人">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:ChangeItemTesterView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="AddSubItemsDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="添加子项目">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:AddSubItemsView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="InPutBoxViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="请输入内容">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:InPutBoxView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="PrinterSelecterViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="请选择打印机">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:PrinterSelecterView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="OriginalRecordTemplateEditViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="原始记录模板编辑">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:OriginalRecordTemplateEditView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="ChangeSampleStateViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="变更样品状态">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:ChangeSampleStateView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="RetestSampleViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="添加样品复测">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:RetestSampleView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="RetestSubItemsPreviewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="请选择要复测的子项目">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:RetestSubItemsPreview />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="MyLogsViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="查看日志">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:MyLogsView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="EditStandardViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="方法编辑">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:EditStandardView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+                        <Setter Property="WindowState" Value="Maximized" />
+                        <!--<Setter Property="SizeToContent"
+                                Value="WidthAndHeight" />-->
+                        <!--<Setter Property="WindowStyle"
+                                Value="SingleBorderWindow" />-->
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="SearchByItemOrMethodViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="按检测项目/方法检索">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:SearchByItemOrMethodView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="CreateMethodViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="添加检测方法">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:CreateMethodView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="CreateStandardSubItemViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="添加标准子项目">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:CreateStandardSubItemView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+            <dx:DialogService
+                x:Key="EditStandardSubItemViewDialogService"
+                DialogWindowStartupLocation="CenterScreen"
+                SetWindowOwner="False"
+                Title="添加标准子项目">
+                <dx:DialogService.ViewTemplate>
+                    <DataTemplate>
+                        <dialogs:EditStandardSubItemView />
+                    </DataTemplate>
+                </dx:DialogService.ViewTemplate>
+                <dx:DialogService.DialogStyle>
+                    <Style TargetType="dx:DXDialogWindow">
+
+                        <Setter Property="ResizeMode" Value="NoResize" />
+                        <Setter Property="SizeToContent" Value="WidthAndHeight" />
+                        <Setter Property="WindowStyle" Value="SingleBorderWindow" />
+                        <Setter Property="CommandButtonStyle">
+                            <Setter.Value>
+                                <Style TargetType="Button">
+                                    <Setter Property="TextBlock.FontWeight" Value="DemiBold" />
+                                    <Setter Property="TextBlock.FontSize" Value="15" />
+                                    <Setter Property="Margin" Value="5 -5" />
+                                    <Setter Property="Padding" Value="3" />
+                                    <Setter Property="MinWidth" Value="100" />
+                                    <Setter Property="ContentTemplate" Value="{Binding ContentTemplate, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="ContentTemplateSelector" Value="{Binding ContentTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </Style>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DialogService.DialogStyle>
+            </dx:DialogService>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

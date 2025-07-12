@@ -1,0 +1,170 @@
+﻿<UserControl
+    x:Class="Lims.WPF.Views.MyReturnedTasksView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    Name="MyReturnedTasksUserControl"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:mycontrols="clr-namespace:Lims.WPF.Resources.UserControls"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:export="clr-namespace:Lims.WPF.Resources.UserControls.Export"
+    xmlns:local="clr-namespace:Lims.WPF.Views"
+    mc:Ignorable="d"
+    d:DesignHeight="450"
+    d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate
+            x:Key="MyReturnedTasksOperationTemplate">
+            <Grid
+                HorizontalAlignment="Stretch">
+                <dx:SimpleButton
+                    IsEnabled="{Binding RowData.Row.Temp_TestResult,Converter={StaticResource ValueableResultToIsEnableConverter}, Mode= TwoWay}"
+                    Command="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.ReceiveItemCommand}"
+                    CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row}"
+                    Content="领取" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate
+            x:Key="MyItemsInCellTemplate">
+            <TextBlock
+                Text="{Binding RowData.Row.Items, Converter={StaticResource MyItemsInCellConverter},ConverterParameter='=102'}"
+                TextWrapping="WrapWithOverflow"
+                FontSize="12"
+                Padding="2" />
+        </DataTemplate>
+        <dxb:PopupMenu
+            x:Key="tasklistViewPopupMenu">
+            <dxb:PopupMenu.Items>
+                <dxb:BarButtonItem
+                    Style="{StaticResource RefreshSampleDatasButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource SearchByCurrentCellValueButtonStyle}" />
+                <dxb:BarCheckItem
+                    Style="{StaticResource OnlyViewUrgentButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource PrintSelectedTaskDatasButtonStyle}" />
+                <dxb:BarButtonItem
+                    Style="{StaticResource ExportSelectedTaskDatasButtonStyle}" />
+                <dxb:BarButtonItem
+                    IsEnabled="{Binding SelectedTaskDatas.Count}"
+                    Command="{Binding TaskList_PrintOriginalRecordCommand}"
+                    CommandParameter="{Binding SelectedTaskDatas}"
+                    Glyph="{dx:DXImage 'Images/Print/Printer_16x16.png'}"
+                    Content="打印原始记录"
+                    ToolTip="打印原始记录" />
+            </dxb:PopupMenu.Items>
+        </dxb:PopupMenu>
+    </UserControl.Resources>
+
+    <Grid
+        Background="{Binding Background, ElementName=ParentWindow}">
+        <DockPanel>
+            <dxb:ToolBarControl
+                Orientation="Horizontal"
+                DockPanel.Dock="Top"
+                BarItemDisplayMode="ContentAndGlyph"
+                Style="{StaticResource toolBarStyle}">
+                <dxb:BarButtonItem
+                    Command="{Binding ReceiveTaskDatasCommand}"
+                    Padding="10,0"
+                    Glyph="{dx:DXImage 'Images/Content/Notes_16x16.png'}"
+                    IsEnabled="{Binding SelectedTaskDatas.Count}"
+                    ToolTip="领取任务"
+                    Content="领取任务" />
+            </dxb:ToolBarControl>
+            <dxg:GridControl
+                Style="{StaticResource TaskListGridControlStyle}">
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn
+                        Header="样品编号"
+                        FieldName="SampleCode"
+                        Fixed="Left" />
+                    <dxg:GridColumn
+                        Header="样品名称"
+                        FieldName="Sample.SampleName"
+                        Fixed="Left" />
+                    <dxg:GridColumn
+                        Header="检测项目"
+                        FieldName="TestItem"
+                        Fixed="Left" />
+                    <dxg:GridColumn
+                        Header="检测结果"
+                        Image="{dx:DXImage 'Images/RichEdit/InsertDataField_32x32.png'}"
+                        HeaderStyle="{StaticResource ResultColumnHeaderStyle}"
+                        FieldName="Temp_TestResult" />
+                    <dxg:GridColumn
+                        Header="报告单位"
+                        FieldName="ReportUnit" />
+                    <dxg:GridColumn
+                        Header="指标要求"
+                        FieldName="IndexRequest" />
+                    <dxg:GridColumn
+                        Header="产品剂型/样品状态"
+                        FieldName="SampleFormOrState" />
+                    <dxg:GridColumn
+                        Header="项目备注"
+                        Visible="False"
+                        FieldName="ItemRemark" />
+                    <dxg:GridColumn
+                        Header="是否加急"
+                        FieldName="Sample.IsUrgent"
+                        Visible="False" />
+                    <dxg:GridColumn
+                        FieldName="CurrentUrgent"
+                        Header="临时加急"
+                        Visible="False" />
+                    <dxg:GridColumn
+                        Header="业务类型"
+                        FieldName="Sample.TaskType" />
+                    <!--<dxg:GridColumn Header="分析人" FieldName="Tester"  />-->
+                    <dxg:GridColumn
+                        Header="修约规则"
+                        FieldName="RoundRule"
+                        Width="60"
+                        Visible="False" />
+                    <!--<dxg:GridColumn Header="单项结论" FieldName="SingleConclusion"  Visible="False"/>-->
+
+                    <dxg:GridColumn
+                        Header="检测方法"
+                        FieldName="TestMethod"
+                        CellTemplate="{StaticResource MethodColumnTemplate}" />
+                    <dxg:GridColumn
+                        Header="执行标准"
+                        FieldName="ExecuteStandard"
+                        CellTemplate="{StaticResource ExecuteStandardColumnTemplate}" />
+                    <!--<dxg:GridColumn Header="结果提交时间" FieldName="ResultSubmitTime" Style="{StaticResource GridControlDateTimeColumnStyle}" />-->
+
+                    <dxg:GridColumn
+                        Header="下单时间"
+                        FieldName="AppointTime"
+                        Style="{StaticResource GridControlDateTimeColumnStyle}" />
+                    <dxg:GridColumn
+                        Header="产品类别"
+                        FieldName="ProductType"
+                        Visible="False" />
+                    <dxg:GridColumn
+                        Header="产品等级"
+                        FieldName="ProductClass"
+                        Visible="False" />
+                    <dxg:GridColumn
+                        Header="产品剂型/样品状态"
+                        FieldName="SampleFormOrState"
+                        Visible="False" />
+                </dxg:GridControl.Columns>
+
+
+
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        Style="{StaticResource TaskListTableViewStyle}"
+                        dxb:BarManager.DXContextMenu="{StaticResource tasklistViewPopupMenu}" />
+                </dxg:GridControl.View>
+            </dxg:GridControl>
+        </DockPanel>
+
+    </Grid>
+</UserControl>

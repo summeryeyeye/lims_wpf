@@ -1,0 +1,65 @@
+﻿<UserControl x:Class="Lims.WPF.Views.Dialogs.MicroorganismTesterManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             mc:Ignorable="d"
+             Height="280"
+             Width="520">
+    <Grid>
+        <Grid.Resources>
+            <Style TargetType="dxb:BarEditItem">
+                <Setter Property="dxb:BarEditItem.EditSettings">
+                    <Setter.Value>
+                        <dxe:TextEditSettings />
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="EditWidth"
+                        Value="150" />
+                <Setter Property="Margin"
+                        Value="15" />
+            </Style>
+            <Style TargetType="dxb:ToolBarControl">
+                <Setter Property="AllowCustomizationMenu"
+                        Value="False" />
+                <Setter Property="AllowQuickCustomization"
+                        Value="False" />
+            </Style>
+        </Grid.Resources>
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <dxb:ToolBarControl>
+                <dxb:BarEditItem Content="编号尾号："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.LastCode_A}" />
+                <dxb:BarEditItem Content="分析人："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.Tester_A}" />
+            </dxb:ToolBarControl>
+            <dxb:ToolBarControl>
+                <dxb:BarEditItem Content="编号尾号："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.LastCode_B}" />
+                <dxb:BarEditItem Content="分析人："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.Tester_B}" />
+            </dxb:ToolBarControl>
+            <dxb:ToolBarControl>
+                <dxb:BarEditItem Content="编号尾号："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.LastCode_C}" />
+                <dxb:BarEditItem Content="分析人："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.Tester_C}" />
+            </dxb:ToolBarControl>
+            <dxb:ToolBarControl>
+                <dxb:BarEditItem Content="固定项目："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.Item}" />
+                <dxb:BarEditItem Content="分析人："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.Tester_D}" />
+            </dxb:ToolBarControl>
+            <dxb:ToolBarControl>
+                <dxb:BarEditItem Content="轮流尾号："
+                                 EditValue="{Binding CurrentMicroorganesmTesterModel.TurnLastCode}" />
+            </dxb:ToolBarControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

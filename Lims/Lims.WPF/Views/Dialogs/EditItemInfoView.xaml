@@ -1,0 +1,103 @@
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             x:Class="Lims.WPF.Views.Dialogs.EditItemInfoView"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+             xmlns:viewModels="clr-namespace:Lims.WPF.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewModels:CurrentTasksManageViewModel}"
+             mc:Ignorable="d"
+             Height="260"
+             Width="480">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin"
+                        Value="5" />
+            </Style>
+            <Style TargetType="TextBox">
+                <Setter Property="Padding"
+                        Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <StackPanel Orientation="Vertical"
+                Margin="0,0,0,10">
+        <StackPanel Orientation="Horizontal"
+                    Margin="10,5"
+                    HorizontalAlignment="Center">
+            <TextBlock Text="{Binding EdittingItem.SampleCode}"
+                       FontSize="18"
+                       Margin="10,0" />
+            <TextBlock Text="{Binding EdittingItem.TestItem}"
+                       FontSize="18"
+                       Margin="10,0" />
+        </StackPanel>
+
+        <Grid Margin="10,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="检测方法:" />
+            <dxe:ComboBoxEdit Grid.Column="1"
+                              IsEnabled="{Binding FocusedItem.ProductStandardId,Converter={StaticResource BooleanChangeOverConverter}}"
+                              SelectedItem="{Binding EdittingStandardMethod,Mode=TwoWay}"
+                              DisplayMember="TestMethod"
+                              IncrementalSearch="True"
+                              ItemsSource="{Binding CurrentMethods}">
+                <dxe:ComboBoxEdit.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding TestMethod}"
+                                   TextDecorations="{Binding  Converter={StaticResource StandardIsInvalidConverter}}" />
+                    </DataTemplate>
+                </dxe:ComboBoxEdit.ItemTemplate>
+            </dxe:ComboBoxEdit>
+        </Grid>
+        <Grid Margin="10,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <!--<TextBlock
+                Text="执行标准:" />
+            <TextBox
+                Grid.Column="1"
+                TextWrapping="Wrap"
+                Text="{Binding EdittingItem.ExecuteStandard,Mode=TwoWay}" />-->
+        </Grid>
+        <Grid Margin="10,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="修约规则:" />
+            <TextBox Grid.Column="1"
+                     IsEnabled="False"
+                     Text="{Binding EdittingStandardMethod.RoundRule,Mode=TwoWay}" />
+        </Grid>
+
+        <Grid Margin="10,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="报告单位:" />
+            <TextBox Grid.Column="1"
+                     Text="{Binding EdittingItem.ReportUnit,Mode=TwoWay}" />
+        </Grid>
+        <Grid Margin="10,2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="指标要求:" />
+            <TextBox Grid.Column="1"
+                     TextWrapping="Wrap"
+                     Text="{Binding EdittingItem.IndexRequest,Mode=TwoWay}" />
+        </Grid>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,130 @@
+﻿<UserControl
+    x:Class="Lims.WPF.Views.Dialogs.AllItemsOfSamplePreview"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    mc:Ignorable="d"
+    Width="1240"
+    Height="640"
+    MinHeight="640">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition
+                Height="12*" />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Orientation="Horizontal"
+            HorizontalAlignment="Center">
+            <TextBlock
+                Text="{Binding FocusedSample.SampleCode}"
+                FontSize="20"
+                Margin="10,0" />
+            <TextBlock
+                Text="{Binding FocusedSample.SampleName}"
+                FontSize="20"
+                Margin="10,0" />
+        </StackPanel>
+        <Grid
+            Background="#00000000"
+            Grid.Row="1">
+            <dxg:GridControl
+                x:Name="AllItemsOfFocusedSampleGrid"
+                SelectionMode="Cell"
+                ItemsSource="{Binding AllItemsOfFocusedSample, Mode=TwoWay}">
+                <dxg:GridControl.TotalSummary>
+                    <dxg:GridSummaryItem
+                        FieldName="TestResult"
+                        SummaryType="Sum"
+                        DisplayFormat="和：{0}" />
+                </dxg:GridControl.TotalSummary>
+                <dxg:GridControl.View>
+                    <dxg:TableView
+                        x:Name="AllItemsOfFocusedSampleView"
+                        RowMinHeight="32"
+                        ShowTotalSummary="True"
+                        SummaryCalculationMode="SelectedRows"
+                        AllowEditing="False"
+                        Style="{StaticResource ItemsTableViewStyle}">
+
+                        <dxg:TableView.FormatConditions>
+                            <dxg:FormatCondition
+                                Expression="[TestProgress]&lt;104">
+                                <dx:Format
+                                    Foreground="#228B22" />
+                            </dxg:FormatCondition>
+                            <dxg:FormatCondition
+                                FieldName="SingleConclusion"
+                                ValueRule="Equal"
+                                Value1="不符合"
+                                PredefinedFormatName="LightRedFillWithDarkRedText"
+                                ApplyToRow="True" />
+                            <dxg:FormatCondition
+                                FieldName="TestRemark"
+                                ValueRule="NotEqual"
+                                Value1="{x:Null}"
+                                PredefinedFormatName="YellowFillWithDarkYellowText"
+                                ApplyToRow="True" />
+                        </dxg:TableView.FormatConditions>
+                    </dxg:TableView>
+                </dxg:GridControl.View>
+                <dxg:GridControl.Columns>
+                    <dxg:GridColumn
+                        FieldName="TestProgress"
+                        Header="检测进度"
+                        CellTemplate="{StaticResource TestProgressTemplate}" />
+                    <dxg:GridColumn
+                        FieldName="TestItem"
+                        Header="检测项目" />
+                    <dxg:GridColumn
+                        FieldName="TestResult"
+                        Header="检测结果"                        
+                        Image="{dx:DXImage 'Images/RichEdit/InsertDataField_32x32.png'}"
+                        HeaderStyle="{StaticResource ResultColumnHeaderStyle}"
+                        Width="180" />
+                    <dxg:GridColumn
+                        FieldName="ReportUnit"
+                        Header="报告单位" />
+                    <dxg:GridColumn
+                        FieldName="RoundRule"
+                        Header="修约规则" />
+                    <dxg:GridColumn
+                        FieldName="IndexRequest"
+                        Header="指标要求" />
+                    <dxg:GridColumn
+                        FieldName="SingleConclusion"
+                        Header="单项结论"
+                        Visible="False" />
+                    <dxg:GridColumn
+                        FieldName="ResultSubmitTime"
+                        Header="结果提交时间时间"
+                        Style="{StaticResource GridControlDateTimeColumnStyle}" />
+                    <dxg:GridColumn
+                        Header="检测方法"
+                        FieldName="TestMethod"
+                        CellTemplate="{StaticResource MethodColumnTemplate}">
+                    </dxg:GridColumn>
+                    <dxg:GridColumn
+                        Header="执行标准"
+                        FieldName="ExecuteStandard"
+                        CellTemplate="{StaticResource ExecuteStandardColumnTemplate}">
+                    </dxg:GridColumn>
+                    <dxg:GridColumn
+                        FieldName="ItemRemark"
+                        Header="项目备注"
+                        Visible="False" />
+                    <dxg:GridColumn
+                        FieldName="Tester"
+                        Header="分析人" />
+                    <dxg:GridColumn
+                        Header="下单时间"
+                        FieldName="AppointTime"
+                        Style="{StaticResource GridControlDateTimeColumnStyle}" />
+                </dxg:GridControl.Columns>
+            </dxg:GridControl>
+        </Grid>
+    </Grid>
+</UserControl>

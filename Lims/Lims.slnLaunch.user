@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "新建配置文件",
+    "Projects": [
+      {
+        "Path": "Lims.WebAPI\\Lims.WebAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Lims.WPF\\Lims.WPF.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

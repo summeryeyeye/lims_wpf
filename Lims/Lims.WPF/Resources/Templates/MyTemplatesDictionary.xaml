@@ -1,0 +1,362 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+                    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                    xmlns:dxci="http://schemas.devexpress.com/winfx/2008/xaml/core/internal"
+                    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+                    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+                    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+                    xmlns:local="clr-namespace:Lims.WPF"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:resources="clr-namespace:Lims.WPF.Resources"
+                    xmlns:templates="clr-namespace:Lims.WPF.Resources.Style.Templates"
+                    xmlns:dxp="http://schemas.devexpress.com/winfx/2008/xaml/printing"
+                    xmlns:dxt="http://schemas.devexpress.com/winfx/2008/xaml/core/themekeys"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!--#region FormatConditionTemplate-->
+    <DataTemplate x:Key="UrgentFormat">
+        <ContentControl>
+            <dxg:FormatCondition ApplyToRow="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ApplyToRow, RelativeSource={RelativeSource Self}}"
+                                 Expression="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Expression, RelativeSource={RelativeSource Self}}"
+                                 FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}">
+                <dxg:FormatCondition.Format>
+                    <dx:Format Foreground="Red"
+                               FontWeight="Bold"
+                               FontStyle="Italic"
+                               FontFamily="华文仿宋" />
+                </dxg:FormatCondition.Format>
+            </dxg:FormatCondition>
+        </ContentControl>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CurrentUrgentFormat">
+        <ContentControl>
+            <dxg:FormatCondition ApplyToRow="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ApplyToRow, RelativeSource={RelativeSource Self}}"
+                                 Expression="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Expression, RelativeSource={RelativeSource Self}}"
+                                 FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}">
+                <dxg:FormatCondition.Format>
+                    <dx:Format Foreground="#FF1493"
+                               FontFamily="华文仿宋"
+                               FontStyle="Italic"
+                               FontWeight="Bold" />
+                </dxg:FormatCondition.Format>
+            </dxg:FormatCondition>
+        </ContentControl>
+    </DataTemplate>
+
+    <DataTemplate x:Key="SingleConclusionTemplate">
+        <ContentControl>
+            <dxg:FormatCondition ApplyToRow="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ApplyToRow, RelativeSource={RelativeSource Self}}"
+                                 Expression="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Expression, RelativeSource={RelativeSource Self}}"
+                                 FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}"
+                                 PredefinedFormatName="LightRedFillWithDarkRedText">
+            </dxg:FormatCondition>
+        </ContentControl>
+    </DataTemplate>
+
+    <resources:FormatConditionSelector x:Key="FormatConditionSelector"
+                                       UrgentTemplate="{StaticResource UrgentFormat}"
+                                       SingleConclusionTemplate="{StaticResource SingleConclusionTemplate}"
+                                       CurrentUrgentTemplate="{StaticResource CurrentUrgentFormat}" />
+    <!--#endregion-->  
+
+    <DataTemplate x:Key="MethodColumnTemplate">
+        <TextBlock Padding="5,0"
+                   VerticalAlignment="Center"
+                   ToolTip="{Binding RowData.Row.MethodStandard.TestMethod}"
+                   Text="{Binding RowData.Row.MethodStandard.TestMethod}"
+                   TextDecorations="{Binding RowData.Row.MethodStandard, Converter={StaticResource StandardIsInvalidConverter}}">
+            
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="MouseUp"
+                                       Command="{Binding Path=DataContext.ViewStandardCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                       CommandParameter="{Binding}" />    
+            </dxmvvm:Interaction.Behaviors>
+            <TextBlock.Style>
+                <Style>
+                    <Style.Triggers>
+                        <Trigger Property="TextBlock.IsMouseOver"
+                                 Value="True">
+                            <Setter Property="TextBlock.Foreground"
+                                    Value="Blue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ExecuteStandardColumnTemplate">
+        <TextBlock Padding="5,0"
+                   VerticalAlignment="Center"
+                   Text="{Binding RowData.Row.ProductStandard.ExecuteStandard}"
+                   ToolTip="{Binding RowData.Row.ProductStandard.ExecuteStandard}"
+                   TextDecorations="{Binding RowData.Row.ProductStandard, Converter={StaticResource StandardIsInvalidConverter}}">
+            <dxmvvm:Interaction.Behaviors>
+                <dxmvvm:EventToCommand EventName="MouseUp"
+                                       Command="{Binding Path=DataContext.ViewStandardCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}"
+                                       CommandParameter="{Binding}" />
+            </dxmvvm:Interaction.Behaviors>
+            <TextBlock.Style>
+                <Style>
+                    <Style.Triggers>
+                        <Trigger Property="TextBlock.IsMouseOver"
+                                 Value="True">
+                            <Setter Property="TextBlock.Foreground"
+                                    Value="Blue" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
+    </DataTemplate>
+
+    <DataTemplate x:Key="TestProgressTemplate">
+        <TextBlock Text="{Binding Row.TestProgress, Converter={StaticResource DisplayTestProgressConverter}}"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center" />
+    </DataTemplate>
+    <!--#region indicatorTemplate-->
+
+    <DataTemplate x:Key="ItemsViewIndicatorTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="24" />
+            </Grid.ColumnDefinitions>
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#A52A2A"
+                       Margin="5,0"
+                       Text="{DXBinding Expr='RowHandle.Value>=0?RowHandle.Value+1:null'}" />
+            <dxe:HyperlinkEdit FontSize="16"
+                               FontFamily="Times New Roman"
+                               HorizontalAlignment="Center"
+                               VerticalAlignment="Center"
+                               Grid.Column="1"
+                               Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content.Row.SubItems.Count}"
+                               Command="{Binding View.DataContext.ShowSubItemsViewCommand}"
+                               CommandParameter="{Binding Row}"
+                               Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content.Row.SubItems.Count,Converter={StaticResource CountToVisibilityConverter}}" />
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <dx:SimpleButton BorderThickness="0"
+                                 ToolTip="{Binding Row.ItemRemark}"
+                                 Command="{Binding View.DataContext.ViewItemRemarkCommand}"
+                                 CommandParameter="{Binding Row}"
+                                 Visibility="{Binding Row.ItemRemark,Converter={StaticResource HasStringToVisibilityConverter}}"
+                                 Glyph="{dx:DXImage 'Images/Support/Info_16x16.png'}" />
+                <dx:SimpleButton Grid.Row="1"
+                                 BorderThickness="0"
+                                 ToolTip="{Binding Row.TestRemark}"
+                                 Command="{Binding View.DataContext.ViewTestRemarkCommand}"
+                                 CommandParameter="{Binding Row}"
+                                 Visibility="{Binding Row.TestRemark,Converter={StaticResource HasStringToVisibilityConverter}}"
+                                 Glyph="{dx:DXImage 'Images/Mail/EditFeed_16x16.png'}" />
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+    <DataTemplate x:Key="DefaultIndicatorTemplate">
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Center">
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#A52A2A"
+                       Text="{DXBinding Expr='RowHandle.Value>=0?RowHandle.Value+1:null'}" />
+        </StackPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="CheckTaskIndicatorTemplate">
+        <Grid>
+            <Grid.Background>
+                <SolidColorBrush>
+                    <SolidColorBrush.Color>
+                        <MultiBinding Converter="{StaticResource TaskCheckableToColorConverter}">
+                            <Binding Path="Row"
+                                     Mode="TwoWay" />
+                            <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"
+                                     Path="DataContext.RelativeProgress" />
+                        </MultiBinding>
+                    </SolidColorBrush.Color>
+                </SolidColorBrush>
+            </Grid.Background>
+            <Border BorderThickness="0,0.2"
+                    BorderBrush="Black" />
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Foreground="#A52A2A"
+                       Text="{DXBinding Expr='RowHandle.Value>=0?RowHandle.Value+1:null'}" />
+        </Grid>
+    </DataTemplate>
+
+    <!--#endregion-->
+    <!--#region  columnsource-->
+    <DataTemplate x:Key="DefaultColumnTemplate">
+        <dxg:GridColumn FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}" />
+    </DataTemplate>
+    <DataTemplate x:Key="LookupColumnTemplate">
+        <dxg:GridColumn FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}">
+            <dxg:GridColumn.EditSettings>
+                <dxe:ComboBoxEditSettings ItemsSource="{Binding Source}" />
+            </dxg:GridColumn.EditSettings>
+        </dxg:GridColumn>
+    </DataTemplate>
+
+    <!--FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}"-->
+
+    <DataTemplate x:Key="BindingColumnTemplate">
+        <dxg:GridColumn MinWidth="80"
+                        AllowResizing="True"
+                        FieldName="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).FieldName, RelativeSource={RelativeSource Self}}"
+                        Width="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Width, RelativeSource={RelativeSource Self}}"
+                        Header="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Header, RelativeSource={RelativeSource Self}}"
+                        ReadOnly="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ReadOnly, RelativeSource={RelativeSource Self}}"
+                        Style="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Style, RelativeSource={RelativeSource Self}}"
+                        Visible="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).Visible, RelativeSource={RelativeSource Self}}"
+                        CellTemplate="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).CellTemplate, RelativeSource={RelativeSource Self}}"
+                        Fixed="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).ColumnFixed, RelativeSource={RelativeSource Self}}"
+                        AllowMoving="{Binding Path=(dxci:DependencyObjectExtensions.DataContext).AllowMoving, RelativeSource={RelativeSource Self}}" />
+    </DataTemplate>
+    <!--<templates:ColumnTemplateSelector
+        x:Key="ColumnTemplateSelector"
+        DefaultColumnTemplate="{StaticResource DefaultColumnTemplate}"
+        LookupColumnTemplate="{StaticResource LookupColumnTemplate}"
+        BindingColumnTemplate="{StaticResource BindingColumnTemplate}" />-->
+    <!--#endregion-->
+
+    <DataTemplate x:Key="MyFilledTestingItemsCountTemplate">
+        <dxe:ProgressBarEdit EditValue="{Binding RowData.Row.Items, Converter={StaticResource MyFilledTestingItemsCountConverter}}"
+                             Style="{StaticResource ProgressBarEditStyle}">
+            <dxe:ProgressBarEdit.DisplayFormatString>{0:P0}</dxe:ProgressBarEdit.DisplayFormatString>
+        </dxe:ProgressBarEdit>
+    </DataTemplate>
+    <DataTemplate x:Key="SubmitItemsCommandTemplate">
+        <dx:SimpleButton Command="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.SubmitSampleCommand}"
+                         Content="提交"
+                         CommandParameter="{Binding ElementName=MyItemsGrid,Path=ItemsSource}"
+                         Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_CheckCircled.svg}"
+                         IsEnabled="{Binding RowData.Row.Items, Converter={StaticResource SubmitableItemsToIsEnableConverter}}" />
+    </DataTemplate>
+    <DataTemplate x:Key="ShowCheckTaskPreviewCommandTemplate">
+        <dx:SimpleButton Command="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.ShowCheckTaskPreviewCommand}"
+                         CommandParameter="{Binding RowData.Row}"
+                         Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_CheckCircled.svg}"
+                         Content="通过">
+            <dx:SimpleButton.IsEnabled>
+                <MultiBinding Converter="{StaticResource TasksCheckableToIsEnableConverter}">
+                    <Binding Path="RowData.Row.Items" />
+                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"
+                             Path="DataContext.RelativeProgress" />
+                </MultiBinding>
+            </dx:SimpleButton.IsEnabled>
+        </dx:SimpleButton>
+    </DataTemplate>
+    <DataTemplate x:Key="TasksCheckProgressTemplate">
+        <dxe:ProgressBarEdit Style="{StaticResource ProgressBarEditStyle}"
+                             EditValue="{Binding RowData.Row.Items, Converter={StaticResource TasksCheckProgressConverter}}">
+            <dxe:ProgressBarEdit.DisplayFormatString>{0:P0}</dxe:ProgressBarEdit.DisplayFormatString>
+        </dxe:ProgressBarEdit>
+    </DataTemplate>
+    <DataTemplate x:Key="ManageSampleOperationTemplate">
+        <dxb:ToolBarControl Style="{StaticResource ToolBarControlInCellStyle}">
+            <dxb:BarSubItem Glyph="{dx:DXImage DevAV/Actions/ViewSetting_32x32.png}">
+                <dxb:BarButtonItem Command="{Binding ChangeSampleInfoCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row}"
+                                   Content="变更样品信息" />
+                <dxb:BarButtonItem Command="{Binding ChangeSampleStateCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row}"
+                                   Content="变更样品状态" />
+                <dxb:BarButtonItem Command="{Binding DeleteSampleCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row}"
+                                   Content="删除样品" />
+                <dxb:BarButtonItem Command="{Binding RetestSampleCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row}"
+                                   Content="样品复测" />
+            </dxb:BarSubItem>
+        </dxb:ToolBarControl>
+    </DataTemplate>
+
+    <DataTemplate x:Key="PassCheckingTemplate">
+        <dx:SimpleButton Command="{Binding RelativeSource={RelativeSource  Mode=FindAncestor, AncestorType=UserControl},Path=DataContext.ShowCheckTaskPreviewCommand}"
+                         Glyph="{dx:DXImage SvgImages/Icon Builder/Actions_CheckCircled.svg}"
+                         Content="通过">
+            <dx:SimpleButton.IsEnabled>
+                <MultiBinding Converter="{StaticResource TasksCheckableToIsEnableConverter}">
+                    <Binding Path="RowData.Row.Items" />
+                    <Binding RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType=UserControl}"
+                             Path="DataContext.RelativeProgress" />
+                </MultiBinding>
+            </dx:SimpleButton.IsEnabled>
+        </dx:SimpleButton>
+    </DataTemplate>
+    <DataTemplate x:Key="TaskCheckingOperationTemplate">
+        <dxb:ToolBarControl Style="{StaticResource ToolBarControlInCellStyle}">
+            <dxb:BarSubItem Glyph="{dx:DXImage DevAV/Actions/ViewSetting_32x32.png}">
+                <dxb:BarButtonItem Command="{Binding ShowChekingRemarkComfirmWindowCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row}"
+                                   Content="添加审核备注" />
+            </dxb:BarSubItem>
+        </dxb:ToolBarControl>
+    </DataTemplate>
+
+    <DataTemplate x:Key="CheckItemsOperationTemplate">
+        <dxb:ToolBarControl Style="{StaticResource ToolBarControlInCellStyle}">
+            <dxb:BarSubItem Glyph="{dx:DXImage DevAV/Actions/ViewSetting_32x32.png}">
+                <dxb:BarButtonItem Command="{Binding ReturnTaskComfirmWindowCommand}"
+                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content.Row}"
+                                   Content="退回任务">
+                    <dxb:BarButtonItem.IsEnabled>
+                        <MultiBinding Converter="{StaticResource ReturnableToIsEnabledConverter}">
+                            <Binding Path="RelativeProgress" />
+                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}"
+                                     Path="Content.Row.TestProgress" />
+                        </MultiBinding>
+                    </dxb:BarButtonItem.IsEnabled>
+                </dxb:BarButtonItem>
+            </dxb:BarSubItem>
+        </dxb:ToolBarControl>
+    </DataTemplate>
+
+
+    <DataTemplate x:Key="TestingItemsCountAndCompletePercentTemplate">
+        <DockPanel HorizontalAlignment="Center"
+                   VerticalAlignment="Center">
+            <Label Content="{Binding RowData.Row.Items,Converter={StaticResource ItemsToTestingItemsCountConverter}}"
+                   Foreground="Red" />
+            <!--<Label
+                Content="{Binding RowData.Row.Items,Converter={StaticResource ItemsToMyTestingItemsCountConverter}}"
+                Foreground="Green"
+                Margin="2,0"
+                VerticalContentAlignment="Center" />-->
+            <Label Content="/"
+                   Margin="5,0" />
+            <Label Content="{Binding RowData.Row.Items.Count}" />
+        </DockPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="DetailPrintHeaderTemplate">
+        <DockPanel>
+            <dxe:TextEdit IsPrintingMode="True"
+                          HorizontalAlignment="Center"
+                          Padding="12"
+                          Margin="0,0,0,8"
+                          Width="1080"
+                          FontWeight="Bold"
+                          FontSize="20"
+                          DisplayFormatString="yyyy/MM/dd HH:mm:ss"
+                          EditValue="{Binding Content.PrintHeader}" />
+        </DockPanel>
+    </DataTemplate>
+    <DataTemplate x:Key="DetailPrintFooterTemplate">
+        <DockPanel>
+            <dxe:TextEdit Width="{Binding Path=UsablePageWidth, Mode=OneWay}"
+                          HorizontalContentAlignment="Right"
+                          dxp:ExportSettings.TargetType="PageNumber"
+                          dxp:PageNumberExportSettings.Format="第 {0} 页，共 {1} 页"
+                          dxp:PageNumberExportSettings.Kind="NumberOfTotal" />
+        </DockPanel>
+    </DataTemplate>
+</ResourceDictionary>

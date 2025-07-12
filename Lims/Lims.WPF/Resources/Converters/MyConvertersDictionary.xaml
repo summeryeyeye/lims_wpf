@@ -1,0 +1,97 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:valueConvert="clr-namespace:Lims.WPF.Resources.Converters">
+    <dxmvvm:NumericToVisibilityConverter
+        x:Key="NumericToVisibilityConverter"
+        Inverse="True" />
+    <dxmvvm:BooleanToVisibilityConverter
+        x:Key="BooleanToVisibilityConverter" />
+    <valueConvert:IsNullToVisibilityConverterConverter
+        x:Key="IsNullToVisibilityConverter" />
+    <valueConvert:ExchangeBooleanToVisibilityConverter
+        x:Key="ExchangeBooleanToVisibilityConverter" />
+
+    <valueConvert:SubItemsCountToDetailButtonVisibilityConverter
+        x:Key="SubItemsCountToDetailButtonVisibilityConverter" />
+    <valueConvert:ValueableResultToIsEnableConverter
+        x:Key="ValueableResultToIsEnableConverter" />
+    <valueConvert:SubmitableItemsToIsEnableConverter
+        x:Key="SubmitableItemsToIsEnableConverter" />
+    <valueConvert:MyFilledTestingItemsCountConverter
+        x:Key="MyFilledTestingItemsCountConverter" />
+    <valueConvert:OriginalRecordCompeleteItemsCountConverter
+        x:Key="OriginalRecordCompeleteItemsCountConverter" />
+    <valueConvert:MyItemsInCellConverter
+        x:Key="MyItemsInCellConverter" />
+    <valueConvert:BooleanChangeOverConverter
+        x:Key="BooleanChangeOverConverter" />
+    <valueConvert:ResizeItemIsCheckedToGlyphConverter
+        x:Key="ResizeItemIsCheckedToGlyphConverter" />
+    <valueConvert:TasksCheckProgressConverter
+        x:Key="TasksCheckProgressConverter" />
+
+    <valueConvert:TasksCheckableToIsEnableConverter
+        x:Key="TasksCheckableToIsEnableConverter" />
+    <valueConvert:ReturnableToIsEnabledConverter
+        x:Key="ReturnableToIsEnabledConverter" />
+    <valueConvert:ObjectConvert
+        x:Key="objectConverter" />
+    <!--<valueConvert:CheckAllConverter x:Key="CheckAll" />-->
+    <valueConvert:CheckAllCheckBoxVisibilityConverter
+        x:Key="CheckAllCheckBoxVisibilityConverter" />
+    <valueConvert:SampleCodeToIsEnableConverter
+        x:Key="SampleCodeToIsEnableConverter" />
+    <valueConvert:SampleCodeIsExistToColorConverter
+        x:Key="SampleCodeIsExistToColorConverter" />
+    <valueConvert:TaskTypeToSelectedIndexConverter
+        x:Key="TaskTypeToSelectedIndexConverter" />
+    <valueConvert:BooleanToColorConverter
+        x:Key="BooleanToColorConverter" />
+    <valueConvert:DisplayTestProgressConverter
+        x:Key="DisplayTestProgressConverter" />
+    <valueConvert:CountToVisibilityConverter
+        x:Key="CountToVisibilityConverter" />
+    <!--<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />-->
+    <valueConvert:FilterSubmittableDatasConverter
+        x:Key="FilterSubmittableDatasConverter" />
+    <!--<valueConvert:SubmittedItemsCountConverter x:Key="SubmittedItemsCountConverter" />-->
+    <valueConvert:TestProgressToIsEnableConverter
+        x:Key="TestProgressToIsEnableConverter" />
+    <valueConvert:ItemsToTestingItemsCountConverter
+        x:Key="ItemsToTestingItemsCountConverter" />
+    <valueConvert:StandardIsInvalidConverter
+        x:Key="StandardIsInvalidConverter" />
+    <valueConvert:StandardValidToColorConverter
+        x:Key="StandardValidToColorConverter" />
+
+    <valueConvert:UsersCanTestConverter
+        x:Key="UsersCanTestConverter" />
+    <valueConvert:MyItemsConverter
+        x:Key="MyItemsConverter" />
+    <valueConvert:MyItemsMultiConverter
+        x:Key="MyItemsMultiConverter" />
+    <valueConvert:MyItemsViewItemsSourceConverter
+        x:Key="MyItemsViewItemsSourceConverter" />
+    <valueConvert:BooleanToContentConverter
+        x:Key="BooleanToContentConverter" />
+    <valueConvert:TaskCheckableToColorConverter
+        x:Key="TaskCheckableToColorConverter" />
+    <valueConvert:BooleanToGlyphConverter
+        x:Key="BooleanToGlyphConverter" />
+    <valueConvert:NewMethodValidationToBooleanConverter
+        x:Key="NewMethodValidationToBooleanConverter" />
+    <valueConvert:ListBoxItemToContentConverter
+        x:Key="ListBoxItemToContentConverter" />
+    <valueConvert:IsNullToEnableConverter
+        x:Key="IsNullToEnableConverter" />
+    <valueConvert:ItemsToMyTestingItemsCountConverter
+        x:Key="ItemsToMyTestingItemsCountConverter" />
+    <valueConvert:HasStringToVisibilityConverter
+        x:Key="HasStringToVisibilityConverter" />
+    <valueConvert:FilePathToFileNameConverter
+        x:Key="FilePathToFileNameConverter" />
+    <valueConvert:DateTimeToOffsetConverter
+        x:Key="DateTimeToOffsetConverter" />
+</ResourceDictionary>

@@ -1,0 +1,41 @@
+﻿<StackPanel x:Class="Lims.WPF.Resources.UserControls.LayoutMenu"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:local="clr-namespace:Lims.WPF.Resources.UserControls"
+            xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+            xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+            xmlns:sys="clr-namespace:System;assembly=mscorlib"
+            Orientation="Horizontal">
+    
+    <dxe:CheckEdit IsChecked="{Binding IsFullTaskListView}"
+                   CheckedGlyph="{dx:DXImage 'Images/XAF/BO_Appointment_32x32.png'}"
+                   UncheckedGlyph="{dx:DXImage 'Images/XAF/Navigation_Item_Dashboard_32x32.png'}"
+                   ShowErrorToolTip="True"
+                   mc:Ignorable="d">
+
+        <dxe:CheckEdit.ToolTip>
+            <dxe:ToolTipContentControl>
+                <StackPanel>
+                    <TextBlock Foreground="Green"
+                               Text="{Binding IsFullTaskListView,Converter={StaticResource BooleanToContentConverter}, ConverterParameter='经典窗口|新式窗口'}" />
+                    <TextBlock Text="按F11键切换窗口模式" />
+                </StackPanel>
+            </dxe:ToolTipContentControl>
+
+        </dxe:CheckEdit.ToolTip>
+
+        <dxe:CheckEdit.GlyphTemplate>
+            <DataTemplate>
+                <Image Source="{Binding}"
+                       Margin="5,2"
+                       Height="32"
+                       Width="32" />
+            </DataTemplate>
+        </dxe:CheckEdit.GlyphTemplate>
+        <dxe:CheckEdit.StyleSettings>
+            <dxe:ImageCheckEditStyleSettings />
+        </dxe:CheckEdit.StyleSettings>
+    </dxe:CheckEdit>
+</StackPanel>

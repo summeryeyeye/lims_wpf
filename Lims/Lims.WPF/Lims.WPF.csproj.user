@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <_LastSelectedProfileId>C:\Users\Administrator\Desktop\202308290816backup\sourcecode\Lims202506292225\Lims\Lims.WPF\Properties\PublishProfiles\ClickOnceProfile1.pubxml</_LastSelectedProfileId>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Update="App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Resources\UserControls\DragForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Resources\UserControls\EditTestDateControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Resources\UserControls\MyGridControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Views\DataRecoveryView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\MicroorganismTesterManagementView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\ReagentIOManagementView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\ReportDataPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\SearchStandardFileView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\SpinView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\UpdateTestDateView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\ReagentManagementView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Resources\Converters\MyConvertersDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Style\ControlStyle\GridControlStyleDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Style\ControlStyle\LCRD.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Style\ControlStyle\MyControlStylesDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Style\WindowStyle\WindowPoPupAnimation.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\Templates\MyTemplatesDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\UserControls\EditTestDateControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\UserControls\LayoutMenu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\UserControls\Pager.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\UserControls\SampleInfoControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\UserControls\SamplesViewBaseMenu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Resources\UserControls\TaskListViewBaseMenu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\CurrentTasksManageView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\DataRecoveryView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\AddSubItemsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\AllItemsOfSamplePreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\ChangeItemTesterView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\ChangeSampleStateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\CheckDatasComfirmView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\CreateMethodView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\CreateStandardSubItemView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\CreateSubItemsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\EditItemInfoView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\EditSampleInfoView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\EditStandardSubItemView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\EditStandardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\InPutBoxView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\MicroorganismTesterManagementView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\ReagentIOManagementView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\SearchStandardFileView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\MyEdiatbleSubItemsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\MyItemsOfSamplePreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\MyLogsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\MySubmittedTaskListPreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\OriginalRecordTemplateEditView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\PrinterSelecterView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\ReportPreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\RetestSampleView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\RetestSubItemsPreview.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\SearchByItemOrMethodView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\SpinView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\SubItemsView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\Dialogs\UpdateTestDateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\IndexView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\LoginView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MyReceivableTasksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MyReturnedTasksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MySubmittedTasksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\MyTestingTasksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ReagentManagementView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\StandardManagementView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TasksCreateView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TasksFirstCheckView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TasksSecondCheckView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TasksThirdCheckView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\TestingTasksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ThemedSplashScreen.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserManagementView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\ViewAllTasksView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

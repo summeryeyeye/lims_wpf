@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Lims.WPF.Views.ReagentManagementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Views"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             mc:Ignorable="d"
+             d:DesignHeight="450"
+             d:DesignWidth="800">
+    <Grid>
+        <dxg:GridControl ItemsSource="{Binding Reagents}">
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True" HorizontalAlignment="Center" 
+                               Style="{StaticResource BaseTableViewStyle}" />
+            </dxg:GridControl.View>
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn Header="Id"
+                                Binding="{Binding Id}"
+                                Visible="False" />
+                <dxg:GridColumn Header="名称"
+                                Width="Auto"
+                                Binding="{Binding Name}" />
+                <dxg:GridColumn Header="分子式"
+                                Binding="{Binding MolecularFormula}" />
+                <dxg:GridColumn Header="CAS号"
+                                Binding="{Binding CASNumber}">
+
+                </dxg:GridColumn>
+                <dxg:GridColumn Header="别名"
+                                Binding="{Binding Alias}" />
+                <dxg:GridColumn Header="位置"
+                                Binding="{Binding Address}" />
+                <dxg:GridColumn Header="规格"
+                                Binding="{Binding Speciffication}" />
+                <dxg:GridColumn Header="纯度"
+                                Binding="{Binding Purity}" />
+                <dxg:GridColumn Header="库存数量"
+                                Binding="{Binding Count}" />
+                <dxg:GridColumn Header="操作">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Grid>
+
+                            </Grid>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+                </dxg:GridColumn>
+            </dxg:GridControl.Columns>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

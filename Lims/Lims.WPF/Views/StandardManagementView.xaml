@@ -1,0 +1,244 @@
+﻿<UserControl
+    x:Class="Lims.WPF.Views.StandardManagementView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Lims.WPF.Views"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    mc:Ignorable="d">
+    <DockPanel>
+        <dxb:ToolBarControl
+            BarItemDisplayMode="ContentAndGlyph"
+            DockPanel.Dock="Top"
+            Style="{StaticResource toolBarStyle}">
+            <dxb:BarButtonItem
+                Style="{StaticResource RefreshSampleDatasButtonStyle}" />
+            <dxb:BarButtonItem
+                Padding="10,0"
+                Glyph="{dx:DXImage 'Images/Actions/Reset2_16x16.png'}"
+                ToolTip="同步产品标准对应方法"
+                Content="同步产品标准对应方法"
+                Command="{Binding TongbuCommand}" />
+            <dxb:BarButtonItem
+                Padding="10,0"
+                Glyph="{dx:DXImage 'Images/Data/RenameDataSource_16x16.png'}"
+                ToolTip="编辑标准子项目"
+                Content="编辑标准子项目"
+                Command="{Binding ShowEditStandardSubItemViewCommand}" />
+            <dxb:BarButtonItem
+                Padding="10,0"
+                Glyph="{dx:DXImage 'Images/RichEdit/AddParagraphToTableOfContents_16x16.png'}"
+                ToolTip="添加新方法"
+                Content="添加新方法"
+                Command="{Binding ShowCreateMethodViewCommand}" />
+        </dxb:ToolBarControl>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition
+                    Width="5" />
+                <ColumnDefinition
+                    Width="1.8*" />
+            </Grid.ColumnDefinitions>
+            <DockPanel>
+                <dxg:GridControl
+                    ItemsSource="{Binding Products}"
+                    SelectedItems="{Binding SelectedProducts}"
+                    SelectionMode="Row">
+                    <dxg:GridControl.GroupSummary>
+                        <dxg:GridSummaryItem
+                            SummaryType="Count"
+                            DisplayFormat="样品数量：0" />
+                    </dxg:GridControl.GroupSummary>
+                    <dxg:GridControl.View>
+                        <dxg:TableView
+                            AutoWidth="False"
+                            HeaderPanelMinHeight="50"
+                            ShowCheckBoxSelectorColumn="True">
+                            <dxg:TableView.FormatConditions>
+                                <dxg:FormatCondition
+                                    Expression="[TestMethodId]='0'">
+                                    <dx:Format
+                                        Foreground="Red" />
+                                </dxg:FormatCondition>
+                                <dxg:FormatCondition
+                                    Expression="[StandardState]=0"
+                                    PredefinedFormatName="LightRedFillWithDarkRedText"
+                                    ApplyToRow="True" />
+                                <dxg:FormatCondition
+                                    Expression="[StandardState]=1"
+                                    PredefinedFormatName="YellowFillWithDarkYellowText"
+                                    ApplyToRow="True" />
+                            </dxg:TableView.FormatConditions>
+                        </dxg:TableView>
+                    </dxg:GridControl.View>
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn
+                            FieldName="Id"
+                            Visible="False"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            FieldName="ExecuteStandard"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            FieldName="ProductType"
+                            Visible="False"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            FieldName="ProductForm"
+                            GroupIndex="2"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            FieldName="TestItem"
+                            GroupIndex="1"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            FieldName="ProductUnit"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            FieldName="TestMethodId"
+                            ReadOnly="True" />
+                        
+                        <!--<dxg:GridColumn ReadOnly="False"
+                                        FieldName="StandardState">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Menu HorizontalAlignment="Center">
+                                        <MenuItem Header="修改标准状态">
+                                            <MenuItem Header="有效"
+                                                      Command="{Binding View.DataContext.UpdateMethodStandardStateCommand}"
+                                                      CommandParameter="2" />
+                                            <MenuItem Header="部分有效"
+                                                      Command="{Binding View.DataContext.UpdateMethodStandardStateCommand}"
+                                                      CommandParameter="1" />
+                                            <MenuItem Header="已废止"
+                                                      Command="{Binding View.DataContext.UpdateMethodStandardStateCommand}"
+                                                      CommandParameter="0" />
+                                        </MenuItem>
+                                    </Menu>
+                                    -->
+                        <!--<Button  Margin="2"
+                     Background="{Binding RowData.Row,Converter={StaticResource StandardValidToColorConverter}}" />-->
+                        <!--
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>-->
+                    </dxg:GridControl.Columns>
+                </dxg:GridControl>
+            </DockPanel>
+            <GridSplitter
+                Grid.Column="1"
+                Background="Red"
+                HorizontalAlignment="Stretch" />
+
+            <DockPanel
+                Grid.Column="2">
+                <dxg:GridControl
+                    SelectedItem="{Binding FocusedMethod,Mode=TwoWay}"
+                    ItemsSource="{Binding Methods}">
+                    <dxg:GridControl.GroupSummary>
+                        <dxg:GridSummaryItem
+                            SummaryType="Count"
+                            DisplayFormat="项目数量：0" />
+                    </dxg:GridControl.GroupSummary>
+                    <dxg:GridControl.View>
+                        <dxg:TableView
+                            AutoWidth="True"
+                            HeaderPanelMinHeight="50"
+                            CellValueChangedCommand="{Binding MethodEditCommand}">
+                            <dxmvvm:Interaction.Behaviors>
+                                <dxmvvm:EventToCommand
+                                    Command="{Binding StandardKeyUpCommand}"
+                                    EventName="KeyUp"
+                                    PassEventArgsToCommand="True" />
+                            </dxmvvm:Interaction.Behaviors>
+
+                            <dxg:TableView.FormatConditions>
+                                <dxg:FormatCondition
+                                    Expression="[StandardState]=0"
+                                    PredefinedFormatName="LightRedFillWithDarkRedText"
+                                    ApplyToRow="True" />
+                                <dxg:FormatCondition
+                                    Expression="[StandardState]=1"
+                                    PredefinedFormatName="YellowFillWithDarkYellowText"
+                                    ApplyToRow="True" />
+                            </dxg:TableView.FormatConditions>
+                        </dxg:TableView>
+                    </dxg:GridControl.View>
+
+                    <dxg:GridControl.Columns>
+                        <dxg:GridColumn
+                            FieldName="Id"
+                            Width="40"
+                            ReadOnly="True" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="TestItem" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="KeyItem" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="TestMethod" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="Tester" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="SampleState" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="TestUnit" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="RoundRule" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="LastUpdater" />
+                        <dxg:GridColumn
+                            ReadOnly="False"
+                            FieldName="StandardState">
+                            <dxg:GridColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Menu
+                                        HorizontalAlignment="Center">
+                                        <MenuItem
+                                            Header="修改标准状态">
+                                            <MenuItem
+                                                Header="有效"
+                                                Command="{Binding View.DataContext.UpdateMethodStandardStateCommand}"
+                                                CommandParameter="2" />
+                                            <MenuItem
+                                                Header="部分有效"
+                                                Command="{Binding View.DataContext.UpdateMethodStandardStateCommand}"
+                                                CommandParameter="1" />
+                                            <MenuItem
+                                                Header="已废止"
+                                                Command="{Binding View.DataContext.UpdateMethodStandardStateCommand}"
+                                                CommandParameter="0" />
+                                        </MenuItem>
+                                    </Menu>
+                                    <!--<Button  Margin="2"
+                                             Background="{Binding RowData.Row,Converter={StaticResource StandardValidToColorConverter}}" />-->
+                                </DataTemplate>
+                            </dxg:GridColumn.CellTemplate>
+                        </dxg:GridColumn>
+                        <dxg:GridColumn
+                            FieldName="IsPrintSubItem"
+                            ReadOnly="False" />
+                    </dxg:GridControl.Columns>
+
+                </dxg:GridControl>
+            </DockPanel>
+        </Grid>
+
+
+
+
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="Lims.WPF.Resources.UserControls.EditTestDateControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Resources.UserControls"
+             mc:Ignorable="d">
+    <StackPanel Orientation="Horizontal">
+        <dxe:DateEdit VerticalAlignment="Center"
+                      HorizontalAlignment="Right"
+                      Name="TestDateEditer"
+                      EditValue="{x:Static sys:DateTime.Now}" />
+        <dxb:ToolBarControl VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            HorizontalContentAlignment="Right"
+                            IsEnabled="{Binding SelectedTaskDatas.Count}"
+                            Style="{StaticResource toolBarStyle}">
+            <dxb:BarButtonItem BarItemDisplayMode="ContentAndGlyph"
+                               Command="{Binding EditTestDateCommand}"
+                               CommandParameter="{Binding ElementName=TestDateEditer,Path=EditValue}"
+                               Glyph="{dx:DXImage 'Images/Conditional Formatting/ADateOccurring_16x16.png'}"
+                               Content="同步检测日期"
+                               ToolTip="同步检测日期" />
+        </dxb:ToolBarControl>
+    </StackPanel>
+</UserControl>

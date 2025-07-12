@@ -1,0 +1,27 @@
+﻿<UserControl x:Class="Lims.WPF.Views.Dialogs.UpdateTestDateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+             mc:Ignorable="d"
+             Height="120"
+             Width="140">
+    <StackPanel VerticalAlignment="Center">
+        <TextBlock Foreground="#1E90FF"
+                   Text="检验日期："
+                   VerticalAlignment="Center" />
+
+
+
+        <dxe:DateEdit VerticalAlignment="Center"
+                      AlwaysShowLabelAtTop="True"
+                      FontSize="20" IsPopupOpen="True"
+                      EditValue="{Binding SelectedTestDate,Converter={StaticResource DateTimeToOffsetConverter}}">
+            <dxe:DateEdit.StyleSettings>
+                <dxe:DateEditNavigatorStyleSettings />
+            </dxe:DateEdit.StyleSettings>
+        </dxe:DateEdit>
+    </StackPanel>
+</UserControl>

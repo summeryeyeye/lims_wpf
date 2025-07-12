@@ -1,0 +1,273 @@
+﻿<UserControl x:Class="Lims.WPF.Views.Dialogs.SearchByItemOrMethodView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+             xmlns:mycontrols="clr-namespace:Lims.WPF.Resources.UserControls"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             mc:Ignorable="d"
+             Height="640"
+             Width="1260">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.7*" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="0.3*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="0.6*" />
+            <RowDefinition Height="5" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.ColumnSpan="3"
+              Margin="0,0,0,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <dx:DXListBox BorderThickness="1"
+                          SelectedIndex="{Binding SelectedSampleStateIndex, Mode=TwoWay}"
+                          ItemsSource="{Binding SampleStates}"
+                          DisplayMemberPath="SampleState"
+                          Margin="5,0">
+                <dx:DXListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </dx:DXListBox.ItemsPanel>
+                <dx:DXListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Width"
+                                Value="64" />
+                        <Setter Property="Margin"
+                                Value="12" />
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="dx:Badge.Badge">
+                            <Setter.Value>
+                                <dx:Badge Content="{Binding MethodsCount}" />
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </dx:DXListBox.ItemContainerStyle>                
+            </dx:DXListBox>
+
+            <dxe:TextEdit Grid.Column="1"
+                          Name="FilterTextBox"
+                          Background="Transparent"
+                          BorderThickness="0,0,0,1"
+                          NullText="输入方法标准关键词"
+                          VerticalContentAlignment="Center"
+                          HorizontalContentAlignment="Center"
+                          Text="{Binding SearchString, Mode=TwoWay}" />
+            <dx:SimpleButton IsDefault="True"
+                             Grid.Column="2"
+                             Width="40"
+                             Margin="5,0"
+                             BorderThickness="0"
+                             Background="Transparent"
+                             Command="{Binding SearchByItemOrMethodCommand}"
+                             CommandParameter="{Binding ElementName=FilterTextBox,Path=Text}"
+                             Glyph="{dx:DXImage SvgImages/DiagramIcons/Zoom.svg}" />
+            <dx:SimpleButton ToolTip="添加新方法"
+                             Grid.Column="3"
+                             Width="40"
+                             Content="✚"
+                             Command="{Binding ShowCreateMethodViewCommand}"
+                             BorderThickness="0"
+                             Background="Transparent" />
+        </Grid>
+
+
+
+        <ItemsControl ItemsSource="{Binding TestItemsSource}"
+                      Grid.Row="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.Template>
+                <ControlTemplate TargetType="{x:Type ItemsControl}">
+                    <ScrollViewer x:Name="ScrollViewer"
+                                  DockPanel.Dock="Right"
+                                  Padding="{TemplateBinding Padding}">
+                        <ItemsPresenter />
+                    </ScrollViewer>
+                </ControlTemplate>
+            </ItemsControl.Template>
+
+            <ItemsControl.ItemContainerStyle>
+                <Style>
+                    <Setter Property="FrameworkElement.Margin"
+                            Value="5" />
+                </Style>
+            </ItemsControl.ItemContainerStyle>
+
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+
+                    <Grid Width="120"
+                          Background="{Binding Background}"
+                          MinHeight="120"
+                          MaxHeight="250"
+                          Margin="3">
+                        <dxmvvm:Interaction.Triggers>
+                            <dxmvvm:EventToCommand EventName="MouseLeftButtonUp"
+                                                   CommandParameter="{Binding }"
+                                                   Command="{Binding DataContext.ShowMethodsCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" />
+                        </dxmvvm:Interaction.Triggers>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <!--<materialDesign:PopupBox HorizontalAlignment="Right"
+                                                     Margin="0,0,-10,0"
+                                                     Panel.ZIndex="1">
+                                <StackPanel>
+                                    <Button Content="添加新方法"
+                                            CommandParameter="{Binding}"
+                                            Command="{Binding DataContext.ShowCreatMethodViewCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}}" />
+                                    <Button Content="删除项目"
+                                            CommandParameter="{Binding}"
+                                            Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=ItemsControl}}" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>-->
+
+                        <Border Grid.RowSpan="2"
+                                CornerRadius="3">
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked}"
+                                                     Value="0">
+                                            <Setter Property="Background"
+                                                    Value="#1E90FF" />
+                                        </DataTrigger>
+
+                                        <DataTrigger Binding="{Binding IsChecked}"
+                                                     Value="1">
+                                            <Setter Property="Background"
+                                                    Value="#3CB371" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                        </Border>
+
+
+                        <TextBlock Grid.Row="1"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Text}"
+                                   TextWrapping="Wrap" />
+                        <Canvas Grid.RowSpan="2"
+                                ClipToBounds="True">
+                            <Border Canvas.Top="10"
+                                    Canvas.Right="-50"
+                                    Width="120"
+                                    Height="120"
+                                    Background="#FFFFFF"
+                                    CornerRadius="100"
+                                    Opacity="0.1" />
+                            <Border Canvas.Top="80"
+                                    Canvas.Right="-30"
+                                    Width="120"
+                                    Height="120"
+                                    Background="#FFFFFF"
+                                    CornerRadius="100"
+                                    Opacity="0.1" />
+                        </Canvas>
+                    </Grid>
+
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+
+        </ItemsControl>
+
+
+
+        <GridSplitter Grid.Row="2"
+                      Height="3"
+                      Grid.ColumnSpan="3"
+                      HorizontalAlignment="Stretch" />
+        <ListBox Grid.Row="3"
+                 Grid.ColumnSpan="3"
+                 FontSize="18"
+                 SelectedItem="{Binding SelectedMethod}"
+                 ItemsSource="{Binding MethodsSource}">
+            <dxmvvm:Interaction.Triggers>
+                <dxmvvm:EventToCommand Command="{Binding AddItemsToPreviewByMethodStandardCommand}"
+                                       PassEventArgsToCommand="True"
+                                       EventName="MouseDoubleClick">
+                </dxmvvm:EventToCommand>
+            </dxmvvm:Interaction.Triggers>
+
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding  TestMethod}"
+                               TextDecorations="{Binding Converter={StaticResource StandardIsInvalidConverter}}" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+
+
+        </ListBox>
+        <GridSplitter Grid.Column="1"
+                      Width="3"
+                      HorizontalAlignment="Stretch"
+                      Grid.RowSpan="3"
+                      Grid.Row="1" />
+        <dxg:GridControl Height="Auto"
+                         Grid.Column="2"
+                         Grid.Row="1"
+                         Grid.RowSpan="3"
+                         CurrentItem="{Binding FocusedItem}"
+                         ItemsSource="{Binding PreviewSources}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn FieldName="TestItem"
+                                HorizontalHeaderContentAlignment="Center"
+                                Width="80"
+                                Header="检测项目" />
+                <dxg:GridColumn FieldName="MethodStandard.TestMethod"
+                                HorizontalHeaderContentAlignment="Center"
+                                Header="检测方法" />
+                <dxg:GridColumn FieldName="SampleFormOrState"
+                                HorizontalHeaderContentAlignment="Center"
+                                Header="产品剂型/样品状态" />
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True"
+                               RowIndicatorContentTemplate="{StaticResource DefaultIndicatorTemplate}"
+                               IndicatorWidth="40"
+                               HeaderPanelMinHeight="40"
+                               AllowEditing="False"
+                               ShowGroupPanel="False">
+                    <!--<dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand
+                            Command="{Binding RemoveItemCommand}"
+                            EventName="KeyDown"
+                            PassEventArgsToCommand="True">
+                        </dxmvvm:EventToCommand>
+                    </dxmvvm:Interaction.Triggers>-->
+                </dxg:TableView>
+
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

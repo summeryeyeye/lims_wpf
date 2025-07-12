@@ -1,0 +1,73 @@
+﻿<UserControl
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    x:Class="Lims.WPF.Views.Dialogs.MyLogsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    mc:Ignorable="d"
+    Height="450"
+    Width="1020">
+    <DockPanel>
+        <Button
+            Content="一键已读"
+            DockPanel.Dock="Top"
+            HorizontalAlignment="Right"
+            Margin="5"
+            Command="{Binding ReadAllLogsCommand}" />
+        <dxg:GridControl
+            ItemsSource="{Binding MyLogsSource}">
+            <dxg:GridControl.Columns>
+                <dxg:GridColumn
+                    Header="时间"
+                    FieldName="CreateTime"
+                    Style="{StaticResource GridControlDateTimeColumnStyle}" />
+                <dxg:GridColumn
+                    Header="动作"
+                    AllowEditing="False"
+                    FieldName="ActionType" />
+                <dxg:GridColumn
+                    Header="发布者"
+                    FieldName="PublisherName" />
+                <dxg:GridColumn
+                    Header="样品编号"
+                    FieldName="SampleCode" />
+                <dxg:GridColumn
+                    Header="检测项目"
+                    FieldName="TestItem" />
+                <dxg:GridColumn
+                    Header="消息"
+                    FieldName="Message" />
+                <dxg:GridColumn
+                    Header="是否已读"
+                    HorizontalHeaderContentAlignment="Center"
+                    FieldName="IsReaded">
+                    <dxg:GridColumn.CellTemplate>
+                        <DataTemplate>
+                            <dxe:CheckEdit
+                                HorizontalAlignment="Center"
+                                IsChecked="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row.IsReaded,Mode=TwoWay}"
+                                Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl}, Path=DataContext.ReadLogCommand}"
+                                CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=RowData.Row}">
+                            </dxe:CheckEdit>
+                        </DataTemplate>
+                    </dxg:GridColumn.CellTemplate>
+
+                </dxg:GridColumn>
+
+            </dxg:GridControl.Columns>
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    AutoWidth="True"
+                    AllowEditing="False"
+                    HeaderPanelMinHeight="50"
+                    RowIndicatorContentTemplate="{StaticResource DefaultIndicatorTemplate}"
+                    IndicatorWidth="70">
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </DockPanel>
+</UserControl>

@@ -1,0 +1,495 @@
+﻿<UserControl x:Class="Lims.Main.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:navigation="clr-namespace:Lims.Common.Navigations;assembly=Lims.Common"            
+             xmlns:local="clr-namespace:Lims.Main"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             xmlns:dxr="http://schemas.devexpress.com/winfx/2008/xaml/ribbon"
+             xmlns:dxdo="http://schemas.devexpress.com/winfx/2008/xaml/docking"
+             xmlns:dxc="clr-namespace:DevExpress.Xpf.Core;assembly=DevExpress.Xpf.Core.v22.1"
+             mc:Ignorable="d"
+             d:DesignHeight="900"
+             d:DesignWidth="1600"
+             
+             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             >
+    <UserControl.Resources>
+        <Style TargetType="dx:DXTabControl">
+            <Setter Property="Padding"
+                    Value="0" />
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Padding"
+                    Value="0" />
+        </Style>
+        <Style TargetType="dxe:ToggleSwitch">
+            <Setter Property="Margin"
+                    Value="5,0" />
+        </Style>
+        <Style TargetType="GridSplitter">
+            <Setter Property="Background"
+                    Value="#F5DEB3" />
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <DockPanel>
+            <dxr:RibbonControl x:Name="RibbonControl"
+                               AllowCustomization="False"
+                               AllowMinimizeRibbon="True"
+                               DockPanel.Dock="Top"
+                               RibbonStyle="Office2007"
+                               ToolbarShowMode="Hide"
+                               ApplicationButtonSmallIcon="{dxc:DXImage Image=Home_16x16.png}"
+                               ApplicationButtonLargeIcon="{dxc:DXImage Image=Home_32x32.png}"
+                               ApplicationButtonText="File"
+                               PageCategoryAlignment="Right"
+                               MinimizationButtonVisibility="Collapsed">
+                <dxr:RibbonControl.Resources>
+                    <Style TargetType="dxb:BarButtonItem">
+                        <Setter Property="Command"
+                                Value="{Binding GuidToRegionCommand}" />
+                        <Setter Property="CommandParameter"
+                                Value="{Binding RelativeSource={RelativeSource Mode=Self},Path=Hint}" />
+                    </Style>
+                </dxr:RibbonControl.Resources>
+                <!--<dxmvvm:Interaction.Behaviors>
+                    <dxmvvm:EventToCommand Command="{Binding RibbonControlDoubleClickCommand}"
+                                           EventName="MouseDoubleClick"
+                                           PassEventArgsToCommand="True" />
+                    <dxmvvm:EventToCommand Command="{Binding RibbonControlMouseDownCommand}"
+                                           EventName="MouseDown"
+                                           PassEventArgsToCommand="True" />
+                </dxmvvm:Interaction.Behaviors>-->
+
+                <dxr:RibbonControl.PageHeaderItems>
+                    <dxb:BarLinkContainerItem>
+                        <dxb:BarButtonItem Command="{Binding ViewLoggerCommand}"
+                                           Glyph="{dxc:DXImage DevAV/Contacts/Message_16x16.png}" />
+                        <dxb:BarItemLinkSeparator />
+                        <dxb:BarEditItem Content="{Binding TaskCountHelper.LoggerCount}"
+                                         ToolTip="未读消息数" />
+                    </dxb:BarLinkContainerItem>
+
+                    <dxb:BarSubItem ToolTip="用户设置"
+                                    Glyph="{dxc:DXImage Office2013/People/PublicFix_16x16.png}"
+                                    LargeGlyph="{dxc:DXImage Office2013/People/PublicFix_32x32.png}">
+                        <dxb:BarButtonItem Content="{Binding User.UserName}"
+                                           Command="{Binding}"
+                                           Glyph="{dxc:DXImage DevAV/View/Card_16x16.png}" />
+                        <dxb:BarButtonItem Command="{Binding ExistLoginCommand}"
+                                           Content="忘记密码并退出"
+                                           Glyph="{dxc:DXImage SvgImages/XAF/Action_Exit.svg}" />
+                    </dxb:BarSubItem>
+
+                </dxr:RibbonControl.PageHeaderItems>
+
+                <dxr:RibbonControl.ApplicationMenu>
+                    <dxr:BackstageViewControl />
+                </dxr:RibbonControl.ApplicationMenu>
+
+                <dxr:RibbonDefaultPageCategory>
+                    <dxr:RibbonPage x:Name="ribbonPage_Main"
+                                    Caption="菜单">
+                        <dxr:RibbonPageGroup Caption="首页">
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Icon Builder/Actions_Home.svg}"
+                                               Description="Creates a new document."
+                                               Hint="首页"
+                                               RibbonStyle="All"
+                                               Language="zh-cn">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="       首页       "
+                                                   FontSize="11" />
+                                            <!--<TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.MyReceivableItemsCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />-->
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Icon Builder/Business_Report.svg}"
+                                               Description="Creates a new document."
+                                               Hint="未完成任务"
+                                               RibbonStyle="Large">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   未完成任务   "
+                                                   FontSize="11" />
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.TestingItemsCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                        </dxr:RibbonPageGroup>
+
+                        <dxr:RibbonPageGroup Caption="我的任务"
+                                             IsVisible="{Binding User.CanTest}">
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/DiagramIcons/Paste.svg}"
+                                               Description="Creates a new document."
+                                               Hint="待领取任务"
+                                               RibbonStyle="All">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   待领取任务   "
+                                                   FontSize="11" />
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.MyReceivableItemsCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/ProductSpecificationsSummary.svg}"
+                                               Description="Creates a new document."
+                                               Hint="检测中任务"
+                                               RibbonStyle="Large">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   检测中任务   "
+                                                   FontSize="11" />
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.MyTestingItemsCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                            <dxb:BarButtonItem Description="Creates a new document."
+                                               Hint="已退回任务"
+                                               LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/AssignTask.svg}">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   已退回任务   "
+                                                   FontSize="11" />
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.MyReturnedItemsCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                            <dxb:BarButtonItem Description="Creates a new document."
+                                               Hint="已提交任务"
+                                               LargeGlyph="{dxc:DXImage SvgImages/DiagramIcons/ApplyChanges.svg}">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+
+                                            <Label Content="   已提交任务   "
+                                                   FontSize="11" />
+                                            <!--<TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.MyReturnedItemsCount}"
+                                                       HorizontalAlignment="Center" />-->
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                        </dxr:RibbonPageGroup>
+
+                        <dxr:RibbonPageGroup Caption="数据审核"
+                                             IsVisible="{Binding User.CanCheck}">
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Business Objects/BO_MyDetails.svg}"
+                                               Description="Creates a new document."
+                                               Hint="数据一审"
+                                               RibbonStyle="Large"
+                                               IsEnabled="{Binding User.CanCheck}">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   数据一审   "
+                                                   FontSize="11" />
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.FirstCheckSamplesCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Outlook Inspired/Employees.svg}"
+                                               Description="Creates a new document."
+                                               Hint="数据二审"
+                                               RibbonStyle="Large"
+                                               IsEnabled="{Binding User.CanCheck}">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   数据二审   "
+                                                   FontSize="11" />
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.SecondCheckSamplesCount,BindsDirectlyToSource=True,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                            <dxb:BarButtonItem Glyph="{dxc:DXImage Image=New_16x16.png}"
+                                               LargeGlyph="{dxc:DXImage SvgImages/Business Objects/BO_Person.svg}"
+                                               Description="Creates a new document."
+                                               Hint="数据三审"
+                                               RibbonStyle="Large"
+                                               IsEnabled="{Binding User.CanCheck}">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   数据三审   "
+                                                   FontSize="11" />
+                                            <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.ThirdCheckSamplesCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                        </dxr:RibbonPageGroup>
+
+                        <dxr:RibbonPageGroup Caption="任务管理"
+                                             IsVisible="{Binding User.CanManage}">
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Reports/AddParameter.svg}"
+                                               Description="Creates a new document."
+                                               Hint="任务指派"
+                                               RibbonStyle="Large">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   任务指派   "
+                                                   FontSize="11" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Business Objects/BO_Position.svg}"
+                                               Description="Creates a new document."
+                                               Hint="任务管理"
+                                               RibbonStyle="Large">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   任务管理   "
+                                                   FontSize="11" />
+                                            <!--<TextBlock Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=UserControl},Path=DataContext.TaskCountHelper.UnfinishedSamplesCount}"
+                                                       HorizontalAlignment="Center"
+                                                       FontSize="10" />-->
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                        </dxr:RibbonPageGroup>
+
+                        <dxr:RibbonPageGroup Caption="任务查看"
+                                             IsVisible="{Binding User.CanRead}">
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/RichEdit/ViewMergedData.svg}"
+                                               Description="Creates a new document."
+                                               Hint="所有任务"
+                                               RibbonStyle="Large">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="  所有任务  "
+                                                   FontSize="11" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                        </dxr:RibbonPageGroup>
+
+                        <dxr:RibbonPageGroup Caption="后台管理"
+                                             IsVisible="{Binding User.IsAdmin}">
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Business Objects/BO_Department.svg}"
+                                               Description="Creates a new document."
+                                               Hint="用户管理"
+                                               RibbonStyle="Large">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   用户管理   "
+                                                   FontSize="11" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                            <dxb:BarButtonItem LargeGlyph="{dxc:DXImage SvgImages/Dashboards/WeightedPies.svg}"
+                                               Description="Creates a new document."
+                                               Hint="标准库管理"
+                                               RibbonStyle="Large">
+                                <dxb:BarButtonItem.ContentTemplate>
+                                    <DataTemplate>
+                                        <StackPanel>
+                                            <Label Content="   标准库管理   "
+                                                   FontSize="11" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </dxb:BarButtonItem.ContentTemplate>
+                            </dxb:BarButtonItem>
+                        </dxr:RibbonPageGroup>
+                    </dxr:RibbonPage>
+
+                    <dxr:RibbonPage Caption="个性化">
+                        <dxr:RibbonPageGroup Caption="主题">
+                            <dxr:RibbonGalleryBarItem x:Name="ribbonGalleryBarItem_Theme">
+                                <dxmvvm:Interaction.Behaviors>
+                                    <dxr:RibbonGalleryItemThemeSelectorBehavior />
+                                </dxmvvm:Interaction.Behaviors>
+                            </dxr:RibbonGalleryBarItem>
+
+                            <dxr:RibbonGalleryBarItem>
+                                <dxmvvm:Interaction.Behaviors>
+                                    <dxr:RibbonGalleryItemThemePaletteSelectorBehavior />
+                                </dxmvvm:Interaction.Behaviors>
+                            </dxr:RibbonGalleryBarItem>
+                        </dxr:RibbonPageGroup>
+                        <dxr:RibbonPageGroup Caption="文字格式">
+                            <dxb:BarEditItem Content="字号大小："
+                                             EditWidth="100"
+                                             EditValue="{Binding FontSize,Mode=TwoWay}"
+                                             Name="FontSizeEditor">
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:SpinEditSettings />
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+                            <dxb:BarEditItem Content="字体格式："
+                                             EditWidth="100"
+                                             Name="FontFamilyEditor"
+                                             EditValue="{Binding FontFamily,Mode=TwoWay}">
+                                <dxb:BarEditItem.EditSettings>
+                                    <dxe:FontEditSettings />
+                                </dxb:BarEditItem.EditSettings>
+                            </dxb:BarEditItem>
+
+                        </dxr:RibbonPageGroup>
+                    </dxr:RibbonPage>
+                    <!--<dxr:RibbonPage Caption="账号管理">
+                        <dxr:RibbonPageGroup Caption="主题">
+                            <dxr:RibbonGalleryBarItem>
+                                <dxmvvm:Interaction.Behaviors>
+                                    <dxr:RibbonGalleryItemThemeSelectorBehavior />
+                                </dxmvvm:Interaction.Behaviors>
+                            </dxr:RibbonGalleryBarItem>
+
+                            <dxr:RibbonGalleryBarItem>
+                                <dxmvvm:Interaction.Behaviors>
+                                    <dxr:RibbonGalleryItemThemePaletteSelectorBehavior />
+                                </dxmvvm:Interaction.Behaviors>
+                            </dxr:RibbonGalleryBarItem>
+                        </dxr:RibbonPageGroup>
+                    </dxr:RibbonPage>-->
+                </dxr:RibbonDefaultPageCategory>
+            </dxr:RibbonControl>
+
+            <!--<Grid dxmvvm:UIRegion.Region="">
+            </Grid>-->
+
+            <dxdo:DockLayoutManager FloatingMode="Desktop">
+                <dxdo:LayoutGroup Orientation="Horizontal">
+                    <!--<dxdo:LayoutPanel Name="Navigation"
+                                      Caption="导航"
+                                      AllowClose="False"
+                                      ItemWidth="180">
+                        <dxa:AccordionControl AutoExpandAllItems="True"
+                                              SelectionUnit="SubItem">
+                            <dxa:AccordionItem Header="首页"
+                                               dxmvvm:UIRegion.Region="{x:Static navigation:Regions.IndexesNavigation}">
+                                <dxa:AccordionItem.ItemContainerStyle>
+                                    <Style TargetType="dxa:AccordionItem">
+                                        <Setter Property="Header"
+                                                Value="{Binding Caption}" />
+                                        <Setter Property="IsEnabled"
+                                                Value="{Binding IsEnabled}" />
+                                    </Style>
+                                </dxa:AccordionItem.ItemContainerStyle>
+                            </dxa:AccordionItem>
+
+                            <dxa:AccordionItem Header="我的任务"
+                                               IsEnabled="{Binding IsLogined}"
+                                               dxmvvm:UIRegion.Region="{x:Static navigation:Regions.MyTasksNavigation}">
+                                <dxa:AccordionItem.ItemContainerStyle>
+                                    <Style TargetType="dxa:AccordionItem">
+                                        <Setter Property="Header"
+                                                Value="{Binding Caption}" />
+                                        <Setter Property="IsEnabled"
+                                                Value="{Binding IsEnabled}" />
+                                    </Style>
+                                </dxa:AccordionItem.ItemContainerStyle>
+                            </dxa:AccordionItem>
+
+                            <dxa:AccordionItem Header="任务管理"
+                                               IsEnabled="{Binding IsLogined}"
+                                               dxmvvm:UIRegion.Region="{x:Static navigation:Regions.TasksManagementNavigation}">
+                                <dxa:AccordionItem.ItemContainerStyle>
+                                    <Style TargetType="dxa:AccordionItem">
+                                        <Setter Property="Header"
+                                                Value="{Binding Caption}" />
+                                        <Setter Property="IsEnabled"
+                                                Value="{Binding IsEnabled}" />
+                                    </Style>
+                                </dxa:AccordionItem.ItemContainerStyle>
+                            </dxa:AccordionItem>
+
+                            <dxa:AccordionItem Header="任务审核"
+                                               IsEnabled="{Binding IsLogined}"
+                                               dxmvvm:UIRegion.Region="{x:Static navigation:Regions.TasksCheckingNavigation}">
+                                <dxa:AccordionItem.ItemContainerStyle>
+                                    <Style TargetType="dxa:AccordionItem">
+                                        <Setter Property="Header"
+                                                Value="{Binding Caption}" />
+                                        <Setter Property="IsEnabled"
+                                                Value="{Binding IsEnabled}" />
+                                    </Style>
+                                </dxa:AccordionItem.ItemContainerStyle>
+                            </dxa:AccordionItem>
+                        </dxa:AccordionControl>
+                    </dxdo:LayoutPanel>-->
+
+                    <dxdo:LayoutGroup Orientation="Vertical">
+                        <dxdo:DocumentGroup x:Name="Documents"
+                                            VirtualizingPanel.VirtualizationMode="Recycling"
+                                            VirtualizingPanel.IsContainerVirtualizable="True"
+                                            VirtualizingPanel.IsVirtualizing="True"
+                                            TabCaptionWidth="100"
+                                            FontSize="14"
+                                            FontFamily="微软雅黑"
+                                            FontWeight="ExtraLight"
+                                            ClosePageButtonShowMode="InActiveTabPageAndTabControlHeader"
+                                            DestroyOnClosingChildren="False"
+                                            dxmvvm:UIRegion.Region="{x:Static navigation:Regions.Documents}">
+                            <dxdo:DocumentGroup.ItemStyle>
+                                <Style TargetType="{x:Type dxdo:LayoutPanel}">
+                                    <Setter Property="VirtualizingPanel.VirtualizationMode"
+                                            Value="Recycling" />
+                                    <Setter Property="VirtualizingPanel.IsContainerVirtualizable"
+                                            Value="True" />
+                                    <Setter Property="VirtualizingPanel.IsVirtualizing"
+                                            Value="True" />
+                                    <Setter Property="CaptionHorizontalAlignment"
+                                            Value="Center" />
+                                    <Setter Property="Caption"
+                                            Value="{Binding Caption}" />
+                                    <!--<Setter Property="CloseCommand"
+                                            Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.ClosePageCommand}" />-->
+                                    <Setter Property="IsActive"
+                                            Value="{Binding IsActive, Mode=TwoWay}" />
+                                    <Setter Property="ClosingBehavior"
+                                            Value="ImmediatelyRemove" />
+                                    <Setter Property="TabCaptionHorizontalAlignment"
+                                            Value="Center" />
+                                </Style>
+                            </dxdo:DocumentGroup.ItemStyle>
+                        </dxdo:DocumentGroup>
+                    </dxdo:LayoutGroup>
+                </dxdo:LayoutGroup>
+            </dxdo:DockLayoutManager>
+        </DockPanel>
+    </Grid>
+</UserControl>

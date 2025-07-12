@@ -1,0 +1,32 @@
+﻿<UserControl x:Class="Lims.WPF.Views.Dialogs.ChangeItemTesterView"
+                   xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+                   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                   xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+                   mc:Ignorable="d"
+                   Height="120"
+                   Width="240">
+    <Grid VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid VerticalAlignment="Center"
+              Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="分析人:"
+                       VerticalAlignment="Center" />
+            <ComboBox Grid.Column="1"
+                      Name="TesterCombobox"
+                      ItemsSource="{Binding Testers}"
+                      SelectedItem="{Binding EditedUser,Mode=TwoWay}"
+                      DisplayMemberPath="UserName" />
+        </Grid>
+    </Grid>
+</UserControl>

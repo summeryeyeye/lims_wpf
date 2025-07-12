@@ -1,0 +1,697 @@
+﻿<UserControl xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+             xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+             x:Class="Lims.WPF.Views.TasksCreateView"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle"
+               TargetType="{x:Type dx:SimpleButton}">
+            <Setter Property="Cursor"
+                    Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type dx:SimpleButton}">
+                        <Grid>
+                            <Rectangle RadiusY="4.5"
+                                       RadiusX="4.5">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush EndPoint="1,1"
+                                                         StartPoint="0,1">
+                                        <GradientStop Color="#FF2AB2E7"
+                                                      Offset="0" />
+                                        <GradientStop Color="#FF35CECF"
+                                                      Offset="1" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              RecognizesAccessKey="True"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsFocused"
+                                     Value="True" />
+                            <Trigger Property="IsDefaulted"
+                                     Value="True" />
+                            <Trigger Property="IsMouseOver"
+                                     Value="True" />
+                            <Trigger Property="IsPressed"
+                                     Value="True" />
+                            <Trigger Property="IsEnabled"
+                                     Value="False" />
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonStatusStyle"
+               TargetType="{x:Type dx:SimpleButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type dx:SimpleButton}">
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                            </Trigger>
+                            <Trigger Property="IsPressed"
+                                     Value="True">
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="false">
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="Transparent">
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="2" />
+            <RowDefinition Height="1.1*" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="3" />
+                <ColumnDefinition Width="4*" />
+            </Grid.ColumnDefinitions>
+            <GridSplitter Grid.Column="1"
+                          HorizontalAlignment="Stretch" />
+
+            <Grid Margin="3">
+                <Grid.Resources>
+                    <Style TargetType="{x:Type DockPanel}">
+                        <Setter Property="Height"
+                                Value="32" />
+                        <Setter Property="VerticalAlignment"
+                                Value="Center" />
+                    </Style>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="Margin"
+                                Value="5" />
+                    </Style>
+
+                    <Style TargetType="{x:Type TextBox}">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="VerticalContentAlignment"
+                                Value="Center" />
+                        <Setter Property="FontSize"
+                                Value="16" />
+                        <Setter Property="Margin"
+                                Value="5,2" />
+                    </Style>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*" />
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <ScrollViewer x:Name="scrolls"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto">
+                    <dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand Command="{Binding ScrollsKeyUpCommand}"
+                                               PassEventArgsToCommand="True"
+                                               EventName="KeyDown">
+                        </dxmvvm:EventToCommand>
+                    </dxmvvm:Interaction.Triggers>
+                    <ScrollViewer.Content>
+                        <StackPanel x:Name="numberedItemsStackPanel"
+                                    Orientation="Vertical"
+                                    ScrollViewer.VerticalScrollBarVisibility="Auto">
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type dxe:ComboBoxEdit}">
+                                    <Setter Property="HorizontalContentAlignment"
+                                            Value="Center" />
+                                    <Setter Property="VerticalContentAlignment"
+                                            Value="Center" />
+                                    <Setter Property="FontSize"
+                                            Value="16" />
+                                    <Setter Property="Margin"
+                                            Value="5,2" />
+                                </Style>
+                            </StackPanel.Resources>
+                            <TextBlock Text="样品信息"
+                                       Foreground="#778899"
+                                       DockPanel.Dock="Top"
+                                       HorizontalAlignment="Center"
+                                       Margin="10,2" />
+                            <Grid Height="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="120" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="是否加急:"
+                                           FontWeight="Bold"
+                                           FontSize="18"
+                                           Foreground="{Binding ElementName=IsUrgentSwitch, Path=IsChecked, Converter={StaticResource BooleanToColorConverter},ConverterParameter='Red|Black'}" />
+                                    <dxe:CheckEdit x:Name="IsUrgentSwitch"
+                                                   IsChecked="{Binding CurrentSample.IsUrgent, Mode=TwoWay}"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   IsEnabled="{Binding IsExistedSample, Converter={StaticResource BooleanChangeOverConverter}, Mode=TwoWay}"
+                                                   Margin="5,2"
+                                                   BorderBrush="Orange"
+                                                   BorderThickness="3"
+                                                   Background="Transparent" />
+                                </StackPanel>
+                                <dxb:ToolBarControl VerticalAlignment="Center"
+                                                    Grid.Column="1"
+                                                    AllowCustomizationMenu="False"
+                                                    AllowQuickCustomization="False"
+                                                    Background="Transparent">
+                                    <dxb:BarSubItem Alignment="Far"
+                                                    ToolTip="工具箱"
+                                                    Glyph="{dx:DXImage 'Images/Setup/Properties_16x16.png'}">
+                                        <dxb:BarButtonItem Content="微生物分析人管理"
+                                                           Command="{Binding MicroorganismTesterManagementCommand}"
+                                                           Glyph="{dx:DXImage 'Images/Business Objects/BORole_16x16.png'}" />
+                                        <dxb:BarButtonItem Content="保存为初始化信息"
+                                                           Command="{Binding SaveAsInitializedInfoCommand}"
+                                                           Glyph="{dx:DXImage 'Images/Actions/Refresh2_16x16.png'}" />
+                                    </dxb:BarSubItem>
+                                </dxb:ToolBarControl>
+                                <dxe:CheckEdit  Grid.Column="2"
+                                                IsEnabled="False"
+                                                Content="是否超期补录"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                IsChecked="{Binding IsOverDate,Mode=TwoWay}">
+                                </dxe:CheckEdit>
+                            </Grid>
+
+                            <DockPanel>
+                                <Label Content="业务类型:" />
+                                <dxe:ComboBoxEdit x:Name="TaskTypeComboBox"
+                                                  IsTextEditable="False"
+                                                  IsEnabled="{Binding IsExistedSample, Converter={StaticResource BooleanChangeOverConverter}, Mode=TwoWay}"
+                                                  Text="{Binding CurrentSample.TaskType, Mode=TwoWay}">
+                                    <dxe:ComboBoxEditItem Content="一般检验" />
+                                    <dxe:ComboBoxEditItem Content="年度检验" />
+                                    <dxe:ComboBoxEditItem Content="执法检验" />
+                                    <dxe:ComboBoxEditItem Content="方法验证" />
+                                    <dxe:ComboBoxEditItem Content="全项检测" />
+                                </dxe:ComboBoxEdit>
+                            </DockPanel>
+
+                            <DockPanel>
+                                <Label Content="样品编号:" />
+                                <TextBox x:Name="SampleCodeTextBox"
+                                         MaxLength="10"
+                                         Text="{Binding CurrentSampleCode, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                                <!--<dxmvvm:Interaction.Triggers>
+                                        <dxmvvm:EventToCommand
+                                            Command="{Binding FindExistSampleCommand}"
+                                            PassEventArgsToCommand="True"
+                                            EventName="TextChanged" />
+                                    </dxmvvm:Interaction.Triggers>-->
+
+                            </DockPanel>
+
+                            <DockPanel>
+                                <Label Content="样品名称:" />
+                                <TextBox x:Name="SampleNameTextBox"
+                                         Text="{Binding CurrentSample.SampleName, Mode=TwoWay}"
+                                         IsEnabled="{Binding IsExistedSample, Converter={StaticResource BooleanChangeOverConverter}, Mode=TwoWay}">
+                                    <dxmvvm:Interaction.Triggers>
+                                        <dxmvvm:EventToCommand Command="{Binding GetSampleNameCommand}"
+                                                               PassEventArgsToCommand="True"
+                                                               EventName="PreviewMouseDoubleClick" />
+                                    </dxmvvm:Interaction.Triggers>
+                                </TextBox>
+                            </DockPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="样品状态:" />
+                                <dx:DXListBox BorderThickness="1"
+                                              SelectedIndex="{Binding SelectedSampleStateIndex}"
+                                              ItemsSource="{Binding SampleStates}"
+                                              DisplayMemberPath="SampleState"
+                                              Margin="5,2">
+                                    <dx:DXListBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <DockPanel />
+                                        </ItemsPanelTemplate>
+                                    </dx:DXListBox.ItemsPanel>
+                                    <dx:DXListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Margin"
+                                                    Value="12" />
+                                            <Setter Property="Width"
+                                                    Value="64" />
+                                            <Setter Property="HorizontalContentAlignment"
+                                                    Value="Center" />
+                                            <Setter Property="dx:Badge.Badge">
+                                                <Setter.Value>
+                                                    <dx:Badge Content="{Binding ProductsCount}" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </dx:DXListBox.ItemContainerStyle>
+                                </dx:DXListBox>
+                            </StackPanel>
+
+                            <DockPanel>
+                                <Label Content="样品备注:" />
+                                <dxe:ComboBoxEdit x:Name="SampleRemarkTextBox"
+                                                  IsEnabled="{Binding IsExistedSample, Converter={StaticResource BooleanChangeOverConverter}, Mode=TwoWay}"
+                                                  Text="{Binding CurrentSample.SampleRemark, Mode=TwoWay}">
+                                    <dxe:ComboBoxEditItem Content="做重复" />
+                                    <dxe:ComboBoxEditItem Content="新办证" />
+                                </dxe:ComboBoxEdit>
+                            </DockPanel>
+                            <DockPanel>
+                                <Label Content="送检单位:" />
+                                <TextBox x:Name="EnterpriseOfSenderTextBox"
+                                         IsEnabled="{Binding IsExistedSample, Converter={StaticResource BooleanChangeOverConverter}, Mode=TwoWay}"
+                                         Text="{Binding CurrentSample.EnterpriseOfSender, Mode=TwoWay}" />
+                            </DockPanel>
+                        </StackPanel>
+                    </ScrollViewer.Content>
+                </ScrollViewer>
+
+                <dx:SimpleButton Content="指派任务"
+                                 Grid.Row="1"
+                                 Margin="5,2"
+                                 MinWidth="150"
+                                 Glyph="{dx:DXImage 'Images/Snap/NewDataSource_32x32.png'}"
+                                 IsEnabled="{Binding SampleCodeValidate, UpdateSourceTrigger=PropertyChanged}"
+                                 Command="{Binding CreateTasksCommand}" />
+            </Grid>
+
+            <Grid Margin="3"
+                  Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="32" />
+                    <RowDefinition Height="9*" />
+                </Grid.RowDefinitions>
+
+
+                <DockPanel Grid.ColumnSpan="5">
+                    <StackPanel Orientation="Horizontal">
+                        <dx:SimpleButton Command="{Binding InitMethodInfoCommand}"
+                                         ToolTip="初始化方法信息"
+                                         VerticalAlignment="Center"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         Margin="5,0"
+                                         Glyph="{dx:DXImage 'Images/Actions/Refresh_32x32.png'}" />
+
+                        <dxe:TextEdit Width="260"
+                                      BorderThickness="0,0,0,1"
+                                      Background="Transparent"
+                                      Text="{Binding SearchString, Mode=TwoWay}"
+                                      NullText="输入产品标准关键词"
+                                      x:Name="FilterTextBox"
+                                      HorizontalContentAlignment="Center">
+                            <dxmvvm:Interaction.Triggers>
+                                <dxmvvm:EventToCommand Command="{Binding DataContext.FilterTextBoxKeyUpCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                                                       PassEventArgsToCommand="True"
+                                                       EventName="KeyUp">
+                                </dxmvvm:EventToCommand>
+                            </dxmvvm:Interaction.Triggers>
+                        </dxe:TextEdit>
+                        <dx:SimpleButton Width="40"
+                                         Margin="5,0"
+                                         BorderThickness="0"
+                                         Background="Transparent"
+                                         Command="{Binding SearchByProductCommand}"
+                                         CommandParameter="{Binding ElementName=FilterTextBox,Path=Text}"
+                                         Glyph="{dx:DXImage 'Images/Zoom/Zoom_32x32.png'}" />
+
+                        <dx:SimpleButton Command="{Binding ShowSearchByItemOrMethodViewCommand}"
+                                         Glyph="{dx:DXImage 'Images/RichEdit/ViewMergedData_32x32.png'}"
+                                         Content="按检测项目/方法检索" />
+                    </StackPanel>
+
+                    <StackPanel HorizontalAlignment="Right"
+                                Orientation="Horizontal">
+                        <CheckBox x:Name="CheckAllCheckBox"
+                                  Visibility="{Binding ProductStandards, Converter={StaticResource CheckAllCheckBoxVisibilityConverter}}"
+                                  IsChecked="{Binding IsCheckAll, Mode=TwoWay}"
+                                  VerticalAlignment="Center"
+                                  VerticalContentAlignment="Center"
+                                  Padding="0"
+                                  FontSize="20"
+                                  Content="{Binding IsChecked, Converter={StaticResource  BooleanToContentConverter},ConverterParameter='全选|全不选', RelativeSource={RelativeSource Mode=Self}}"
+                                  Command="{Binding CheckAllItemsCommand}">
+                            <CheckBox.CommandParameter>
+                                <MultiBinding Converter="{StaticResource objectConverter}">
+                                    <Binding Path="IsChecked"
+                                             RelativeSource="{RelativeSource Mode=Self}" />
+                                    <Binding Path="ProductStandards" />
+                                </MultiBinding>
+                            </CheckBox.CommandParameter>
+                        </CheckBox>
+                        <dx:SimpleButton Content="添加到预览栏"
+                                         Command="{Binding AddItemsToPreviewByProductStandardCommand}"
+                                         CommandParameter="{Binding ProductStandards}"
+                                         Glyph="{dx:DXImage 'Images/Actions/ConvertToRange_32x32.png'}"
+                                         Margin="10,5,0,0" />
+                    </StackPanel>
+                </DockPanel>
+
+                <DockPanel Grid.Row="1"
+                           Grid.ColumnSpan="5">
+
+                    <ItemsControl x:Name="menuItemsControl"
+                                  ItemsSource="{Binding MenuNodes, Mode=TwoWay}">
+                        <dxmvvm:Interaction.Triggers>
+                            <dxmvvm:EventToCommand Command="{Binding DataContext.AddItemKeyUpCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                                                   PassEventArgsToCommand="True"
+                                                   EventName="KeyUp">
+                            </dxmvvm:EventToCommand>
+                        </dxmvvm:Interaction.Triggers>
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+
+                        <ItemsControl.ItemContainerStyle>
+                            <Style>
+                                <Setter Property="FrameworkElement.Margin"
+                                        Value="5" />
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <dx:SimpleButton MinWidth="75"
+                                                     BorderThickness="0,0,0,2"
+                                                     Background="Transparent"
+                                                     FontWeight="DemiBold"
+                                                     Padding="0"
+                                                     Command="{Binding DataContext.GuidToNodeCommand, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}, Mode=FindAncestor}}"
+                                                     CommandParameter="{Binding}">
+                                        <TextBlock Background="Transparent"
+                                                   Text="{Binding Text}" />
+                                    </dx:SimpleButton>
+                                    <TextBlock Text=" ➤"
+                                               VerticalAlignment="Center" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+
+                </DockPanel>
+
+                <ItemsControl ItemsSource="{Binding ProductStandards}"
+                              Grid.Row="2"
+                              Grid.ColumnSpan="5"
+                              VirtualizingPanel.VirtualizationMode="Recycling"
+                              Name="StandardsView">
+                    <dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand Command="{Binding DataContext.AddItemKeyUpCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                                               PassEventArgsToCommand="True"
+                                               EventName="KeyUp">
+                        </dxmvvm:EventToCommand>
+                    </dxmvvm:Interaction.Triggers>
+
+                    <ItemsControl.Template>
+                        <ControlTemplate TargetType="{x:Type ItemsControl}">
+                            <Border Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}">
+                                <ScrollViewer x:Name="ScrollViewer"
+                                              Margin="20,0,0,0"
+                                              DockPanel.Dock="Right"
+                                              CanContentScroll="True"
+                                              Focusable="False"
+                                              Padding="{TemplateBinding Padding}">
+                                    <ItemsPresenter />
+                                </ScrollViewer>
+                            </Border>
+                        </ControlTemplate>
+                    </ItemsControl.Template>
+
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="FrameworkElement.Margin"
+                                    Value="3" />
+                            <Style.Triggers>
+                                <Trigger Property="UIElement.IsMouseOver"
+                                         Value="True">
+                                    <Setter Property="FrameworkElement.ToolTip"
+                                            Value="{Binding Content.Text, RelativeSource={x:Static RelativeSource.Self}}" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <Border.Style>
+                                    <Style TargetType="Border">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver"
+                                                     Value="True">
+                                                <Setter Property="Effect">
+                                                    <Setter.Value>
+                                                        <DropShadowEffect BlurRadius="10"
+                                                                          ShadowDepth="2"
+                                                                          Color="#DDDDDD" />
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Border.Style>
+                                <dx:HeaderItemControl Name="panel"
+                                                      Padding="-20"
+                                                      Command="{Binding DataContext.GetChildrenNodesCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                                                      CommandParameter="{Binding}"
+                                                      Width="{Binding Size}"
+                                                      Height="{Binding Size}">
+                                    <dxmvvm:Interaction.Triggers>
+                                        <dxmvvm:EventToCommand Command="{Binding DataContext.AddItemToPreviewCommand, RelativeSource={RelativeSource AncestorType={x:Type UserControl}, Mode=FindAncestor}}"
+                                                               CommandParameter="{Binding}"
+                                                               EventName="MouseDoubleClick" />
+                                    </dxmvvm:Interaction.Triggers>
+                                    <Grid Height="{Binding Size}"
+                                          Width="{Binding Size}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.RowSpan="2"
+                                                Background="{Binding Background, Mode=TwoWay}" />
+                                        <CheckBox Margin="-3"
+                                                  DockPanel.Dock="Top"
+                                                  Visibility="{Binding CheckBoxVisibility}"
+                                                  IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                                  HorizontalAlignment="Right" />
+                                        <TextBlock Text="{Binding Text}"
+                                                   Grid.Row="1"
+                                                   FontSize="{Binding FontSize}"
+                                                   Padding="3"
+                                                   TextWrapping="Wrap"
+                                                   HorizontalAlignment="{Binding Alignment}"
+                                                   VerticalAlignment="Center">
+                                        </TextBlock>
+                                        <Canvas ClipToBounds="True"
+                                                Grid.RowSpan="2">
+                                            <Border Canvas.Top="10"
+                                                    Canvas.Right="-50"
+                                                    Width="100"
+                                                    Height="100"
+                                                    Background="#FFFFFF"
+                                                    Opacity="0.1"
+                                                    CornerRadius="100" />
+                                            <Border Canvas.Top="40"
+                                                    Canvas.Right="-30"
+                                                    Width="100"
+                                                    Height="100"
+                                                    Background="#FFFFFF"
+                                                    Opacity="0.1"
+                                                    CornerRadius="100" />
+                                            <Border CornerRadius="5" />
+                                        </Canvas>
+                                    </Grid>
+                                </dx:HeaderItemControl>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+        <GridSplitter Grid.Row="1"
+                      HorizontalAlignment="Stretch"
+                      Grid.ColumnSpan="3" />
+
+        <dxg:GridControl Grid.Row="2"
+                         SelectionMode="Row"
+                         SelectedItem="{Binding FocusedItem}"
+                         ItemsSource="{Binding PreviewSources}">
+            <dxg:GridControl.View>
+                <dxg:TableView AutoWidth="True"
+                               VerticalScrollbarVisibility="Auto"
+                               AllowDragDrop="True"
+                               AllowSortedDataDragDrop="True"
+                               Style="{StaticResource ItemsTableViewStyle}">
+                    <dxg:TableView.RowIndicatorContentTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="1.6*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Foreground="#A52A2A"
+                                           Text="{DXBinding Expr='RowHandle.Value>=0?RowHandle.Value+1:null'}" />
+                                <dxe:HyperlinkEdit FontSize="16"
+                                                   FontFamily="Times New Roman"
+                                                   HorizontalAlignment="Center"
+                                                   VerticalAlignment="Center"
+                                                   Grid.Column="1"
+                                                   Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content.Row.SubItems.Count}"
+                                                   Command="{Binding DataContext.ShowCreateSubItemsViewCommand, RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}, Mode=FindAncestor}}"
+                                                   CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Content.Row}"
+                                                   Visibility="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=Content.Row.SubItems.Count,Converter={StaticResource CountToVisibilityConverter}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </dxg:TableView.RowIndicatorContentTemplate>
+
+                    <dxmvvm:Interaction.Triggers>
+                        <dxmvvm:EventToCommand Command="{Binding CreatItemsPreviewKeyDownCommand}"
+                                               EventName="KeyDown"
+                                               PassEventArgsToCommand="True">
+                        </dxmvvm:EventToCommand>
+                    </dxmvvm:Interaction.Triggers>
+
+                </dxg:TableView>
+            </dxg:GridControl.View>
+
+            <dxg:GridColumn Header="子项目"
+                            HorizontalHeaderContentAlignment="Center"
+                            AllowResizing="False"
+                            Width="40">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dx:SimpleButton Content="✚"
+                                         Command="{Binding DataContext.AddSubItemsCommand, RelativeSource={RelativeSource AncestorType={x:Type dxg:GridControl}, Mode=FindAncestor}}"
+                                         CommandParameter="{Binding RowData.Row}" />
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Binding="{Binding TestItem,Mode=TwoWay}"
+                            AllowEditing="True"
+                            Header="检测项目"
+                            ReadOnly="False" />
+            <dxg:GridColumn Header="指标要求"
+                            AllowEditing="True">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit EditMode="InplaceActive"
+                                          AllowSpinOnMouseWheel="False"
+                                          Margin="0"
+                                          BorderThickness="0"
+                                          Text="{Binding RowData.Row.IndexRequest, Mode=TwoWay}">
+                            <dxe:ComboBoxEditItem Content="≥" />
+                            <dxe:ComboBoxEditItem Content="≤" />
+                            <dxe:ComboBoxEditItem Content="＞" />
+                            <dxe:ComboBoxEditItem Content="＜" />
+                            <dxe:ComboBoxEditItem Content="=" />
+                            <dxe:ComboBoxEditItem Content="～" />
+                        </dxe:ComboBoxEdit>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="报告单位">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit EditMode="InplaceActive"
+                                          AllowSpinOnMouseWheel="False"
+                                          Margin="0"
+                                          BorderThickness="0"
+                                          Text="{Binding RowData.Row.ReportUnit, Mode=TwoWay}">
+                            <dxe:ComboBoxEditItem Content="%" />
+                            <dxe:ComboBoxEditItem Content="CFU/g" />
+                            <dxe:ComboBoxEditItem Content="CFU/mL" />
+                            <dxe:ComboBoxEditItem Content="g/L" />
+                            <dxe:ComboBoxEditItem Content="mg/L" />
+                            <dxe:ComboBoxEditItem Content="μg/L" />
+                            <dxe:ComboBoxEditItem Content="g/100g" />
+                            <dxe:ComboBoxEditItem Content="g/kg" />
+                            <dxe:ComboBoxEditItem Content="mg/kg" />
+                            <dxe:ComboBoxEditItem Content="g/mL" />
+                            <dxe:ComboBoxEditItem Content="mg/mL" />
+                            <dxe:ComboBoxEditItem Content="μg/mL" />
+                        </dxe:ComboBoxEdit>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="ItemRemark"
+                            Header="项目备注"
+                            AllowEditing="True">
+                <dxg:GridColumn.CellTemplate>
+                    <DataTemplate>
+                        <dxe:ComboBoxEdit EditMode="InplaceActive"
+                                          AllowSpinOnMouseWheel="False"
+                                          Margin="0"
+                                          BorderThickness="0"
+                                          Text="{Binding RowData.Row.ItemRemark, Mode=TwoWay}">
+                            <dxe:ComboBoxEditItem Content="以干基计" />
+                            <dxe:ComboBoxEditItem Content="做重复" />
+                        </dxe:ComboBoxEdit>
+                    </DataTemplate>
+                </dxg:GridColumn.CellTemplate>
+            </dxg:GridColumn>
+            <dxg:GridColumn Header="检测方法"
+                            FieldName="MethodStandard.TestMethod"
+                            CellTemplate="{StaticResource MethodColumnTemplate}">
+            </dxg:GridColumn>
+
+            <dxg:GridColumn Header="执行标准"
+                            FieldName="ProductStandard.ExecuteStandard"
+                            CellTemplate="{StaticResource ExecuteStandardColumnTemplate}">
+            </dxg:GridColumn>
+            <dxg:GridColumn FieldName="ProductStandard.ProductType"
+                            Header="产品类型"
+                            Width="50" />
+            <dxg:GridColumn FieldName="ProductStandard.ProductClass"
+                            Header="产品等级"
+                            Width="50" />
+            <dxg:GridColumn FieldName="SampleFormOrState"
+                            Header="产品剂型/样品状态"
+                            Width="50" />
+            <dxg:GridColumn FieldName="Tester"
+                            Header="分析人"
+                            Width="50" />
+        </dxg:GridControl>
+    </Grid>
+</UserControl>

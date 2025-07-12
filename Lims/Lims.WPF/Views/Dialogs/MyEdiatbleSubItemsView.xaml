@@ -1,0 +1,143 @@
+﻿<UserControl
+    x:Class="Lims.WPF.Views.Dialogs.MyEdiatbleSubItemsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Lims.WPF.Views.Dialogs"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    mc:Ignorable="d"
+    Height="auto"
+    MinHeight="280"
+    Width="920">
+    <Grid
+        Background="#00000000">
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid
+            VerticalAlignment="Center">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Label
+                Content="{Binding EdittingItem.SampleCode}"
+                Margin="5,0"
+                FontSize="16"
+                HorizontalContentAlignment="Right" />
+            <Label
+                Content="{Binding EdittingItem.TestItem}"
+                Grid.Column="1"
+                Margin="5,0"
+                FontSize="16" />
+            <StackPanel
+                Grid.Column="2"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+               
+                
+                <CheckBox
+                    Content="检出限"
+                    Name="ckb"
+                    IsChecked="{Binding IsJudgeLimitValue}"
+                    HorizontalAlignment="Left" />
+                <Label
+                    Content="&lt;"
+                    IsEnabled="{Binding ElementName=ckb,Path=IsChecked}" />
+                <TextBox
+                    BorderThickness="0,0,0,1"
+                    VerticalContentAlignment="Center"
+                    Width="30"
+                    Text="{Binding LimitValue}"
+                    HorizontalContentAlignment="Center"
+                    IsEnabled="{Binding ElementName=ckb,Path=IsChecked}"
+                    Background="Transparent"
+                    BorderBrush="Black" />
+                <Label
+                    Content="=>"
+                    IsEnabled="{Binding ElementName=ckb,Path=IsChecked}" />
+                <TextBox
+                    BorderThickness="0,0,0,1"
+                    VerticalContentAlignment="Center"
+                    Width="50"
+                    Text="{Binding OverrunExpress}"
+                    IsEnabled="{Binding ElementName=ckb,Path=IsChecked}"
+                    Background="Transparent"
+                    BorderBrush="Black" />
+            </StackPanel>
+
+        </Grid>
+        <dxg:GridControl
+            Grid.Row="1"
+            SelectionMode="MultipleRow"
+            FontSize="18"
+            SelectedItems="{Binding SelectedEditableSubItems,NotifyOnTargetUpdated=True}"
+            CurrentItem="{Binding FocusedSubItem}"
+            ColumnsSource="{Binding SubItemViewColumns}"
+            ColumnGeneratorTemplate="{StaticResource BindingColumnTemplate}"
+            ItemsSource="{Binding EdittingItem.SubItems}">
+            <dxg:GridControl.TotalSummary>
+                <dxg:GridSummaryItem
+                    FieldName="TestResult"
+                    SummaryType="Sum"
+                    DisplayFormat="总和：{0}" />
+                <dxg:GridSummaryItem
+                    FieldName="Temp_TestResult"
+                    SummaryType="Sum"
+                    DisplayFormat="总和：{0}" />
+            </dxg:GridControl.TotalSummary>
+            <dxg:GridControl.View>
+                <dxg:TableView
+                    ShowCheckBoxSelectorColumn="True"
+                    Style="{StaticResource SubItemsTableViewStyle}"
+                    VerticalScrollbarVisibility="Visible"
+                    CellValueChangedCommand="{Binding Temp_TestSubItemResultChangedCommand}"
+                    NavigationStyle="Cell">
+                    <dxmvvm:Interaction.Behaviors>
+                        <dxmvvm:EventToCommand
+                            EventName="KeyUp"
+                            Command="{Binding EditableSubItemsViwKeyUpCommand}"
+                            PassEventArgsToCommand="True">
+                        </dxmvvm:EventToCommand>
+                    </dxmvvm:Interaction.Behaviors>
+
+
+
+                    <dxb:BarManager.DXContextMenu>
+                        <dxb:PopupMenu
+                            IsEnabled="{Binding SelectedEditableSubItems.Count}">
+                            <dxb:PopupMenu.Items>
+                                <dxb:BarButtonItem
+                                    Command="{Binding PasteSubItemTempResultFromClipboardCommand}"
+                                    Glyph="{dx:DXImage 'Images/RichEdit/PasteSpecial_16x16.png'}"
+                                    CommandParameter="{Binding  FocusedItem}"
+                                    Content="粘贴自剪切板" />
+                                <dxb:BarButtonItem
+                                    Command="{Binding ClearTempSubItemTestResultColumnCommand}"
+                                    Glyph="{dx:DXImage 'Images/Actions/ClearTableStyle_16x16.png'}"
+                                    CommandParameter="{Binding  FocusedItem}"
+                                    Content="清空结果栏" />         
+                                <dxb:BarButtonItem
+                                    Command="{Binding CaculateSubTestResultAverageCommand}"
+                                    Glyph="{dx:DXImage 'Images/Conditional Formatting/AboveAverage_16x16.png'}"
+                                    CommandParameter="{Binding  FocusedItem}"
+                                    Content="计算平均值" />
+                            </dxb:PopupMenu.Items>
+                        </dxb:PopupMenu>
+                    </dxb:BarManager.DXContextMenu>
+
+
+                </dxg:TableView>
+            </dxg:GridControl.View>
+        </dxg:GridControl>
+    </Grid>
+</UserControl>
