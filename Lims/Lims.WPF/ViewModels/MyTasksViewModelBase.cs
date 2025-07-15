@@ -246,7 +246,7 @@ namespace Lims.WPF.ViewModels
             try
             {
                 MethodStandardDto std = item.MethodStandard;
-               // await OriginalRecordPrint(std, item);
+                // await OriginalRecordPrint(std, item);
                 if (await OriginalRecordPrint(std, item))
                     await ShowNotifaction("", "打印成功!", "");
                 //DXMessageBox.Show("打印成功！");
@@ -321,7 +321,7 @@ namespace Lims.WPF.ViewModels
 
             List<string> fieldValues;
 
-            ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyWordAsync(new ItemFilterParam(item.SampleCode) { TestItemKeyWord_1 = "密度" })).Result;
+            ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(item.SampleCode) { KeyItem = "密度" })).Result;
 
             ReportModel reportModel = new ReportModel();
             reportModel.SampleCode = item.SampleCode;
@@ -369,7 +369,7 @@ namespace Lims.WPF.ViewModels
                                                     subStandard.Campany
                                                 };
 
-                                infoStr.AppendLine($"{subStandard.Name}({string.Join('-', info)})");
+                                infoStr.AppendLine($"{subStandard.SubitemName}({string.Join('-', info)})");
                                 //subInstruments.Append(subStandard.Instruments);
                             }
                         }
@@ -482,7 +482,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task OriginalRecordTemplateEdit()
         {
-            var response = await _methodStandardService.GetMethodStandardsByTesterAsync(new MethodStandardFilterParam() { TesterName = UserDto.Inatance.UserName, TesterGroup = UserDto.Inatance.Group });
+            var response = await _methodStandardService.GetMethodStandardsByTesterAsync(new MethodStandardFilterParam() { TesterName = UserDto.Inatance.UserName, TesterGroup = UserDto.Inatance.UserGroup });
             if (response.Status)
             {
                 MyEdittingStandards = response.Result.ToObservableCollection();
@@ -603,10 +603,10 @@ namespace Lims.WPF.ViewModels
         {
             foreach (SampleDto sample in selectedSamples)
             {
-                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyWordAsync(new ItemFilterParam(sample.SampleCode) { TestItemKeyWord_1 = "水分", TestItemKeyWord_2 = "含水率" })).Result;
-                var moistureContent = MoistureItem != null ? $"{MoistureItem.TestResult} {MoistureItem.ReportUnit}" : string.Empty;
-                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyWordAsync(new ItemFilterParam(sample.SampleCode) { TestItemKeyWord_1 = "密度" })).Result;
-                var densityContent = DensityItem != null ? $"{DensityItem.TestResult} {DensityItem.ReportUnit}" : string.Empty;
+                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "水分" })).Result;
+                var moistureContent = MoistureItem != null ? $"{MoistureItem.TestResult} {MoistureItem.ReportUnit}" : "/";
+                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "密度" })).Result;
+                var densityContent = DensityItem != null ? $"{DensityItem.TestResult} {DensityItem.ReportUnit}" :"/";
 
                 sample.MoistureContent = moistureContent;
                 sample.Density = densityContent;
@@ -630,10 +630,14 @@ namespace Lims.WPF.ViewModels
                 if (sample == null)
                     return;
 
-                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyWordAsync(new ItemFilterParam(sample.SampleCode) { TestItemKeyWord_1 = "水分", TestItemKeyWord_2 = "含水率" })).Result;
+                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "水分" })).Result;
                 MoistureContent = MoistureItem != null ? $"{MoistureItem.TestItem}: {MoistureItem.TestResult} {MoistureItem.ReportUnit}" : string.Empty;
-                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyWordAsync(new ItemFilterParam(sample.SampleCode) { TestItemKeyWord_1 = "密度" })).Result;
+                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "密度" })).Result;
                 Density = DensityItem != null ? $"{DensityItem.TestItem}: {DensityItem.TestResult} {DensityItem.ReportUnit}" : string.Empty;
+                if (string.IsNullOrEmpty(MoistureContent)&&string.IsNullOrEmpty(Density))
+                {
+                    MoistureContent = "未指派水分/密度项目";
+                }
             }
             catch (Exception)
             {

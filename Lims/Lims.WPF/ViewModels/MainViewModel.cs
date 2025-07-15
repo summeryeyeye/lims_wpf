@@ -576,7 +576,7 @@ namespace Lims.WPF.ViewModels
                         {
                             await notificationService.CreatePredefinedNotification("登陆失败！", "请检查账号或密码是否正确！", "").ShowAsync();
                         }
-                        else if (CurrentUser.Password == Password)
+                        else if (CurrentUser.Passwd == Password)
                         {
 
                             await CreateNavigationItems();

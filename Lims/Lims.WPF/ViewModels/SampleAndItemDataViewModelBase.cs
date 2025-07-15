@@ -99,9 +99,12 @@ namespace Lims.WPF.ViewModels
         }
 
 
+
+
+       
         protected virtual async Task<ObservableCollection<ItemDto>?> GetAllItemsOfSample(SampleDto sample)
         {
-            return sample == null ? new ObservableCollection<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(sample.SampleCode))).Result?.ToObservableCollection();
+            return sample == null ? new ObservableCollection<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(sample.SampleCode))).Result?.OrderBy(i => i.ItemId).ToObservableCollection();
         }
 
         protected async Task ExcuteIfNullSample(SampleDto sample, IEnumerable<ItemDto> currentItems)
@@ -123,11 +126,14 @@ namespace Lims.WPF.ViewModels
                 await _sampleService.UpdateAsync(sample);
             }
         }
-
+        public virtual Task RefreshItemDatas(SampleDto sample)
+        {
+            return Task.CompletedTask;
+        }
 
         protected virtual async Task<ObservableCollection<ItemDto>> GetItemsSource(SampleDto sample)
         {
-            return (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam(sample.SampleCode))).Result.ToObservableCollection();
+            return (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam(sample.SampleCode))).Result.OrderBy(i => i.ItemId).ToObservableCollection();
         }
         protected abstract override Task LoadMainDatas(UserDto? user);
 
@@ -188,7 +194,7 @@ namespace Lims.WPF.ViewModels
                 stringBuilder.Append(table.Rows[i]["样品名称"].ToString());
                 stringBuilder.Append("\r\n");
             }
-            Clipboard.SetText(stringBuilder.ToString());
+            Clipboard.SetDataObject(stringBuilder.ToString());
             await ShowNotifaction("", "已将样品编号及样品名称拷贝到剪切板!", "");
         }
 
@@ -408,7 +414,7 @@ namespace Lims.WPF.ViewModels
                 //throw;
             }
         }
-       
+
 
         protected ItemDto focusedItem;
 
@@ -1334,7 +1340,7 @@ namespace Lims.WPF.ViewModels
 
                         subItem.AverageTestResult = ave.ToString();
 
-                        ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyWordAsync(new ItemFilterParam(item.SampleCode) { TestItemKeyWord_1 = "密度" })).Result;
+                        ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(item.SampleCode) { KeyItem = "密度" })).Result;
 
 
                         //已提交页面不修改Temp_TestResult

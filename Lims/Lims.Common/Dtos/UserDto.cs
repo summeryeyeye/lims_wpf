@@ -21,17 +21,17 @@
             }
         }
 
-        private string? password;
+        private string? passwd;
 
-        public string? Password
+        public string? Passwd
         {
             get
             {
-                return password;
+                return passwd;
             }
             set
             {
-                password = value;
+                passwd = value;
             }
         }
 
@@ -48,9 +48,9 @@
                 userName = value;
             }
         }
-        private string superiorName;
+        private string? superiorName;
 
-        public string SuperiorName
+        public string? SuperiorName
         {
             get
             {
@@ -62,17 +62,17 @@
             }
         }
 
-        private string? group;
+        private string? userGroup;
 
-        public string? Group
+        public string? UserGroup
         {
             get
             {
-                return group;
+                return userGroup;
             }
             set
             {
-                group = value;
+                userGroup = value;
             }
         }
         private bool canRead;

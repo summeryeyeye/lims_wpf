@@ -120,6 +120,6 @@ namespace Lims.WebAPI.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResponse> GetFirstItemBySampleCodeAndKeyWord([FromQuery] ItemFilterParam param) => await itemService.QueryFirstOrDefaultAsync(i => i.SampleCode == param.SampleCode && (i.TestItem.Contains(param.TestItemKeyWord_1) || i.TestItem.Contains(param.TestItemKeyWord_2)));
+        public async Task<ApiResponse> GetFirstItemBySampleCodeAndKeyItem([FromQuery] ItemFilterParam param) => await itemService.QueryFirstOrDefaultAsync(i => i.SampleCode == param.SampleCode && (i.MethodStandard.KeyItem == param.KeyItem));
     }
 }

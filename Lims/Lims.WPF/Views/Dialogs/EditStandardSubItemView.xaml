@@ -16,7 +16,6 @@
                 <dxg:TableView
                     AutoWidth="True"
                     CellValueChangedCommand="{Binding StandardSubItemChangedEditCommand}">
-
                 </dxg:TableView>
             </dxg:GridControl.View>
             <dxg:GridControl.Columns>
@@ -24,11 +23,11 @@
                     FieldName="Id"
                     ReadOnly="True" />
                 <dxg:GridColumn
-                    FieldName="Name" />
+                    FieldName="SubitemName" />
                 <dxg:GridColumn
                     FieldName="ParentNames" />
                 <dxg:GridColumn
-                    FieldName="Type" />
+                    FieldName="SubitemType" />
             </dxg:GridControl.Columns>
         </dxg:GridControl>
     </Grid>

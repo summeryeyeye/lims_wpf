@@ -6,7 +6,7 @@
         /// <summary>
         /// 名称
         /// </summary>
-        public string Name { get; set; }
+        public string? ReagentName { get; set; }
         /// <summary>
         /// 分子式
         /// </summary>
@@ -22,7 +22,7 @@
         /// <summary>
         /// 位置
         /// </summary>
-        public string Address { get; set; }
+        public string? Address { get; set; }
         /// <summary>
         /// 规格
         /// </summary>

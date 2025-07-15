@@ -62,12 +62,12 @@ namespace Lims.WPF.Services.Services
             return await client.ExecuteAsync<List<ItemDto>>(request);
         }
 
-        public async Task<ApiResponse<ItemDto>> GetFirstItemBySampleCodeAndKeyWordAsync(ItemFilterParam param)
+        public async Task<ApiResponse<ItemDto>> GetFirstItemBySampleCodeAndKeyItemAsync(ItemFilterParam param)
         {
             BaseRequest request = new()
             {
                 Method = RestSharp.Method.GET,
-                Route = @$"api/{serviceName}/GetFirstItemBySampleCodeAndKeyWord?SampleCode={param.SampleCode}&TestItemKeyWord_1={param.TestItemKeyWord_1}&TestItemKeyWord_2={param.TestItemKeyWord_2}",
+                Route = @$"api/{serviceName}/GetFirstItemBySampleCodeAndKeyItem?SampleCode={param.SampleCode}&KeyItem={param.KeyItem}",
             };
             return await client.ExecuteAsync<ItemDto>(request);
         }

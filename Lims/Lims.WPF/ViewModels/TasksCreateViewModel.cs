@@ -722,10 +722,11 @@ namespace Lims.WPF.ViewModels
             }
         }
         SampleDto defaultsample;
+        [Command]
         /// <summary>
         /// 初始化样品信息
         /// </summary>
-        private void InitSampleInfo()
+        public void InitSampleInfo()
         {
             CurrentSample = defaultsample.Copy();
 
@@ -767,13 +768,13 @@ namespace Lims.WPF.ViewModels
             {
                 var subItemStandards = response.Result.OrderBy(s => s.Id);
 
-                foreach (var item in subItemStandards.DistinctBy(s => s.Type))
+                foreach (var item in subItemStandards.DistinctBy(s => s.SubitemType))
                 {
-                    StandardSubItems.Add(new SubItemClass { Text = item.Type });
+                    StandardSubItems.Add(new SubItemClass { Text = item.SubitemType });
                 }
                 foreach (var item in StandardSubItems)
                 {
-                    var subs = subItemStandards.Where(s => s.Type == item.Text);
+                    var subs = subItemStandards.Where(s => s.SubitemType == item.Text);
 
                     List<SubItem> subitems = new();
 
@@ -781,7 +782,7 @@ namespace Lims.WPF.ViewModels
                     {
                         subitems.Add(new SubItem
                         {
-                            TestItem = s.Name,
+                            TestItem = s.SubitemName,
                             // ReportUnit = itemModel.ReportUnit
                         });
                     }
@@ -889,7 +890,7 @@ namespace Lims.WPF.ViewModels
             switch (e.Key)
             {
                 case Key.Escape:
-                    PreviewSources.Clear();
+                    ClearPreviewSources();
                     break;
 
                 case Key.Delete:
@@ -903,6 +904,15 @@ namespace Lims.WPF.ViewModels
                     break;
             }
         }
+        [Command]
+        public void ClearPreviewSources()
+        {
+            PreviewSources.Clear();
+        }
+
+
+
+
         [Command]
         public void PreviewSubItemsKeyUp(KeyEventArgs e)
         {
@@ -1084,18 +1094,18 @@ namespace Lims.WPF.ViewModels
                 ParentNames = FocusedItem.TestItem,
             };
             if (SelectedStandardSubItem != null)
-                CreattingStandardSubItem.Type = SelectedStandardSubItem.Text;
+                CreattingStandardSubItem.SubitemType = SelectedStandardSubItem.Text;
 
             var dialogService = GetService<IDialogService>("CreateStandardSubItemViewDialogService");
             dialogService.ShowDialog(new List<UICommand> {
                         new UICommand{Caption = "确定添加",IsDefault = true,IsCancel = false,Command=new DelegateCommand( async() =>
                         {
-                           if (string.IsNullOrWhiteSpace(CreattingStandardSubItem.Name) || string.IsNullOrWhiteSpace(CreattingStandardSubItem.ParentNames) || string.IsNullOrWhiteSpace(CreattingStandardSubItem.Type)){
+                           if (string.IsNullOrWhiteSpace(CreattingStandardSubItem.SubitemName) || string.IsNullOrWhiteSpace(CreattingStandardSubItem.ParentNames) || string.IsNullOrWhiteSpace(CreattingStandardSubItem.SubitemType)){
                                 _messageBoxService.ShowMessage("标准子项目格式不正确,添加失败!");
                                 return;
                             }else
                             {
-                                if (!(await _subItemStandardService.GetAnySubItemStandardsByKeyWordAsync(new SubItemStandardFilterParam(){ParentNames=CreattingStandardSubItem.Name})).Result)
+                                if (!(await _subItemStandardService.GetAnySubItemStandardsByKeyWordAsync(new SubItemStandardFilterParam(){ParentNames=CreattingStandardSubItem.SubitemName})).Result)
                                 {
                                     await _subItemStandardService.CreateAsync(CreattingStandardSubItem);
                                     await ShowNotifaction("", "标准子项目添加成功!", "");

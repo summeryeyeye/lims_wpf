@@ -73,6 +73,27 @@ namespace Lims.WPF.ViewModels
         }
 
         [Command]
+        public override  async Task RefreshItemDatas(SampleDto sample)
+        {
+            if (sample != null)
+            {
+                 ItemsSource = await GetAllItemsOfSample(sample);
+                //ItemFilterParam itemFilterParam = new ItemFilterParam()
+                //{
+                //    SampleCode = sample.SampleCode,
+                //    Tester = CurrentUser.UserName,
+                //    TestProgress = (int)RelativeProgress,
+                //    Operation = Operation.Higher,
+                //    MinDate = Sample_BeginDate,
+                //    MaxDate = Sample_EndDate
+                //};
+                //ItemsSource = (await _itemService.GetMyItemsBySampleCodeAsync(itemFilterParam)).Result.ToObservableCollection();
+            }
+        }
+
+
+
+        [Command]
         public void ShowReportsDataPreview(ObservableCollection<SampleDto> samples)
         {
             foreach (var sample in samples)

@@ -47,11 +47,11 @@ namespace Lims.WPF.ViewModels
             return TestProgress.检测中;
         }
         [Command]
-        public async Task RefreshItemDatas(SampleDto sample)
+        public  override async Task RefreshItemDatas(SampleDto sample)
         {
             if (sample != null)
             {
-
+                // ItemsSource = await GetAllItemsOfSample(sample);
                 ItemFilterParam itemFilterParam = new ItemFilterParam()
                 {
                     SampleCode = sample.SampleCode,
@@ -78,8 +78,8 @@ namespace Lims.WPF.ViewModels
                 //SampleDto sample = (await _sampleService.GetSingleAsync(edittingItem.SampleCode)).Result;
 
 
-                var items =await GetAllItemsOfSample(edittingItem.Sample);
-                if (items != null && items?.Min(i=>i.TestProgress) > (int)TestProgress.检测中)
+                var items = await GetAllItemsOfSample(edittingItem.Sample);
+                if (items != null && items?.Min(i => i.TestProgress) > (int)TestProgress.检测中)
                 {
                     _messageBoxService.ShowMessage("该样品下所有项目都已提交至数据一审,不支持自主撤销提交!");
                     return;
@@ -101,7 +101,7 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-       
+
 
         private MethodStandardDto selectedMethodStandard;
 
@@ -117,8 +117,8 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        
+
     }
-    
+
 
 }

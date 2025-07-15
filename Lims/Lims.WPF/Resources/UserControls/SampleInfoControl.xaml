@@ -1,17 +1,19 @@
-﻿<UserControl x:Class="Lims.WPF.Resources.UserControls.SampleInfoControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:local="clr-namespace:Lims.WPF.Resources.UserControls"
-             xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
-             xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
-             xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
-             xmlns:sys="clr-namespace:System;assembly=mscorlib"
-             mc:Ignorable="d">
-    <Grid VerticalAlignment="Center"
-          Height="36">
+﻿<UserControl
+    x:Class="Lims.WPF.Resources.UserControls.SampleInfoControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:dx="http://schemas.devexpress.com/winfx/2008/xaml/core"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Lims.WPF.Resources.UserControls"
+    xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm"
+    xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
+    xmlns:dxb="http://schemas.devexpress.com/winfx/2008/xaml/bars"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    mc:Ignorable="d">
+    <Grid
+        VerticalAlignment="Center"
+        Height="36">
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
@@ -20,48 +22,57 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Column="4"
-                    Margin="0,0,5,0"
-                    DockPanel.Dock="Right"
-                    Orientation="Horizontal">
+        <StackPanel
+            Grid.Column="4"
+            Margin="0,0,5,0"
+            DockPanel.Dock="Right"
+            Orientation="Horizontal">
         </StackPanel>
-        <StackPanel Grid.Column="0"
-                    Grid.ColumnSpan="3"
-                    MinWidth="400"
-                    Margin="10,0"
-                    HorizontalAlignment="Left"
-                    Orientation="Horizontal">
-            <dxe:HyperlinkEdit Command="{Binding ShowAllItemsOfCurrentSampleCommand}"
-                               Text="{Binding CurrentSample.SampleCode}"
-                               DisplayFormatString="🔍 {0}"
-                               Margin="10,0"
-                               FontSize="20"
-                               FontFamily="黑体"
-                               Foreground="{Binding CurrentSample.IsUrgent,Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Red|Black'}"
-                               CommandParameter="{Binding CurrentSample}"
-                               Background="Transparent"
-                               ToolTip="查看该样品下所有项目" />
+        <StackPanel
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            MinWidth="400"
+            Margin="10,0"
+            HorizontalAlignment="Left"
+            Orientation="Horizontal">
+            <dxe:HyperlinkEdit
+                Command="{Binding ShowAllItemsOfCurrentSampleCommand}"
+                Text="{Binding CurrentSample.SampleCode}"
+                DisplayFormatString="🔍 {0}"
+                Margin="10,0"
+                FontSize="20"
+                FontFamily="黑体"
+                Foreground="{Binding CurrentSample.IsUrgent,Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Red|Black'}"
+                CommandParameter="{Binding CurrentSample}"
+                Background="Transparent"
+                ToolTip="查看该样品下所有项目" />
 
 
-            <Label VerticalAlignment="Center"
-                   FontFamily="黑体"
-                   FontSize="20"
-                   Foreground="{Binding CurrentSample.IsUrgent,Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Red|Black'}"
-                   Content="{Binding CurrentSample.SampleName}" />
+            <Label
+                VerticalAlignment="Center"
+                FontFamily="黑体"
+                FontSize="20"
+                Foreground="{Binding CurrentSample.IsUrgent,Converter={StaticResource BooleanToColorConverter}, ConverterParameter='Red|Black'}"
+                Content="{Binding CurrentSample.SampleName}" />
         </StackPanel>
 
-        <Grid Grid.ColumnSpan="3"
-              Grid.Column="3"
-              HorizontalAlignment="Left"
-              VerticalAlignment="Center">
+        <Grid
+            Grid.ColumnSpan="3"
+            Grid.Column="3"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
             <Grid.Resources>
-                <Style TargetType="Label">
-                    <Setter Property="FontSize"
-                            Value="16" />
-                    <Setter Property="FontWeight"
-                            Value="Bold" />
-                    <Setter Property="FontFamily"
-                            Value="Times New Roman" />
+                <Style
+                    TargetType="Label">
+                    <Setter
+                        Property="FontSize"
+                        Value="16" />
+                    <Setter
+                        Property="FontWeight"
+                        Value="Bold" />
+                    <Setter
+                        Property="FontFamily"
+                        Value="Times New Roman" />
                 </Style>
             </Grid.Resources>
             <Grid.ColumnDefinitions>
@@ -69,9 +80,21 @@
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <Label Content="{Binding MoistureContent}" />
-            <Label Grid.Column="1"
-                   Content="{Binding Density}" />
+            <Label
+                Content="{Binding MoistureContent}"
+                FontStyle="Oblique"
+                FontWeight="Regular"
+                FontSize="14"
+                Foreground="DarkBlue"
+                VerticalContentAlignment="Bottom" />
+            <Label
+                Grid.Column="1"
+                Content="{Binding Density}"
+                FontStyle="Oblique"
+                FontSize="14"
+                Foreground="DarkSlateGray"
+                VerticalContentAlignment="Bottom" />
+
 
         </Grid>
         <!--<StackPanel Grid.Column="5"

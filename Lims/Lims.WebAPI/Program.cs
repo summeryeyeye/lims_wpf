@@ -30,11 +30,11 @@ builder.Services.AddScoped<ISqlSugarClient>(s =>
         ConnectionString = conStr,
         DbType = SqlSugar.DbType.PostgreSQL,
         IsAutoCloseConnection = true,
-        MoreSettings = new ConnMoreSettings
-        {
-            PgSqlIsAutoToLower = false, //不自动转换为小写
-            PgSqlIsAutoToLowerCodeFirst = false //代码优先不自动转换为小写
-        }
+        //MoreSettings = new ConnMoreSettings
+        //{
+        //    PgSqlIsAutoToLower = false, //不自动转换为小写
+        //    PgSqlIsAutoToLowerCodeFirst = false //代码优先不自动转换为小写
+        //}
     });
 });   
   

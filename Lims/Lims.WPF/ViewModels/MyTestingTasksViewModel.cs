@@ -405,7 +405,7 @@ namespace Lims.WPF.ViewModels
             {
                 if (SelectedEditableSubItems.Count > 0)
                 {
-                    ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyWordAsync(new ItemFilterParam(item.SampleCode) { TestItemKeyWord_1 = "密度" })).Result;
+                    ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(item.SampleCode) { KeyItem = "密度" })).Result;
                     foreach (var subItem in SelectedEditableSubItems)
                     {
                         if (IsNumeric(subItem.FirstTestResult) && IsNumeric(subItem.SecondTestResult))

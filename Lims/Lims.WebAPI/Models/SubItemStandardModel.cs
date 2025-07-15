@@ -2,33 +2,31 @@
 
 namespace Lims.WebAPI.Models
 {
-    [SugarTable("SubItemStandardModel")]
-    [Serializable]
-    public class SubItemStandardModel : BaseModel
+    [Serializable]    public class SubItemStandardModel : BaseModel
     {
         /// <summary>
         /// 主键，自增ID
         /// </summary>
-        [SugarColumn(ColumnName = "Id", ColumnDataType = "int4", IsNullable = false, IsPrimaryKey = true, IsIdentity = true)]
+        [SugarColumn(ColumnDataType = "int4", IsNullable = false, IsPrimaryKey = true, IsIdentity = true)]
         public int Id { get; set; }
 
         /// <summary>
         /// 子项目名称
         /// </summary>
-        [SugarColumn(ColumnName = "Name", ColumnDataType = "varchar", IsNullable = false)]
-        public string? Name { get; set; }
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
+        public string? SubitemName { get; set; }
 
         /// <summary>
         /// 父级名称（可多级）
         /// </summary>
-        [SugarColumn(ColumnName = "ParentNames", ColumnDataType = "varchar", IsNullable = false)]
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
         public string? ParentNames { get; set; }
 
         /// <summary>
         /// 类型
         /// </summary>
-        [SugarColumn(ColumnName = "Type", ColumnDataType = "varchar", IsNullable = false)]
-        public string? Type { get; set; }
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
+        public string? SubitemType { get; set; }
 
         /// <summary>
         /// 基质

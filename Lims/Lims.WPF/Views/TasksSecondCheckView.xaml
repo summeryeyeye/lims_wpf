@@ -47,6 +47,8 @@
         <dxb:PopupMenu
             x:Key="itemViewPopupMenu">
             <dxb:BarButtonItem
+                Style="{StaticResource RefreshItemDatasButtonStyle}" />
+            <dxb:BarButtonItem
                 Command="{Binding ReturnTaskComfirmWindowCommand}"
                 CommandParameter="{Binding FocusedItem}"
                 IsVisible="{Binding CurrentUser.CanSecondCheck}"

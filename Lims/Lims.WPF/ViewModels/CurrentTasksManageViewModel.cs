@@ -450,19 +450,19 @@ namespace Lims.WPF.ViewModels
             {
                 var subItemStandards = response.Result.OrderBy(s => s.Id);
 
-                foreach (var item in subItemStandards.DistinctBy(s => s.Type))
+                foreach (var item in subItemStandards.DistinctBy(s => s.SubitemType))
                 {
-                    StandardSubItems.Add(new SubItemClass { Text = item.Type });
+                    StandardSubItems.Add(new SubItemClass { Text = item.SubitemType });
                 }
                 foreach (var item in StandardSubItems)
                 {
-                    var subs = subItemStandards.Where(s => s.Type == item.Text);
+                    var subs = subItemStandards.Where(s => s.SubitemType == item.Text);
 
                     List<SubItem> subitems = new List<SubItem>();
 
                     foreach (var s in subs)
                     {
-                        subitems.Add(new SubItem { TestItem = s.Name });
+                        subitems.Add(new SubItem { TestItem = s.SubitemName });
                     }
                     item.SubItems = subitems;
                 }

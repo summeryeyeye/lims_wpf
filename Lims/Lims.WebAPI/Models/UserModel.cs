@@ -1,9 +1,7 @@
 ﻿using SqlSugar;
 
 namespace Lims.WebAPI.Models
-{
-
-    [SugarTable("UserModel")]
+{   
     [Serializable]
     public class UserModel : BaseModel
     {
@@ -14,81 +12,81 @@ namespace Lims.WebAPI.Models
             set;
         }
 
-        [SugarColumn(ColumnName = "UserId", ColumnDataType = "varchar", IsPrimaryKey = true)]
+        [SugarColumn(ColumnDataType = "varchar", IsPrimaryKey = true)]
         public string? UserId
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "Password", ColumnDataType = "varchar", IsNullable = false)]
-        public string? Password
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
+        public string? Passwd
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "UserName", ColumnDataType = "varchar", IsNullable = false)]
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
         public string? UserName
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName= "SuperiorName", ColumnDataType = "varchar", IsNullable = false)]
+        [SugarColumn( ColumnDataType = "varchar", IsNullable = false)]
         public string? SuperiorName
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "Group", ColumnDataType = "varchar", IsNullable = false)]
-        public string? Group
+        [SugarColumn( ColumnDataType = "varchar", IsNullable = false)]
+        public string? UserGroup
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "CanRead", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool CanRead
         {
             get;
             set;
         }
 
-        [SugarColumn(ColumnName = "CanTest", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool CanTest
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "CanCheck", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool CanCheck
         {
             get;
             set;
         }
 
-        [SugarColumn(ColumnName = "CanFirstCheck", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool CanFirstCheck
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "CanSecondCheck", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool CanSecondCheck
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "CanThirdCheck", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool CanThirdCheck
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "CanManage", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool CanManage
         {
             get; set;
         }
 
-        [SugarColumn(ColumnName = "IsAdmin", ColumnDataType = "bool", IsNullable = false, DefaultValue = "0")]
+        [SugarColumn(ColumnDataType = "bool", IsNullable = false, DefaultValue = "false")]
         public bool IsAdmin
         {
             get; set;

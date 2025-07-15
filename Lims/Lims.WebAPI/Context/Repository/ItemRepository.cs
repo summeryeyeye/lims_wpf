@@ -41,7 +41,13 @@ namespace Lims.WebAPI.Context.Repository
             return await queryble.Where(func).ToListAsync();
         }
 
-
+        public async override Task<ItemModel> QueryFirstOrDefaultAsync(Expression<Func<ItemModel, bool>> func)
+        {
+            var queryble = base.Context.Queryable<ItemModel>();
+            queryble = queryble.Includes(i => i.MethodStandard);
+            return await queryble.Where(func).FirstAsync();
+            //return base.QueryFirstOrDefaultAsync(func);
+        }
 
 
 

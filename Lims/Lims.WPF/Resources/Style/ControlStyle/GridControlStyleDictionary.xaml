@@ -177,8 +177,8 @@
                 Value="{Binding SampleFormatConditionRules}" />
         <Setter Property="FocusedRowHandle"
                 Value="{Binding FocusedSampleRowHandle, Mode=TwoWay}" />
-        <Setter Property="SelectedRowsSource"
-                Value="{Binding SelectedSamples,Mode=TwoWay,NotifyOnSourceUpdated=True}" />
+        <!--<Setter Property="SelectedRowsSource"
+                Value="{Binding SelectedSamples,Mode=TwoWay,NotifyOnSourceUpdated=True}" />-->
         <Setter Property="RowMinHeight"
                 Value="38" />
         <Setter Property="PrintSelectedRowsOnly"

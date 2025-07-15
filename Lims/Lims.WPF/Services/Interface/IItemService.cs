@@ -16,6 +16,6 @@ namespace Lims.WPF.Services.Interface
         Task<ApiResponse<List<ItemDto>>> GetAllItemsBySampleCodeAsync(ItemFilterParam param);
         Task<ApiResponse<List<ItemDto>>> GetAllItemsByMethodStandardIdAsync(ItemFilterParam param);
         Task<ApiResponse<List<ItemDto>>> GetAllItemsBySampleCodesAsync(ItemFilterParam param);
-        Task<ApiResponse<ItemDto>> GetFirstItemBySampleCodeAndKeyWordAsync(ItemFilterParam param);
+        Task<ApiResponse<ItemDto>> GetFirstItemBySampleCodeAndKeyItemAsync(ItemFilterParam param);
     }
 }

@@ -7,7 +7,7 @@
             get; set;
         }
 
-        public string? Name
+        public string? SubitemName
         {
             get; set;
         }
@@ -17,7 +17,7 @@
             get; set;
         }
 
-        public string? Type
+        public string? SubitemType
         {
             get; set;
         }
