@@ -29,7 +29,7 @@
                    HorizontalContentAlignment="Right" />
             <TextBox Width="460"
                      FontSize="16"
-                     Text="{Binding CreattingStandardSubItem.Name,Mode=TwoWay}"
+                     Text="{Binding CreattingStandardSubItem.SubitemName,Mode=TwoWay}"
                      HorizontalContentAlignment="Center" />
         </StackPanel>
         <StackPanel Orientation="Horizontal">

@@ -42,8 +42,8 @@ namespace Lims.WPF.ViewModels
         /// <summary>
         /// 记录界面切换中项目宽度
         /// </summary>
-        private string sampleViewWidth = "2.8*";
-        public string SampleViewWidth
+        private string? sampleViewWidth = "2.8*";
+        public string? SampleViewWidth
         {
             get
             {
@@ -56,8 +56,8 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        private string CurrentHeight;
-        private string CurrentWidth;
+        private string? CurrentHeight;
+        private string? CurrentWidth;
 
         private bool isFullTaskListView;
 
@@ -77,7 +77,7 @@ namespace Lims.WPF.ViewModels
                     ItemViewHeight = "0";
                     CurrentWidth = SampleViewWidth;
                     SampleViewWidth = "0";
-                    cfa.Save();
+                    cfa?.Save();
                 }
                 else
                 {
@@ -101,7 +101,7 @@ namespace Lims.WPF.ViewModels
 
 
 
-       
+
         protected virtual async Task<ObservableCollection<ItemDto>?> GetAllItemsOfSample(SampleDto sample)
         {
             return sample == null ? new ObservableCollection<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(sample.SampleCode))).Result?.OrderBy(i => i.ItemId).ToObservableCollection();
@@ -131,7 +131,7 @@ namespace Lims.WPF.ViewModels
             return Task.CompletedTask;
         }
 
-        protected virtual async Task<ObservableCollection<ItemDto>> GetItemsSource(SampleDto sample)
+        protected virtual async Task<ObservableCollection<ItemDto?>> GetItemsSource(SampleDto sample)
         {
             return (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam(sample.SampleCode))).Result.OrderBy(i => i.ItemId).ToObservableCollection();
         }
@@ -163,6 +163,8 @@ namespace Lims.WPF.ViewModels
         [Command]
         public virtual async void ShowAllItemsOfCurrentSample(SampleDto sample)
         {
+            if (sample == null)
+                return;
             AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(sample.SampleCode))).Result.ToObservableCollection();
             DevExpress.Mvvm.IDialogService dialogService = GetService<DevExpress.Mvvm.IDialogService>("AllItemsOfSamplePreviewDialogService");
             dialogService.ShowDialog(
@@ -203,58 +205,61 @@ namespace Lims.WPF.ViewModels
 
         public async void ReportDataPreview(SampleDto sample)
         {
-            AllItemsOfFocusedSample = await GetAllItemsOfSample(sample); //TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode).ToObservableCollection();
-            if (AllItemsOfFocusedSample != null && AllItemsOfFocusedSample.Count > 0)
+            if (sample != null)
             {
-                var items = new ItemDto[AllItemsOfFocusedSample.Count];
-                AllItemsOfFocusedSample.CopyTo(items, 0);
-
-                foreach (var item in items)
+                AllItemsOfFocusedSample = await GetAllItemsOfSample(sample); //TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode).ToObservableCollection();
+                if (AllItemsOfFocusedSample != null && AllItemsOfFocusedSample.Count > 0)
                 {
-                    try
+                    var items = new ItemDto[AllItemsOfFocusedSample.Count];
+                    AllItemsOfFocusedSample.CopyTo(items, 0);
+
+                    foreach (var item in items)
                     {
-                        item.TestMethod = item.TestMethod.Split(' ')[0] + " " + item.TestMethod.Split(' ')[1];
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                    try
-                    {
-                        item.ExecuteStandard = item.ExecuteStandard?.Split(' ')[0] + " " + item.ExecuteStandard?.Split(' ')[1];
-                    }
-                    catch (Exception)
-                    {
-
-                    }
-                }
-                ReportDataSource = items.ToList();
-
-
-                var itemsWithSubItems = AllItemsOfFocusedSample.Where(i => i.SubItems != null && i.SubItems.Count > 0);
-
-                foreach (var item in itemsWithSubItems)
-                {
-                    foreach (var subitem in item.SubItems)
-                    {
-
-                        ReportDataSource.Add(new ItemDto(0, item.ReportUnit, subitem.TestItem, 0, subitem.IndexRequest)
+                        try
                         {
-                            SampleCode = item.SampleCode,
+                            item.TestMethod = item?.TestMethod?.Split(' ')[0] + " " + item?.TestMethod?.Split(' ')[1];
+                        }
+                        catch (Exception)
+                        {
 
-                            TestMethod = item.TestMethod,
+                        }
+                        try
+                        {
+                            item.ExecuteStandard = item?.ExecuteStandard?.Split(' ')[0] + " " + item?.ExecuteStandard?.Split(' ')[1];
+                        }
+                        catch (Exception)
+                        {
 
-                            ExecuteStandard = item.ExecuteStandard,
-
-                            ItemId = subitem.SubItemId,
-                            TestResult = subitem.TestResult,
-                        });
+                        }
                     }
-                }
+                    ReportDataSource = items.ToList();
 
-                ReportDataSource = ReportDataSource.OrderBy(i => i.ItemId).ToList();
-                ReportDataPreview reportDataPreview = new ReportDataPreview(ReportDataSource);
-                reportDataPreview.Show();
+
+                    var itemsWithSubItems = AllItemsOfFocusedSample.Where(i => i.SubItems != null && i.SubItems.Count > 0);
+
+                    foreach (var item in itemsWithSubItems)
+                    {
+                        foreach (var subitem in item.SubItems)
+                        {
+
+                            ReportDataSource.Add(new ItemDto(0, item.ReportUnit, subitem.TestItem, 0, subitem.IndexRequest)
+                            {
+                                SampleCode = item.SampleCode,
+
+                                TestMethod = item.TestMethod,
+
+                                ExecuteStandard = item.ExecuteStandard,
+
+                                ItemId = subitem.SubItemId,
+                                TestResult = subitem.TestResult,
+                            });
+                        }
+                    }
+
+                    ReportDataSource = ReportDataSource.OrderBy(i => i.ItemId).ToList();
+                    ReportDataPreview reportDataPreview = new ReportDataPreview(ReportDataSource);
+                    reportDataPreview.Show();
+                }
             }
         }
 
@@ -463,13 +468,7 @@ namespace Lims.WPF.ViewModels
         }
 
 
-        protected ObservableCollection<ItemDto> taskListPreviewSources = new();
 
-        public ObservableCollection<ItemDto> TaskListPreviewSources
-        {
-            get => taskListPreviewSources;
-            set => taskListPreviewSources = value;
-        }
 
         private int myFocusedItemRowHandle;
 

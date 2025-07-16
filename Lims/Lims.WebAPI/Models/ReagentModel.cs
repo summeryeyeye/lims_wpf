@@ -15,7 +15,7 @@ namespace Lims.WebAPI.Models
         /// 名称
         /// </summary>
         [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
-        public string RagentName { get; set; }
+        public string? ReagentName { get; set; }
 
         /// <summary>
         /// 分子式
@@ -39,7 +39,7 @@ namespace Lims.WebAPI.Models
         /// 位置
         /// </summary>
         [SugarColumn(ColumnDataType = "varchar")]
-        public string Address { get; set; }
+        public string? Address { get; set; }
 
         /// <summary>
         /// 规格

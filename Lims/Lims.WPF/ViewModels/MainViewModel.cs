@@ -84,14 +84,14 @@ namespace Lims.WPF.ViewModels
             if (await Login())
             {
 
-              
+
                 //1.初始化
                 InitInfo();
                 //2.监听
                 Listen();
                 //3.连接
                 Link();
-              
+
 
             }
         }
@@ -118,7 +118,7 @@ namespace Lims.WPF.ViewModels
         /// </summary>
         private void InitInfo()
         {
-            var url= $"{serviceRoutePath}TaskCount";
+            var url = $"{serviceRoutePath}TaskCount";
             HubConnectionBuilder hubConnectionBuilder = new HubConnectionBuilder();
             hubConnectionBuilder.WithUrl(url, options => { });
             hubConnection = new HubConnectionBuilder().WithUrl(serviceRoutePath + "TaskCount").WithAutomaticReconnect().Build();
@@ -177,8 +177,8 @@ namespace Lims.WPF.ViewModels
 
         private void ReceiveInfos(string data)
         {
-            if (string.IsNullOrWhiteSpace(data))            
-                return;            
+            if (string.IsNullOrWhiteSpace(data))
+                return;
             var taskCount = Newtonsoft.Json.JsonConvert.DeserializeObject<TaskCountDto>(data);
             if (taskCount == null)
                 return;
@@ -369,7 +369,7 @@ namespace Lims.WPF.ViewModels
 
             return Task.CompletedTask;
         }
-
+        public ObservableCollection<ReagentDto?> Reagents { get; private set; } = new ObservableCollection<ReagentDto?>();
         /// <summary>
         /// 弹出试剂管理窗口
         /// </summary>
@@ -377,7 +377,10 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async void PopupReagentManagementView()
         {
-            (await ReagentService.GetAllAsync()).Result.ToObservableCollection();
+            var response = await ReagentService.GetAllAsync();
+            if (response.Status)
+                if (response.Result != null)
+                    Reagents = response.Result.OrderBy(i => i.Id).ToObservableCollection();
             var dialog = GetService<IDialogService>("ReagentIOManagementViewService");
             dialog.ShowDialog(
         new List<UICommand> {
@@ -818,6 +821,7 @@ namespace Lims.WPF.ViewModels
                 RaisePropertyChanged(nameof(UnReadLoggersCount));
             }
         }
+
 
     }
     public class NavigationItem : INavigationItem

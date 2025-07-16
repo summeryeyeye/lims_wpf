@@ -38,7 +38,7 @@ namespace Lims.WebAPI.Singleton
             conn.Open();
 
             // 订阅通知
-            conn.Notification += async (o, e) =>
+            conn.Notification += (o, e) =>
             {
                 //Console.WriteLine($"收到通知: {e.Channel}, 数据: {e.Payload}");
 

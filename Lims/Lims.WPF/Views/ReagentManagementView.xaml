@@ -20,7 +20,7 @@
                                 Visible="False" />
                 <dxg:GridColumn Header="名称"
                                 Width="Auto"
-                                Binding="{Binding Name}" />
+                                Binding="{Binding ReagentName}" />
                 <dxg:GridColumn Header="分子式"
                                 Binding="{Binding MolecularFormula}" />
                 <dxg:GridColumn Header="CAS号"

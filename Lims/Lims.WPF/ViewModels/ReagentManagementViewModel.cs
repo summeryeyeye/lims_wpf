@@ -6,16 +6,16 @@ namespace Lims.WPF.ViewModels
 {
     public class ReagentManagementViewModel : DocumentViewModelBase
     {
-        private ObservableCollection<ReagentDto> reagents;
+        private ObservableCollection<ReagentDto?> reagents = new ObservableCollection<ReagentDto?>();
 
-        public ObservableCollection<ReagentDto> Reagents
+        public ObservableCollection<ReagentDto?> Reagents
         {
             get { return reagents; }
             set { reagents = value; RaisePropertyChanged(nameof(Reagents)); }
         }
         public ReagentManagementViewModel()
         {
-            LoadMainDatas(CurrentUser);
+            _ = LoadMainDatas(CurrentUser);
         }
 
         protected override async Task LoadMainDatas(UserDto? user)

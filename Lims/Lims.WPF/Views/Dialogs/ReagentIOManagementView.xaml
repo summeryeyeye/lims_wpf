@@ -44,7 +44,7 @@
                 <dxg:GridColumn Header="名称"
                                 Width="260"
                                 HorizontalHeaderContentAlignment="Center"
-                                Binding="{Binding Name}" />
+                                Binding="{Binding ReagentName}" />
                 <dxg:GridColumn Header="分子式"
                                 Visible="False"
                                 Binding="{Binding MolecularFormula}" />
@@ -106,7 +106,7 @@
                                 <dx:SimpleButton Grid.Column="2"
                                                  Width="auto"
                                                  Command="{DXCommand '$browserhelper:BrowserHelper.SearchByBaiduBaike(@parameter)'}"
-                                                 CommandParameter="{Binding Row.Name}"
+                                                 CommandParameter="{Binding Row.ReagentName}"
                                                  Style="{StaticResource BtnInfoStyle}"
                                                  Content="试剂信息" />
                             </Grid>

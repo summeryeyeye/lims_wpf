@@ -112,10 +112,20 @@
             <dxb:BarButtonItem
                 Style="{StaticResource RefreshItemDatasButtonStyle}" />
 
-            <dxb:BarButtonItem
-                Content="编辑原始记录模板规则"
-                Glyph="{dx:DXImage 'Images/RichEdit/InsertColumnBreak_16x16.png'}"
-                Command="{Binding OriginalRecordTemplateEditCommand}" />
+            <dxb:BarSubItem
+                Content="原始记录打印管理"
+                Glyph="{dx:DXImage 'Images/XAF/ActionGroup_EasyTestRecorder.png'}">
+                <dxb:BarButtonItem
+                    Content="关联原始记录模板"
+                    Glyph="{dx:DXImage 'Images/XAF/Action_FileAttachment_Attach.png'}"
+                    Command="{Binding AttachOriginalRecordTemplateCommand}"
+                    CommandParameter="{Binding  FocusedItem}" />
+
+                <dxb:BarButtonItem
+                    Content="编辑原始记录模板规则"
+                    Glyph="{dx:DXImage 'Images/RichEdit/InsertColumnBreak_16x16.png'}"
+                    Command="{Binding OriginalRecordTemplateEditCommand}" />
+            </dxb:BarSubItem>
 
             <dxb:BarItemSeparator />
         </dxb:PopupMenu>

@@ -31,14 +31,22 @@ namespace Lims.WPF.ViewModels
         public MyTestingTasksViewModel()
         {
             AllowAutoRounding = Convert.ToBoolean(cfa.AppSettings.Settings["AllowAutoRounding"].Value);
+            AllowNoticeTestDate = Convert.ToBoolean(cfa.AppSettings.Settings["AllowNoticeTestDate"].Value);
         }
 
         protected override async Task LoadMainDatas(UserDto? user)
         {
-            ShowMainDatasLoadingPanel = true;
+            if (user == null)
+            {
+                _messageBoxService.ShowMessage("当前用户信息获取失败，请重新登录！");
+                return;
+            }
+            else
+            {
+                ShowMainDatasLoadingPanel = true;
             pre_MyFocusedSampelRowIndex = FocusedSampleRowHandle;
-            TaskDatasSource=new ObservableCollection<ItemDto>();
-            SamplesSource=new ObservableCollection<SampleDto?>();
+            TaskDatasSource = new ObservableCollection<ItemDto?>();
+            SamplesSource = new ObservableCollection<SampleDto?>();
 
             ItemFilterParam itemFilterParam = new ItemFilterParam()
             {
@@ -57,9 +65,18 @@ namespace Lims.WPF.ViewModels
 
             FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
             ShowMainDatasLoadingPanel = false;
+            }   
         }
 
-
+        protected ObservableCollection<ItemDto> taskListPreviewSources = new();
+        /// <summary>
+        /// 提交预览窗口数据源
+        /// </summary>
+        public ObservableCollection<ItemDto> TaskListPreviewSources
+        {
+            get => taskListPreviewSources;
+            set => taskListPreviewSources = value;
+        }
 
         /// <summary>
         /// 提交任务窗口
@@ -75,6 +92,12 @@ namespace Lims.WPF.ViewModels
                 TaskListPreviewSources = source;
                 if (TaskListPreviewSources != null && TaskListPreviewSources.Count > 0)
                 {
+                    if (AllowNoticeTestDate)
+                        if (TaskListPreviewSources.Any(i => i.TestDate == null))
+                        {
+                            _messageBoxService.ShowMessage("存在项目未同步检测日期，请添加后重试！");
+                            return  Task.CompletedTask;
+                        }
                     ItemDto[] tasks = new ItemDto[TaskListPreviewSources.Count];
                     TaskListPreviewSources.CopyTo(tasks, 0);
                     DateTimeOffset now = DateTimeOffset.Now;
@@ -88,6 +111,7 @@ namespace Lims.WPF.ViewModels
                                 Caption = "确认提交", IsDefault = true, IsCancel = false, Command =
                                     new DelegateCommand(async () =>
                                     {
+
                                         foreach (var task in tasks)
                                         {
                                             SampleDto editingSample =
@@ -174,7 +198,7 @@ namespace Lims.WPF.ViewModels
         }
 
 
-        public List<ItemDto> SubmitableItems { get; set; }
+        public List<ItemDto> SubmitableItems { get; set; }=new List<ItemDto>();
 
         /// <summary>
         /// 提交样品窗口
@@ -188,6 +212,14 @@ namespace Lims.WPF.ViewModels
 
                 if (SubmitableItems != null && SubmitableItems.Count > 0)
                 {
+                    if (AllowNoticeTestDate)
+                        if (SubmitableItems.Any(i => i.TestDate == null))
+                        {
+                            _messageBoxService.ShowMessage("存在项目未同步检测日期，请添加后重试！");
+                            return ;
+                        }
+
+
                     IDialogService dialogService = GetService<IDialogService>("MyItemsOfSamplePreviewDialogService");
                     dialogService.ShowDialog(
                         new List<UICommand>
@@ -263,7 +295,13 @@ namespace Lims.WPF.ViewModels
         public async Task SubmitData(ItemDto item)
         {
             if (item == null)
-                return;
+                return; 
+            if (AllowNoticeTestDate)
+                if (item.TestDate == null)
+                {
+                    _messageBoxService.ShowMessage("该项目未同步检测日期，请添加后重试！");
+                    return;
+                }
             SampleDto editingSample = SamplesSource.FirstOrDefault(s => s.SampleCode == item.SampleCode);
             if (editingSample == null)
                 return;
@@ -398,7 +436,12 @@ namespace Lims.WPF.ViewModels
         }
 
         public int SelectedTesterIndex { get; set; }
-
+        /// <summary>
+        /// 计算子项目平均值
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         protected override async Task CaculateSubTestResultAverage(ItemDto item)
         {
             try
@@ -425,7 +468,7 @@ namespace Lims.WPF.ViewModels
                                     if (density > 0)
                                     {
                                         subItem.Temp_TestResult = Math.Round(ave * 10 * density, 1, MidpointRounding.ToEven).ToString();
-                                    }                                   
+                                    }
                                     //await _subItemService.UpdateAsync(subItem);
                                     //continue;
                                 }
@@ -498,12 +541,39 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void SwitchAutoRounding()
         {
-            AllowAutoRounding = !AllowAutoRounding;
+            AllowAutoRounding = !  AllowAutoRounding;
+            cfa.AppSettings.Settings["AllowAutoRounding"].Value = AllowAutoRounding.ToString();
+            cfa.Save();
             if (AllowAutoRounding)
                 showNotifaction("自动修约已开启！");
             else
                 showNotifaction("自动修约已关闭！");
         }
+
+        private bool allowNoticeTestDate;
+
+        public bool AllowNoticeTestDate
+        {
+            get { return allowNoticeTestDate; }
+            set {
+                allowNoticeTestDate = value;
+                RaisePropertyChanged(nameof(AllowNoticeTestDate));
+            }
+        }
+
+
+        [Command]
+        public void SwitchNoticeTestDate()
+        {
+            AllowNoticeTestDate = !AllowNoticeTestDate; 
+            cfa.AppSettings.Settings["AllowNoticeTestDate"].Value = AllowNoticeTestDate.ToString();
+            cfa.Save();
+            if (AllowNoticeTestDate)
+                showNotifaction("检测日期提醒已开启！");
+            else
+                showNotifaction("检测日期提醒已关闭！");
+        }
+        
 
 
         protected override void ShowItemsOfFocusedSample(SampleDto sample)

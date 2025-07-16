@@ -2,7 +2,7 @@
 {
     public class SubItemStandardFilterParam
     {
-        public string? Name { get; set; }
+        public string? SubitemName { get; set; }
         public string? ParentNames
         {
             get; set;

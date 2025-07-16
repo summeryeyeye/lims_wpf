@@ -44,6 +44,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Resources\UserControls\DragForm.resx">
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="Resources\Converters\MyConvertersDictionary.xaml">
       <SubType>Designer</SubType>
     </Page>

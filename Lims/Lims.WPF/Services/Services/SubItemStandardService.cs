@@ -16,7 +16,7 @@ namespace Lims.WPF.Services.Services
             BaseRequest request = new()
             {
                 Method = RestSharp.Method.GET,
-                Route = @$"api/{serviceName}/GetAnySubItemStandardsByKeyWord?Name={param.ParentNames}",
+                Route = @$"api/{serviceName}/GetAnySubItemStandardsByKeyWord?SubitemName={param.ParentNames}",
             };
             return await client.ExecuteAsync<bool>(request);
         }
@@ -35,7 +35,7 @@ namespace Lims.WPF.Services.Services
             BaseRequest request = new()
             {
                 Method = RestSharp.Method.GET,
-                Route = @$"api/{serviceName}/GetSubItemStandardsBySubItem?Name={param.Name}",
+                Route = @$"api/{serviceName}/GetSubItemStandardsBySubItem?SubitemName={param.SubitemName}",
             };
             return await client.ExecuteAsync<List<SubItemStandardDto>>(request);
         }

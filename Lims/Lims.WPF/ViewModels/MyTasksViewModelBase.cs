@@ -1,10 +1,12 @@
 ﻿
+using DevExpress.CodeParser;
 using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
 using DevExpress.Mvvm.Native;
 using DevExpress.Mvvm.Xpf;
 using DevExpress.Utils.About;
 using DevExpress.Xpf.Core;
+using DevExpress.Xpf.Docking;
 using DevExpress.XtraPivotGrid.Data;
 using Lims.Common.Dtos;
 using Lims.Common.Parameters;
@@ -16,6 +18,7 @@ using System.Data;
 using System.Drawing.Printing;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using Task = System.Threading.Tasks.Task;
@@ -23,9 +26,12 @@ namespace Lims.WPF.ViewModels
 {
     public abstract class MyTasksViewModelBase : SampleAndItemDataViewModelBase
     {
-        protected override Task<ObservableCollection<ItemDto>> GetItemsSource(SampleDto sample)
+        protected override Task<ObservableCollection<ItemDto?>> GetItemsSource(SampleDto sample)
         {
-            return Task.FromResult(TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode).OrderBy(i => i.ItemId).ToObservableCollection());
+            if (TaskDatasSource != null)
+                return Task.FromResult(TaskDatasSource.Where(i => i?.SampleCode == sample.SampleCode).OrderBy(i => i.ItemId).ToObservableCollection());
+            else
+                return null;
         }
 
 
@@ -37,14 +43,17 @@ namespace Lims.WPF.ViewModels
             ItemFilterParam itemFilterParam = new ItemFilterParam()
             {
                 TestProgress = (int)RelativeProgress,
-                Tester = user.UserName,
+                Tester = user?.UserName,
                 Operation = Operation.Equal,
             };
             var response = await _itemService.GetMyItemsAsync(itemFilterParam);
             if (response.Status)
             {
-                TaskDatasSource = response.Result.OrderBy(t => t.AppointTime).ToObservableCollection();
-                SamplesSource = TaskDatasSource.Select(i => i.Sample).DistinctBy(s => s?.SampleCode).ToObservableCollection();
+                if (response.Result != null)
+                {
+                    TaskDatasSource = response.Result.OrderBy(t => t.AppointTime).ToObservableCollection();
+                    SamplesSource = TaskDatasSource.Select(i => i.Sample).DistinctBy(s => s?.SampleCode).ToObservableCollection();
+                }
             }
             FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
             ShowMainDatasLoadingPanel = false;
@@ -65,7 +74,7 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        public UserDto EditedUser
+        public UserDto? EditedUser
         {
             get; set;
         }
@@ -356,21 +365,24 @@ namespace Lims.WPF.ViewModels
                         dr["SubItem"] = subItem.TestItem;
                         reportModel.DataTable.Rows.Add(dr);
 
-                        var subRespone = await _subItemStandardService.GetSubItemStandardsBySubItemAsync(new SubItemStandardFilterParam() { Name = subItem.TestItem });
+                        var subRespone = await _subItemStandardService.GetSubItemStandardsBySubItemAsync(new SubItemStandardFilterParam() { SubitemName = subItem.TestItem });
                         if (subRespone.Status)
                         {
-                            var subStandard = subRespone.Result.FirstOrDefault();
-                            if (subStandard != null)
+                            if (subRespone.Result!=null)
                             {
-                                var info = new List<string>
+                                var subStandard = subRespone.Result.FirstOrDefault();
+                                if (subStandard != null)
+                                {
+                                    var info = new List<string>
                                                 {
                                                     subStandard.Substratum,
                                                     subStandard.BatchNumber,
                                                     subStandard.Campany
                                                 };
 
-                                infoStr.AppendLine($"{subStandard.SubitemName}({string.Join('-', info)})");
-                                //subInstruments.Append(subStandard.Instruments);
+                                    infoStr.AppendLine($"{subStandard.SubitemName}({string.Join('-', info)})");
+                                    //subInstruments.Append(subStandard.Instruments);
+                                }
                             }
                         }
                     }
@@ -382,7 +394,7 @@ namespace Lims.WPF.ViewModels
                     {
                         foreach (var subItem in item.SubItems)
                         {
-                            var subRespone = await _subItemStandardService.GetSubItemStandardsBySubItemAsync(new SubItemStandardFilterParam() { Name = subItem.TestItem });
+                            var subRespone = await _subItemStandardService.GetSubItemStandardsBySubItemAsync(new SubItemStandardFilterParam() { SubitemName = subItem.TestItem });
                             if (subRespone.Status)
                             {
                                 subInstrumentInfos.Add(subRespone.Result.FirstOrDefault().Instruments);
@@ -494,9 +506,38 @@ namespace Lims.WPF.ViewModels
                     }
                     , "", this);
             }
-
-
         }
+        [Command]
+        public async Task AttachOriginalRecordTemplate(ItemDto item)
+        {
+            if (item != null)
+            {
+                Microsoft.Win32.OpenFileDialog dlg = new()
+                {
+                    DefaultExt = ".docx",
+                    Filter = "(*.doc,*.docx,)|*.doc;*.docx;"
+                };
+
+                bool? result = dlg.ShowDialog();
+                if (result != null && (bool)result)
+                {
+                    if (item.MethodStandard != null)
+                    {
+                        item.MethodStandard.OriginalRecordTemplateFilePath = dlg.FileName;
+                        await _methodStandardService.UpdateAsync(item.MethodStandard);
+                        showNotifaction("方法与原始记录模板关联成功！");
+                    }
+                    else                    
+                        showNotifaction("未找到该方法！");
+                    
+                }
+
+            }
+        }
+
+
+
+
         [Command]
         public void FileOpenDialog()
         {
@@ -588,7 +629,9 @@ namespace Lims.WPF.ViewModels
 
 
             var editingSample = SamplesSource.FirstOrDefault(s => s?.SampleCode == item.SampleCode);
-            editingSample.Items = await GetAllItemsOfSample(editingSample);
+            if (editingSample != null)
+                editingSample.Items = await GetAllItemsOfSample(editingSample);
+
         }
         #endregion
 
@@ -606,7 +649,7 @@ namespace Lims.WPF.ViewModels
                 ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "水分" })).Result;
                 var moistureContent = MoistureItem != null ? $"{MoistureItem.TestResult} {MoistureItem.ReportUnit}" : "/";
                 ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "密度" })).Result;
-                var densityContent = DensityItem != null ? $"{DensityItem.TestResult} {DensityItem.ReportUnit}" :"/";
+                var densityContent = DensityItem != null ? $"{DensityItem.TestResult} {DensityItem.ReportUnit}" : "/";
 
                 sample.MoistureContent = moistureContent;
                 sample.Density = densityContent;
@@ -634,7 +677,7 @@ namespace Lims.WPF.ViewModels
                 MoistureContent = MoistureItem != null ? $"{MoistureItem.TestItem}: {MoistureItem.TestResult} {MoistureItem.ReportUnit}" : string.Empty;
                 ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "密度" })).Result;
                 Density = DensityItem != null ? $"{DensityItem.TestItem}: {DensityItem.TestResult} {DensityItem.ReportUnit}" : string.Empty;
-                if (string.IsNullOrEmpty(MoistureContent)&&string.IsNullOrEmpty(Density))
+                if (string.IsNullOrEmpty(MoistureContent) && string.IsNullOrEmpty(Density))
                 {
                     MoistureContent = "未指派水分/密度项目";
                 }
@@ -649,9 +692,9 @@ namespace Lims.WPF.ViewModels
     }
     public class RecordTemplate : BindableBase
     {
-        private string fileName;
+        private string? fileName;
 
-        public string FileName
+        public string? FileName
         {
             get => fileName;
             set
@@ -692,27 +735,27 @@ namespace Lims.WPF.ViewModels
     }
     public class ReportModel
     {
-        public string SampleCode
+        public string? SampleCode
         {
             get;
             set;
         }
-        public string TestDate
+        public string? TestDate
         {
             get;
             set;
         }
-        public string TestMethod
+        public string? TestMethod
         {
             get;
             set;
         }
-        public string FirstSampleWeight
+        public string? FirstSampleWeight
         {
             get;
             set;
         }
-        public string SecondSampleWeight
+        public string? SecondSampleWeight
         {
             get;
             set;
@@ -720,7 +763,7 @@ namespace Lims.WPF.ViewModels
         /// <summary>
         /// 水分
         /// </summary>
-        public string Moisture
+        public string? Moisture
         {
             get;
             set;
@@ -728,7 +771,7 @@ namespace Lims.WPF.ViewModels
         /// <summary>
         /// 密度
         /// </summary>
-        public string Density
+        public string? Density
         {
             get;
             set;
@@ -738,12 +781,12 @@ namespace Lims.WPF.ViewModels
         //    get;
         //    set;
         //}
-        public string TestResult
+        public string? TestResult
         {
             get;
             set;
         }
-        public string TestItem
+        public string? TestItem
         {
             get;
             set;
@@ -754,8 +797,8 @@ namespace Lims.WPF.ViewModels
             set;
         }
 
-        public string Instruments { get; set; }
-        public string Info { get; set; }
+        public string? Instruments { get; set; }
+        public string? Info { get; set; }
         public ReportModel()
         {
             DataTable = new DataTable();

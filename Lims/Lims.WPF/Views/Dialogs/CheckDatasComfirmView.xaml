@@ -32,7 +32,7 @@
                     <dxg:GridControl.View>
                         <dxg:TableView
                             Style="{StaticResource ItemsTableViewStyle}"
-                            Name="ItemsView">
+                            >
                         </dxg:TableView>
                     </dxg:GridControl.View>
 
@@ -72,7 +72,7 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock
-                        Text="{Binding ElementName=ItemsView,Path=FocusedRow.TestItem}"
+                        Text="{Binding ElementName=ItemsGrid,Path=SelectedItem.TestItem}"
                         Margin="10,0"
                         VerticalAlignment="Center"
                         FontSize="20" />
@@ -81,7 +81,7 @@
                         MaxHeight="1600"
                         Grid.Row="1"
                         AutoExpandAllGroups="True"
-                        ItemsSource="{Binding ElementName=ItemsView,Path=FocusedRow.SubItems}">
+                        ItemsSource="{Binding ElementName=ItemsGrid,Path=SelectedItem.SubItems}">
                         <dxg:GridControl.View>
                             <dxg:TableView
                                 Style="{StaticResource DefaultTableView}"

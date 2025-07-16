@@ -23,7 +23,7 @@ namespace Lims.WebAPI.Controllers
         [HttpGet]
         public async Task<ApiResponse> GetSubItemStandardsByTestItem([FromQuery] SubItemStandardFilterParam param) => await subItemStandardService.QueryAsync(s => s.ParentNames.Contains(param.ParentNames));
         [HttpGet]
-        public async Task<ApiResponse> GetSubItemStandardsBySubItem([FromQuery] SubItemStandardFilterParam param) => await subItemStandardService.QueryAsync(s => s.SubitemName.Equals(param.Name));
+        public async Task<ApiResponse> GetSubItemStandardsBySubItem([FromQuery] SubItemStandardFilterParam param) => await subItemStandardService.QueryAsync(s => s.SubitemName.Equals(param.SubitemName));
 
 
 

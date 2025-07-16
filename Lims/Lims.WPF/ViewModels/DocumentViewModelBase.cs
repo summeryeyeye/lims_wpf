@@ -46,10 +46,10 @@ namespace Lims.WPF.ViewModels
             GetFormattingRules();
         }
         protected abstract Task LoadMainDatas(UserDto? user);
-        public ObservableCollection<UserDto>? Users { get; set; }
-        private ObservableCollection<UserDto> testers;
+        public ObservableCollection<UserDto?>? Users { get; set; }
+        private ObservableCollection<UserDto?>? testers;
 
-        public ObservableCollection<UserDto> Testers
+        public ObservableCollection<UserDto?>? Testers
         {
             get { return testers; }
             set { testers = value; RaisePropertyChanged(nameof(Testers)); }
@@ -69,17 +69,17 @@ namespace Lims.WPF.ViewModels
         /// <summary>
         /// 用于添加新方法的检测人名称集合
         /// </summary>
-        private ObservableCollection<string> methodTesters;
+        private ObservableCollection<string?>? methodTesters;
 
-        public ObservableCollection<string> MethodTesters
+        public ObservableCollection<string?>? MethodTesters
         {
             get { return methodTesters; }
             set { methodTesters = value; RaisePropertyChanged(nameof(MethodTesters)); }
         }
 
-        private string selectedMethodTester;
+        private string? selectedMethodTester;
 
-        public string SelectedMethodTester
+        public string? SelectedMethodTester
         {
             get { return selectedMethodTester; }
             set { selectedMethodTester = value; RaisePropertyChanged(nameof(SelectedMethodTester)); }
@@ -192,9 +192,9 @@ namespace Lims.WPF.ViewModels
                 RaisePropertyChanged(nameof(SamplesSource));
             }
         }
-        private ObservableCollection<ItemDto> itemsSource = [];
+        private ObservableCollection<ItemDto?> itemsSource = [];
 
-        public ObservableCollection<ItemDto> ItemsSource
+        public ObservableCollection<ItemDto?> ItemsSource
         {
             get => itemsSource;
             set
@@ -203,9 +203,9 @@ namespace Lims.WPF.ViewModels
                 RaisePropertyChanged(nameof(ItemsSource));
             }
         }
-        private ObservableCollection<ItemDto?> taskDatasSource = new ObservableCollection<ItemDto?>();
+        private ObservableCollection<ItemDto?>? taskDatasSource = new ObservableCollection<ItemDto?>();
 
-        public ObservableCollection<ItemDto?> TaskDatasSource
+        public ObservableCollection<ItemDto?>? TaskDatasSource
         {
             get => taskDatasSource;
             set
@@ -225,8 +225,8 @@ namespace Lims.WPF.ViewModels
 
 
         #region 只看加急
-        protected Collection<ItemDto> itemDtos;
-        protected Collection<SampleDto> sampleDtos;
+        protected Collection<ItemDto?> itemDtos;
+        protected Collection<SampleDto?> sampleDtos;
         private bool onlyViewUrgent;
         public bool OnlyViewUrgent
         {
@@ -319,7 +319,7 @@ namespace Lims.WPF.ViewModels
         {
             if (item.Value == null || ((Keyboard.Modifiers & ModifierKeys.Control) != ModifierKeys.Control))
                 return;
-            string methodName = item.Value.ToString(); //(item.Row as ItemDto).ExecuteStandard;
+            string? methodName = item.Value.ToString(); //(item.Row as ItemDto).ExecuteStandard;
             string? method;
             if (!string.IsNullOrEmpty(methodName))
             {
@@ -439,7 +439,7 @@ namespace Lims.WPF.ViewModels
                     TableRow row = table.Rows[10].Clone();
                     foreach (ItemDto item in printSources)
                     {
-                        SampleDto sample = (await _sampleService.GetSingleAsync(item.SampleCode)).Result;
+                        SampleDto? sample = (await _sampleService.GetSingleAsync(item.SampleCode)).Result;
                         if (item.SampleCode != preRow.SampleCode)//号不同换行
                         {
                             tRow++;
@@ -694,8 +694,8 @@ namespace Lims.WPF.ViewModels
     }
     public class StandardFileItem
     {
-        public string FilePath { get; set; }
-        public string FileName { get { return FilePath.Split('\\').Last(); } }
+        public string? FilePath { get; set; }
+        public string? FileName { get { return FilePath?.Split('\\').Last(); } }
         public bool IsSelected { get; set; }
     }
 
