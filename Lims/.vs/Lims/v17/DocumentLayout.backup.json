@@ -362,8 +362,7 @@
               "RelativeToolTip": "Lims.WPF\\App.config",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-07-17T00:42:50.2Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-17T00:42:50.2Z"
             },
             {
               "$type": "Document",
@@ -375,8 +374,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\HasStringToVisibilityConverter.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAuwAkAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:41.793Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:41.793Z"
             },
             {
               "$type": "Document",
@@ -388,8 +386,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\FormattingRule.cs",
               "ViewState": "AgIAABwAAAAAAAAAAAAWwCQAAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:40.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:40.538Z"
             },
             {
               "$type": "Document",
@@ -401,8 +398,7 @@
               "RelativeToolTip": "Lims.WPF\\ViewModels\\DocumentViewModelBase.cs",
               "ViewState": "AgIAACMCAAAAAAAAAAArwDcCAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:32.086Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:32.086Z"
             },
             {
               "$type": "Document",
@@ -414,8 +410,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\IsNullToEnableConverter.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAuwAQAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:46.296Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:46.296Z"
             },
             {
               "$type": "Document",
@@ -425,7 +420,7 @@
               "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\MainViewModel.cs",
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MainViewModel.cs",
               "RelativeToolTip": "Lims.WPF\\ViewModels\\MainViewModel.cs",
-              "ViewState": "AgIAADkBAAAAAAAAAIAwwD8BAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAMIAAAAAAAAAAAAewD4BAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-07-16T07:55:33.563Z",
               "EditorCaption": ""
@@ -436,8 +431,8 @@
               "Title": "MainView.xaml",
               "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\MainView.xaml",
               "RelativeDocumentMoniker": "Lims.WPF\\Views\\MainView.xaml",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\MainView.xaml*",
-              "RelativeToolTip": "Lims.WPF\\Views\\MainView.xaml*",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\MainView.xaml",
+              "RelativeToolTip": "Lims.WPF\\Views\\MainView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2025-07-16T08:04:05.906Z",
               "EditorCaption": ""
@@ -452,8 +447,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\IsCheckedToBagroudConverter.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAuwA8AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:44.576Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:44.576Z"
             },
             {
               "$type": "Document",
@@ -465,8 +459,7 @@
               "RelativeToolTip": "Lims.WebAPI\\Singleton\\TaskCount.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAuwEIAAABbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:41:15.494Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:41:15.494Z"
             },
             {
               "$type": "Document",
@@ -478,8 +471,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\IsNullToBooleanConverter.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAuwAkAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:45.372Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:45.372Z"
             },
             {
               "$type": "Document",
@@ -491,8 +483,7 @@
               "RelativeToolTip": "Lims.WPF\\Properties\\PublishProfiles\\ClickOnceProfile1.pubxml",
               "ViewState": "AgIAACYAAAAAAAAAAAAAAC0AAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003576|",
-              "WhenOpened": "2025-07-16T08:41:11.593Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:41:11.593Z"
             },
             {
               "$type": "Document",
@@ -504,8 +495,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\FilterSubmittableDatasConverter.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAuwA8AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:39.105Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:39.105Z"
             },
             {
               "$type": "Document",
@@ -516,8 +506,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\LoginView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\LoginView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:04:04.834Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:04.834Z"
             },
             {
               "$type": "Document",
@@ -529,8 +518,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\FilePathToFileNameConverter.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAuwBIAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:37.492Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:37.492Z"
             },
             {
               "$type": "Document",
@@ -542,8 +530,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\ExchangeBooleanToVisibilityConverter.cs",
               "ViewState": "AgIAAAIAAAAAAAAAAAAmwAkAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:35.603Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:35.603Z"
             },
             {
               "$type": "Document",
@@ -554,8 +541,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\EditItemInfoView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\EditItemInfoView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:40:34.26Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:34.26Z"
             },
             {
               "$type": "Document",
@@ -567,8 +553,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\UserControls\\DragForm.resx",
               "ViewState": "AgIAACEAAAAAAAAAAAAAACEAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2025-07-16T08:40:33.312Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:33.312Z"
             },
             {
               "$type": "Document",
@@ -580,8 +565,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\DisplayTestProgressConverter.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAuwBIAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:30.472Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:30.472Z"
             },
             {
               "$type": "Document",
@@ -593,8 +577,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\UserControls\\Export\\DemoModuleExportHelper.cs",
               "ViewState": "AgIAAGIBAAAAAAAAAAAuwGsBAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:29.214Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:29.214Z"
             },
             {
               "$type": "Document",
@@ -606,8 +589,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\DateTimeToOffsetConverter.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAuwBkAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:28.289Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:28.289Z"
             },
             {
               "$type": "Document",
@@ -619,8 +601,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\CheckAllConverter.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAuwA4AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:25.234Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:25.234Z"
             },
             {
               "$type": "Document",
@@ -632,8 +613,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\CheckAllCheckBoxVisibilityConverter.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAuwBQAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:24.561Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:24.561Z"
             },
             {
               "$type": "Document",
@@ -645,8 +625,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\BooleanToVisibilityConverter.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAuwAoAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:23.022Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:23.022Z"
             },
             {
               "$type": "Document",
@@ -658,8 +637,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\BooleanToGlyphConverter.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAuwBQAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:22.346Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:22.346Z"
             },
             {
               "$type": "Document",
@@ -671,8 +649,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\BooleanToContentConverter.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAuwA4AAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:20.886Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:20.886Z"
             },
             {
               "$type": "Document",
@@ -684,8 +661,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\BooleanToColorConverter.cs",
               "ViewState": "AgIAAAcAAAAAAAAAAAAuwBAAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:19.568Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:19.568Z"
             },
             {
               "$type": "Document",
@@ -697,8 +673,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\BooleanChangeOverConverter.cs",
               "ViewState": "AgIAAAQAAAAAAAAAAAAuwAkAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:40:17.846Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:40:17.846Z"
             },
             {
               "$type": "Document",
@@ -722,8 +697,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Style\\ControlStyle\\MyControlStylesDictionary.xaml.bak",
               "ViewState": "AgIAAJwAAAAAAAAAAAAUwKYAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-16T08:04:25.574Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:25.574Z"
             },
             {
               "$type": "Document",
@@ -734,8 +708,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\MyItemsOfSamplePreview.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\MyItemsOfSamplePreview.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:04:31.816Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:31.816Z"
             },
             {
               "$type": "Document",
@@ -747,8 +720,7 @@
               "RelativeToolTip": "Lims.WPF\\Views\\MyTestingTasksView.xaml.bak",
               "ViewState": "AgIAAAMAAAAAAAAAAAAUwA0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-16T08:25:02.63Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:25:02.63Z"
             },
             {
               "$type": "Document",
@@ -759,8 +731,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Resources\\UserControls\\Pager.xaml",
               "RelativeToolTip": "Lims.WPF\\Resources\\UserControls\\Pager.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:25:06.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:25:06.794Z"
             },
             {
               "$type": "Document",
@@ -771,8 +742,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\CreateStandardSubItemView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\CreateStandardSubItemView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:02:34.198Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:02:34.198Z"
             },
             {
               "$type": "Document",
@@ -784,8 +754,7 @@
               "RelativeToolTip": "Lims.WPF\\Services\\HttpRestClient.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAjwBcAAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T07:58:12.685Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T07:58:12.685Z"
             },
             {
               "$type": "Document",
@@ -797,8 +766,7 @@
               "RelativeToolTip": "Lims.WebAPI\\Controllers\\MyBaseController.cs",
               "ViewState": "AgIAABQAAAAAAAAAAAAuwBYAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:04:14.231Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:14.231Z"
             },
             {
               "$type": "Document",
@@ -810,8 +778,7 @@
               "RelativeToolTip": "Lims.ToolsForClient\\ListToDataTable.cs",
               "ViewState": "AgIAABcAAAAAAAAAAAArwCEAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:04:02.021Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:02.021Z"
             },
             {
               "$type": "Document",
@@ -823,8 +790,7 @@
               "RelativeToolTip": "Lims.ToolsForClient\\LinqToDataTable.cs",
               "ViewState": "AgIAABEAAAAAAAAAAAArwCAAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:03:59.922Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:59.922Z"
             },
             {
               "$type": "Document",
@@ -836,8 +802,7 @@
               "RelativeToolTip": "Lims.WPF\\Resources\\Style\\ControlStyle\\GridControlStyleDictionary.xaml.bak",
               "ViewState": "AgIAAKYBAAAAAAAAAAAUwLABAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-16T08:03:50.014Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:50.014Z"
             },
             {
               "$type": "Document",
@@ -861,8 +826,7 @@
               "RelativeToolTip": "Lims.ToolsForClient\\ExcelExportHelper.cs",
               "ViewState": "AgIAAP4AAAAAAAAAAAAjwAcBAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:03:45.838Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:45.838Z"
             },
             {
               "$type": "Document",
@@ -874,8 +838,7 @@
               "RelativeToolTip": "Lims.ToolsForClient\\Extensions\\DataTableExtensions.cs",
               "ViewState": "AgIAACoAAAAAAAAAAAAjwDMAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:03:34.548Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:34.548Z"
             },
             {
               "$type": "Document",
@@ -887,8 +850,7 @@
               "RelativeToolTip": "Lims.WPF\\Views\\DataRecoveryView.xaml.bak",
               "ViewState": "AgIAAAMAAAAAAAAAAAAUwA0AAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-16T08:03:30.988Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:30.988Z"
             },
             {
               "$type": "Document",
@@ -899,8 +861,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\DataRecoveryView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\DataRecoveryView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:03:26.731Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:26.731Z"
             },
             {
               "$type": "Document",
@@ -911,8 +872,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\CurrentTasksManageView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\CurrentTasksManageView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:03:24.973Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:24.973Z"
             },
             {
               "$type": "Document",
@@ -923,8 +883,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\AddSubItemsView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\AddSubItemsView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:02:11.039Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:02:11.039Z"
             },
             {
               "$type": "Document",
@@ -935,8 +894,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\MyTestingTasksView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\MyTestingTasksView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:05:54.882Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:05:54.882Z"
             },
             {
               "$type": "Document",
@@ -947,8 +905,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\RetestSampleView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\RetestSampleView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:35:16.08Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:35:16.08Z"
             },
             {
               "$type": "Document",
@@ -960,8 +917,7 @@
               "RelativeToolTip": "Lims.WPF\\ViewModels\\SampleAndItemDataViewModelBase.cs",
               "ViewState": "AgIAAA0EAAAAAAAAAAAjwBYEAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:35:18.319Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:35:18.319Z"
             },
             {
               "$type": "Document",
@@ -972,8 +928,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\SearchByItemOrMethodView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\SearchByItemOrMethodView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:36:52.794Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:36:52.794Z"
             },
             {
               "$type": "Document",
@@ -984,8 +939,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\TasksCreateView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\TasksCreateView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:37:17.677Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:37:17.677Z"
             },
             {
               "$type": "Document",
@@ -996,8 +950,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\TasksFirstCheckView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\TasksFirstCheckView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:37:26.189Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:37:26.189Z"
             },
             {
               "$type": "Document",
@@ -1008,8 +961,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\TasksSecondCheckView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\TasksSecondCheckView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:37:27.344Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:37:27.344Z"
             },
             {
               "$type": "Document",
@@ -1020,8 +972,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\TasksThirdCheckView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\TasksThirdCheckView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:37:29.667Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:37:29.667Z"
             },
             {
               "$type": "Document",
@@ -1032,8 +983,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Resources\\UserControls\\TaskListViewBaseMenu.xaml",
               "RelativeToolTip": "Lims.WPF\\Resources\\UserControls\\TaskListViewBaseMenu.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:37:15.414Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:37:15.414Z"
             },
             {
               "$type": "Document",
@@ -1044,8 +994,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Resources\\UserControls\\SamplesViewBaseMenu.xaml",
               "RelativeToolTip": "Lims.WPF\\Resources\\UserControls\\SamplesViewBaseMenu.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:36:49.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:36:49.533Z"
             },
             {
               "$type": "Document",
@@ -1056,8 +1005,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Resources\\UserControls\\SampleInfoControl.xaml",
               "RelativeToolTip": "Lims.WPF\\Resources\\UserControls\\SampleInfoControl.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:36:48.059Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:36:48.059Z"
             },
             {
               "$type": "Document",
@@ -1068,8 +1016,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\ReportPreview.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\ReportPreview.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:35:14.99Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:35:14.99Z"
             },
             {
               "$type": "Document",
@@ -1081,8 +1028,7 @@
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\ReportDataPreview.Designer.cs",
               "ViewState": "AgIAAD8AAAAAAAAAAAArwEkAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:35:11.082Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:35:11.082Z"
             },
             {
               "$type": "Document",
@@ -1093,8 +1039,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\CheckDatasComfirmView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\CheckDatasComfirmView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:02:29.251Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:02:29.251Z"
             },
             {
               "$type": "Document",
@@ -1105,8 +1050,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\AllItemsOfSamplePreview.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\AllItemsOfSamplePreview.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:02:20.748Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:02:20.748Z"
             },
             {
               "$type": "Document",
@@ -1117,8 +1061,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\ChangeItemTesterView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\ChangeItemTesterView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:02:26.38Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:02:26.38Z"
             },
             {
               "$type": "Document",
@@ -1129,8 +1072,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\ChangeSampleStateView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\ChangeSampleStateView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:02:28.146Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:02:28.146Z"
             },
             {
               "$type": "Document",
@@ -1141,8 +1083,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\CreateMethodView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\CreateMethodView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:02:32.606Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:02:32.606Z"
             },
             {
               "$type": "Document",
@@ -1153,8 +1094,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\EditSampleInfoView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\EditSampleInfoView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:03:43.456Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:43.456Z"
             },
             {
               "$type": "Document",
@@ -1165,8 +1105,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Resources\\UserControls\\EditTestDateControl.xaml",
               "RelativeToolTip": "Lims.WPF\\Resources\\UserControls\\EditTestDateControl.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:03:44.784Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:44.784Z"
             },
             {
               "$type": "Document",
@@ -1177,8 +1116,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\IndexView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\IndexView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:03:51.019Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:51.019Z"
             },
             {
               "$type": "Document",
@@ -1189,8 +1127,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\InPutBoxView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\InPutBoxView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:03:58.785Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:03:58.785Z"
             },
             {
               "$type": "Document",
@@ -1201,8 +1138,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\MyEdiatbleSubItemsView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\MyEdiatbleSubItemsView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:04:30.853Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:30.853Z"
             },
             {
               "$type": "Document",
@@ -1213,8 +1149,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\MyReceivableTasksView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\MyReceivableTasksView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:04:34.844Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:34.844Z"
             },
             {
               "$type": "Document",
@@ -1225,8 +1160,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\MyReturnedTasksView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\MyReturnedTasksView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:04:35.935Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:35.935Z"
             },
             {
               "$type": "Document",
@@ -1237,8 +1171,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\MySubmittedTaskListPreview.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\MySubmittedTaskListPreview.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:04:38.513Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:38.513Z"
             },
             {
               "$type": "Document",
@@ -1250,8 +1183,7 @@
               "RelativeToolTip": "Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
               "ViewState": "AgIAAL0BAAAAAAAAAAArwMoBAAA2AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:04:43.82Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:43.82Z"
             },
             {
               "$type": "Document",
@@ -1263,8 +1195,7 @@
               "RelativeToolTip": "Lims.WPF\\Views\\MySubmittedTasksView.xaml.bak",
               "ViewState": "AgIAAJkAAAAAAAAAAAAUwKoAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-16T08:04:41.98Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:41.98Z"
             },
             {
               "$type": "Document",
@@ -1275,8 +1206,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\MySubmittedTasksView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\MySubmittedTasksView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:04:40.25Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:04:40.25Z"
             },
             {
               "$type": "Document",
@@ -1288,8 +1218,7 @@
               "RelativeToolTip": "Lims.WPF\\Services\\Services\\SubItemStandardService.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAQwCUAAABRAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:36:56.081Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:36:56.081Z"
             },
             {
               "$type": "Document",
@@ -1300,8 +1229,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\ReagentManagementView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\ReagentManagementView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:01:47.083Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:01:47.083Z"
             },
             {
               "$type": "Document",
@@ -1312,8 +1240,7 @@
               "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\lims_wpf\\Lims\\Lims.WPF\\Views\\Dialogs\\ReagentIOManagementView.xaml",
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\ReagentIOManagementView.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-16T08:25:09.126Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:25:09.126Z"
             },
             {
               "$type": "Document",
@@ -1325,8 +1252,7 @@
               "RelativeToolTip": "Lims.WPF\\Services\\Services\\ReagentService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:28:15.349Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:28:15.349Z"
             },
             {
               "$type": "Document",
@@ -1350,8 +1276,7 @@
               "RelativeToolTip": "Lims.WPF\\Views\\Dialogs\\ReagentIOManagementView.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:28:55.394Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:28:55.394Z"
             },
             {
               "$type": "Document",
@@ -1363,8 +1288,7 @@
               "RelativeToolTip": "Lims.WPF\\ViewModels\\ReagentManagementViewModel.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAD4vw0AAABIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T07:56:07.976Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T07:56:07.976Z"
             },
             {
               "$type": "Document",
@@ -1376,8 +1300,7 @@
               "RelativeToolTip": "Lims.Common\\Parameters\\SubItemStandardFilterParam.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:05:14.996Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:05:14.996Z"
             },
             {
               "$type": "Document",
@@ -1389,8 +1312,7 @@
               "RelativeToolTip": "Lims.WebAPI\\Models\\ReagentModel.cs",
               "ViewState": "AgIAAAgAAAAAAAAAAAAQwCkAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:00:25.557Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:00:25.557Z"
             },
             {
               "$type": "Document",
@@ -1402,8 +1324,7 @@
               "RelativeToolTip": "Lims.WebAPI\\Models\\SampleModel.cs",
               "ViewState": "AgIAAEoAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-16T08:00:25.054Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-16T08:00:25.054Z"
             }
           ]
         }

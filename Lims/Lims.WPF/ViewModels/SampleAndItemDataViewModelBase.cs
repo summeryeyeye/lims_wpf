@@ -1181,42 +1181,42 @@ namespace Lims.WPF.ViewModels
                 get; set;
             }
 
-            public string 样品名称
+            public string? 样品名称
             {
                 get; set;
             }
 
-            public string 是否加急
+            public string? 是否加急
             {
                 get; set;
             }
 
-            public string 业务类型
+            public string? 业务类型
             {
                 get; set;
             }
 
-            public string 检测项目
+            public string? 检测项目
             {
                 get; set;
             }
 
-            public string 指标要求
+            public string? 指标要求
             {
                 get; set;
             }
 
-            public string 执行标准
+            public string? 执行标准
             {
                 get; set;
             }
 
-            public string 数据结果
+            public string? 数据结果
             {
                 get; set;
             }
 
-            public string 核对
+            public string? 核对
             {
                 get; set;
             }
@@ -1234,14 +1234,14 @@ namespace Lims.WPF.ViewModels
             {
                 if (SelectedEditableSubItems.Count > 0)
                 {
-                    var report = GetDataFrom_HITACHIAA_Report();
-                    if (report == null)
-                        return;
-                    var strList = report.aaList;
+                    HITACHIAA_Report report;
+                    List<string> strList;
                     switch (e.Key)
                     {
                         //粘贴至平行一
                         case Key.Q:
+                            report = GetDataFrom_HITACHIAA_Report();
+                            strList = report.aaList;
                             for (int i = 0; i < SelectedEditableSubItems.Count; i++)
                             {
                                 if (i == strList.Count)
@@ -1279,6 +1279,8 @@ namespace Lims.WPF.ViewModels
                             break;
                         //粘贴至平行二
                         case Key.W:
+                            report = GetDataFrom_HITACHIAA_Report();
+                            strList = report.aaList;
                             for (int i = 0; i < SelectedEditableSubItems.Count; i++)
                             {
                                 if (i == strList.Count)
