@@ -120,8 +120,8 @@ namespace Lims.WPF.ViewModels
         {
             var url = $"{serviceRoutePath}TaskCount";
             HubConnectionBuilder hubConnectionBuilder = new HubConnectionBuilder();
-            hubConnectionBuilder.WithUrl(url, options => { });
-            hubConnection = new HubConnectionBuilder().WithUrl(serviceRoutePath + "TaskCount").WithAutomaticReconnect().Build();
+            //hubConnectionBuilder.WithUrl(url, options => { });
+            hubConnection = new HubConnectionBuilder().WithUrl(url).WithAutomaticReconnect().Build();
             //自定义重连规则实现
             hubConnectionBuilder = (HubConnectionBuilder)hubConnectionBuilder
                 .WithAutomaticReconnect(new RetryPolicy());
@@ -199,26 +199,26 @@ namespace Lims.WPF.ViewModels
 
             if (myReceivableTasksNavigationItem != null)
             {
-                var dr = taskCount.MyReceivableTasks.Select($"Tester='{currentUser?.UserName}'").FirstOrDefault();
+                var dr = taskCount.MyReceivableTasks.Select($"tester='{currentUser?.UserName}'").FirstOrDefault();
                 myReceivableTasksNavigationItem.Count = dr != null ? System.Convert.ToInt32(dr["count"]) : 0;
             }
 
             if (myTestingTasksNavigationItem != null)
             {
-                var dr = taskCount.MyTestingTasks.Select($"Tester='{currentUser?.UserName}'").FirstOrDefault();
+                var dr = taskCount.MyTestingTasks.Select($"tester='{currentUser?.UserName}'").FirstOrDefault();
                 myTestingTasksNavigationItem.Count = dr != null ? System.Convert.ToInt32(dr["count"]) : 0;
 
             }
             if (myReturnedTasksNavigationItem != null)
             {
-                var dr = taskCount.MyReturnedTasks.Select($"Tester='{currentUser?.UserName}'").FirstOrDefault();
+                var dr = taskCount.MyReturnedTasks.Select($"tester='{currentUser?.UserName}'").FirstOrDefault();
                 myReturnedTasksNavigationItem.Count = dr != null ? System.Convert.ToInt32(dr["count"]) : 0;
 
                 //myReturnedTasksNavigationItem.Count = (int)taskCount.MyReturnedTasks.Select(CurrentUser.UserName).FirstOrDefault()["count"];
             }
 
 
-            var drLog = taskCount.MyUnreadLogs.Select($"Tester='{currentUser?.UserName}'").FirstOrDefault();
+            var drLog = taskCount.MyUnreadLogs.Select($"tester='{currentUser?.UserName}'").FirstOrDefault();
             UnReadLoggersCount = drLog != null ? System.Convert.ToInt32(drLog["count"]) : 0;
 
             //UnReadLoggersCount = (int)taskCount.MyUnreadLogs.Select(CurrentUser.UserName).FirstOrDefault()["count"];
@@ -244,7 +244,7 @@ namespace Lims.WPF.ViewModels
         {
 
         }
-        public ObservableCollection<LoggerDto>? MyLogsSource
+        public ObservableCollection<LoggerDto?> MyLogsSource
         {
             get; set;
         }
@@ -317,7 +317,7 @@ namespace Lims.WPF.ViewModels
         /// </summary>
         /// <returns></returns>
         [Command]
-        public async static Task OpenCommonDisk()
+        public async  Task OpenCommonDisk()
         {
             await Task.Run(() =>
             {

@@ -64,7 +64,7 @@ namespace Lims.WebAPI.Singleton
                 taskCountDto.MyReceivableTasks = Db.Ado.GetDataTable("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=101 Group BY tester");
                 taskCountDto.MyTestingTasks = Db.Ado.GetDataTable("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=103 Group BY tester");
                 taskCountDto.MyReturnedTasks = Db.Ado.GetDataTable("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=102 Group BY tester");
-                taskCountDto.MyUnreadLogs = Db.Ado.GetDataTable("SELECT receivername Tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername");
+                taskCountDto.MyUnreadLogs = Db.Ado.GetDataTable("SELECT receivername tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername");
                 taskCountDto.unFinishedTasks = Db.Ado.GetInt("SELECT Count(itemid) count FROM itemmodel WHERE testprogress<104");
                 taskCountDto.firstCheckTasks = Db.Ado.GetInt("SELECT COUNT(samplecode) count FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 104 THEN 1 ELSE 0 END) = 0 ) t");
                 taskCountDto.sencondCheckTasks = Db.Ado.GetInt("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 105 THEN 1 ELSE 0 END) = 0 ) t");
