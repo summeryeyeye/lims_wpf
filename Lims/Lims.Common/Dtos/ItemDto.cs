@@ -54,7 +54,7 @@ namespace Lims.Common.Dtos
         public string? TestMethod
         {
             get { return testMethod; }
-            set { testMethod = value; RaisePropertiesChanged(nameof(TestMethod)); }
+            set { testMethod = value; RaisePropertiyChanged(nameof(TestMethod)); }
         }
 
         public string? RoundRule { get; set; }
@@ -73,7 +73,7 @@ namespace Lims.Common.Dtos
             set
             {
                 firstSampleWeight = value;
-                RaisePropertiesChanged(nameof(FirstSampleWeight));
+                RaisePropertiyChanged(nameof(FirstSampleWeight));
             }
         }
 
@@ -85,7 +85,7 @@ namespace Lims.Common.Dtos
             set
             {
                 secondSampleWeight = value;
-                RaisePropertiesChanged(nameof(SecondSampleWeight));
+                RaisePropertiyChanged(nameof(SecondSampleWeight));
             }
         }
 
@@ -101,7 +101,7 @@ namespace Lims.Common.Dtos
             }
             set
             {
-                testItem = value; RaisePropertiesChanged(nameof(TestItem));
+                testItem = value; RaisePropertiyChanged(nameof(TestItem));
             }
         }
         private string? tester;
@@ -114,7 +114,7 @@ namespace Lims.Common.Dtos
             }
             set
             {
-                tester = value; RaisePropertiesChanged(nameof(Tester));
+                tester = value; RaisePropertiyChanged(nameof(Tester));
             }
         }
         private string? reportUnit;
@@ -127,7 +127,7 @@ namespace Lims.Common.Dtos
             set
             {
                 reportUnit = value;
-                RaisePropertiesChanged(nameof(ReportUnit));
+                RaisePropertiyChanged(nameof(ReportUnit));
             }
         }
 
@@ -136,7 +136,7 @@ namespace Lims.Common.Dtos
         public string? IndexRequest
         {
             get { return indexRequest; }
-            set { indexRequest = value; RaisePropertiesChanged(nameof(IndexRequest)); }
+            set { indexRequest = value; RaisePropertiyChanged(nameof(IndexRequest)); }
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Lims.Common.Dtos
             set
             {
                 appointTime = value;
-                RaisePropertiesChanged(nameof(AppointTime));
+                RaisePropertiyChanged(nameof(AppointTime));
             }
         }
         private int preTestProgress;
@@ -177,7 +177,7 @@ namespace Lims.Common.Dtos
             set
             {
                 preTestProgress = value;
-                RaisePropertiesChanged(nameof(PreTestProgress));
+                RaisePropertiyChanged(nameof(PreTestProgress));
             }
         }
         private int testProgress;
@@ -188,7 +188,7 @@ namespace Lims.Common.Dtos
             set
             {
                 testProgress = value;
-                RaisePropertiesChanged(nameof(TestProgress));
+                RaisePropertiyChanged(nameof(TestProgress));
             }
         }
 
@@ -203,7 +203,7 @@ namespace Lims.Common.Dtos
             set
             {
                 temp_TestResult = value;
-                RaisePropertiesChanged(nameof(Temp_TestResult));
+                RaisePropertiyChanged(nameof(Temp_TestResult));
             }
         }
 
@@ -218,7 +218,7 @@ namespace Lims.Common.Dtos
             set
             {
                 testResult = value;
-                RaisePropertiesChanged(nameof(TestResult));
+                RaisePropertiyChanged(nameof(TestResult));
             }
         }
 
@@ -233,7 +233,7 @@ namespace Lims.Common.Dtos
             set
             {
                 itemRemark = value;
-                RaisePropertiesChanged(nameof(ItemRemark));
+                RaisePropertiyChanged(nameof(ItemRemark));
             }
         }
 
@@ -245,7 +245,7 @@ namespace Lims.Common.Dtos
             set
             {
                 resultSubmitTime = value;
-                RaisePropertiesChanged(nameof(ResultSubmitTime));
+                RaisePropertiyChanged(nameof(ResultSubmitTime));
             }
         }
 
@@ -257,7 +257,7 @@ namespace Lims.Common.Dtos
             set
             {
                 temp_SingleConclusion = value;
-                RaisePropertiesChanged(nameof(Temp_SingleConclusion));
+                RaisePropertiyChanged(nameof(Temp_SingleConclusion));
             }
         }
         private string? singleConclusion = "/";
@@ -268,7 +268,7 @@ namespace Lims.Common.Dtos
             set
             {
                 singleConclusion = value;
-                RaisePropertiesChanged(nameof(SingleConclusion));
+                RaisePropertiyChanged(nameof(SingleConclusion));
             }
         }
 
@@ -280,7 +280,7 @@ namespace Lims.Common.Dtos
             set
             {
                 testDate = value;
-                RaisePropertiesChanged(nameof(TestDate));
+                RaisePropertiyChanged(nameof(TestDate));
             }
         }
         /// <summary>
@@ -291,7 +291,7 @@ namespace Lims.Common.Dtos
         public string? TestRemark
         {
             get { return testRemark; }
-            set { testRemark = value; RaisePropertiesChanged(nameof(TestRemark)); }
+            set { testRemark = value; RaisePropertiyChanged(nameof(TestRemark)); }
         }
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Lims.Common.Dtos
             set
             {
                 isOriginalRecordComplete = value;
-                RaisePropertiesChanged(nameof(IsOriginalRecordComplete));
+                RaisePropertiyChanged(nameof(IsOriginalRecordComplete));
             }
         }
 
@@ -317,7 +317,7 @@ namespace Lims.Common.Dtos
         public bool IsOverDate
         {
             get { return isOverDate; }
-            set { isOverDate = value; RaisePropertiesChanged(nameof(IsOverDate)); }
+            set { isOverDate = value; RaisePropertiyChanged(nameof(IsOverDate)); }
         }
 
         public SampleDto? Sample { get; set; }
@@ -335,7 +335,7 @@ namespace Lims.Common.Dtos
             set
             {
                 subItems = value;
-                RaisePropertiesChanged(nameof(SubItems));
+                RaisePropertiyChanged(nameof(SubItems));
             }
         }
 

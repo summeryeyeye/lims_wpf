@@ -12,7 +12,7 @@ namespace Lims.Common.Dtos
             set
             {
                 sampleCode = value;
-                RaisePropertiesChanged(nameof(SampleCode));
+                RaisePropertiyChanged(nameof(SampleCode));
             }
         }
         private string? sampleName;
@@ -23,7 +23,7 @@ namespace Lims.Common.Dtos
             set
             {
                 sampleName = value;
-                RaisePropertiesChanged(nameof(SampleName));
+                RaisePropertiyChanged(nameof(SampleName));
             }
         }
 
@@ -35,7 +35,7 @@ namespace Lims.Common.Dtos
             set
             {
                 sampleState = value;
-                RaisePropertiesChanged(nameof(SampleState));
+                RaisePropertiyChanged(nameof(SampleState));
             }
         }
 
@@ -47,7 +47,7 @@ namespace Lims.Common.Dtos
             set
             {
                 isUrgent = value;
-                RaisePropertiesChanged(nameof(IsUrgent));
+                RaisePropertiyChanged(nameof(IsUrgent));
             }
         }
 
@@ -59,7 +59,7 @@ namespace Lims.Common.Dtos
             set
             {
                 taskType = value;
-                RaisePropertiesChanged(nameof(TaskType));
+                RaisePropertiyChanged(nameof(TaskType));
             }
         }
 
@@ -74,7 +74,7 @@ namespace Lims.Common.Dtos
             set
             {
                 enterpriseOfSender = value;
-                RaisePropertiesChanged(nameof(EnterpriseOfSender));
+                RaisePropertiyChanged(nameof(EnterpriseOfSender));
             }
         }
 
@@ -86,7 +86,7 @@ namespace Lims.Common.Dtos
             set
             {
                 sampleRemark = value;
-                RaisePropertiesChanged(nameof(SampleRemark));
+                RaisePropertiyChanged(nameof(SampleRemark));
             }
         }
 
@@ -98,7 +98,7 @@ namespace Lims.Common.Dtos
             set
             {
                 createTime = value;
-                RaisePropertiesChanged(nameof(CreateTime));
+                RaisePropertiyChanged(nameof(CreateTime));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Lims.Common.Dtos
             set
             {
                 firstAuditTime = value;
-                RaisePropertiesChanged(nameof(FirstAuditTime));
+                RaisePropertiyChanged(nameof(FirstAuditTime));
             }
         }
 
@@ -122,7 +122,7 @@ namespace Lims.Common.Dtos
             set
             {
                 secondAuditTime = value;
-                RaisePropertiesChanged(nameof(SecondAuditTime));
+                RaisePropertiyChanged(nameof(SecondAuditTime));
             }
         }
 
@@ -134,7 +134,7 @@ namespace Lims.Common.Dtos
             set
             {
                 completeTime = value;
-                RaisePropertiesChanged(nameof(CompleteTime));
+                RaisePropertiyChanged(nameof(CompleteTime));
             }
         }
 
@@ -146,7 +146,7 @@ namespace Lims.Common.Dtos
             set
             {
                 checkRemark = value;
-                RaisePropertiesChanged(nameof(CheckRemark));
+                RaisePropertiyChanged(nameof(CheckRemark));
             }
         }
 
@@ -183,7 +183,7 @@ namespace Lims.Common.Dtos
         public string? MoistureContent
         {
             get { return moistureContent; }
-            set { moistureContent = value; RaisePropertiesChanged(nameof(MoistureContent)); }
+            set { moistureContent = value; RaisePropertiyChanged(nameof(MoistureContent)); }
         }
         /// <summary>
         /// 密度
@@ -193,7 +193,7 @@ namespace Lims.Common.Dtos
         public string? Density
         {
             get { return density; }
-            set { density = value; RaisePropertiesChanged(nameof(Density)); }
+            set { density = value; RaisePropertiyChanged(nameof(Density)); }
         }
 
 
@@ -208,7 +208,7 @@ namespace Lims.Common.Dtos
             set
             {
                 items = value;
-                RaisePropertiesChanged(nameof(Items));
+                RaisePropertiyChanged(nameof(Items));
             }
         }
         

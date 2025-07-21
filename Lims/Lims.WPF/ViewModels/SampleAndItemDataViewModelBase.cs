@@ -1315,12 +1315,7 @@ namespace Lims.WPF.ViewModels
                             await _itemService.UpdateAsync(EdittingItem);
                             break;
                     }
-                }
-                else
-                {
-                    _messageBoxService.ShowMessage("请勾选需要操作的数据后操作！");
-                }
-
+                }    
             }
 
         }

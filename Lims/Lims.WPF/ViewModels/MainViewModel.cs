@@ -17,6 +17,7 @@ using System.Data;
 using System.Data.Common;
 //using System.Data.SqlClient;
 using System.Diagnostics;
+using System.Drawing.Printing;
 using System.Net.Http;
 using System.Security.Policy;
 using System.Text;
@@ -64,6 +65,14 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void Test()
         {
+            Spire.Doc.Document document = new Spire.Doc.Document();
+            document.LoadFromFile(@"C:\Users\Administrator\Desktop\1092s-2.docx");
+
+            PrintDocument printDocument = document.PrintDocument;
+            printDocument.Print();
+
+
+
 
 
 

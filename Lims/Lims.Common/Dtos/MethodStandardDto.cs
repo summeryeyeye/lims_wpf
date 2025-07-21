@@ -21,7 +21,7 @@
         public string? KeyItem
         {
             get { return keyItem; }
-            set { keyItem = value; RaisePropertiesChanged(nameof(KeyItem)); }
+            set { keyItem = value; RaisePropertiyChanged(nameof(KeyItem)); }
         }
 
         
@@ -39,7 +39,7 @@
             set
             {
                 originalRecordTemplateFilePath = value;
-                RaisePropertiesChanged(nameof(OriginalRecordTemplateFilePath));
+                RaisePropertiyChanged(nameof(OriginalRecordTemplateFilePath));
             }
         }
         private string? instruments;
@@ -47,14 +47,14 @@
         public string? Instruments
         {
             get { return instruments; }
-            set { instruments = value; RaisePropertiesChanged(nameof(Instruments)); }
+            set { instruments = value; RaisePropertiyChanged(nameof(Instruments)); }
         }
         private string? originalRecordGroup;
 
         public string? OriginalRecordGroup
         {
             get { return originalRecordGroup; }
-            set { originalRecordGroup = value; RaisePropertiesChanged(nameof(OriginalRecordGroup)); }
+            set { originalRecordGroup = value; RaisePropertiyChanged(nameof(OriginalRecordGroup)); }
         }
         private bool isPrintSubItem;
 

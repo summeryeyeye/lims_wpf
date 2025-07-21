@@ -43,7 +43,7 @@ namespace Lims.Common.Dtos
         public bool IsReaded
         {
             get { return isReaded; }
-            set { isReaded = value; RaisePropertiesChanged(nameof(IsReaded)); }
+            set { isReaded = value; RaisePropertiyChanged(nameof(IsReaded)); }
         }
 
         public static string GetLocalIP()

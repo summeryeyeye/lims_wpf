@@ -46,7 +46,7 @@ namespace Lims.WPF.ViewModels
             //await GetTesterNames();
         }
 
-        private List<ProductStandardDto> _ProductStandardDBInfos = new();
+        private List<ProductStandardDto?> _ProductStandardDBInfos = new();
         private ObservableCollection<ProductNode> productStandards = new();
         public ObservableCollection<ProductNode> ProductStandards
         {
@@ -519,11 +519,18 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task InitMethodInfo()
         {
-            _ProductStandardDBInfos = (await _productStandardService.GetAllAsync()).Result;
+            var response = await _productStandardService.GetAllAsync();
+            if (response.Status)
+            {
+                if (response.Result != null)
+                {
+                    _ProductStandardDBInfos = response.Result.OrderBy(p => p.Id).ToList();
 
-            SearchString = string.Empty;
+                    SearchString = string.Empty;
 
-            GetRootNodes(string.Empty);
+                    GetRootNodes(string.Empty);
+                }
+            }
         }
         [Command]
         public void CheckSubItem(SubItem subitem)
@@ -1164,7 +1171,7 @@ namespace Lims.WPF.ViewModels
             set
             {
                 isChecked = value;
-                RaisePropertiesChanged(nameof(IsChecked));
+                RaisePropertiyChanged(nameof(IsChecked));
             }
         }
     }
@@ -1186,7 +1193,7 @@ namespace Lims.WPF.ViewModels
             set
             {
                 content = value;
-                RaisePropertiesChanged(nameof(Content));
+                RaisePropertiyChanged(nameof(Content));
             }
         }
 
@@ -1207,7 +1214,7 @@ namespace Lims.WPF.ViewModels
             set
             {
                 isCheck = value;
-                RaisePropertiesChanged(nameof(IsCheck));
+                RaisePropertiyChanged(nameof(IsCheck));
             }
         }
     }
@@ -1262,8 +1269,8 @@ namespace Lims.WPF.ViewModels
                 {
                     background = "#87CEFA";
                 }
-                RaisePropertiesChanged(nameof(IsChecked));
-                RaisePropertiesChanged(nameof(Background));
+                RaisePropertiyChanged(nameof(IsChecked));
+                RaisePropertiyChanged(nameof(Background));
             }
         }
     }

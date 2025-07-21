@@ -42,7 +42,7 @@
             set
             {
                 
-                count = value; RaisePropertiesChanged(nameof(Count));
+                count = value; RaisePropertiyChanged(nameof(Count));
             }
         }
 

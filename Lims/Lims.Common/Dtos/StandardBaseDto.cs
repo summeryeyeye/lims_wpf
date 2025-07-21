@@ -10,7 +10,7 @@
         public StandardState StandardState
         {
             get { return standardState; }
-            set { standardState = value; RaisePropertiesChanged(nameof(StandardState)); }
+            set { standardState = value; RaisePropertiyChanged(nameof(StandardState)); }
         }
         public string LastUpdater { get; set; }
     }

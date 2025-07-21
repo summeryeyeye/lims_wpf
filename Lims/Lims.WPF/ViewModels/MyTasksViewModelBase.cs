@@ -158,11 +158,12 @@ namespace Lims.WPF.ViewModels
                         {
                             var testDate = SelectedTestDate;
                             focusedItem.TestDate = testDate;
-
+                           
                             TaskDatasSource.FirstOrDefault(i => i.ItemId == focusedItem.ItemId).TestDate = testDate;
 
                             await _itemService.UpdateAsync(focusedItem);
                             await ShowNotifaction("", "同步检测日期完成!", "");
+    
 
                         })},
                         new UICommand{Caption = "取消",IsDefault = false,IsCancel = true,}
@@ -368,7 +369,7 @@ namespace Lims.WPF.ViewModels
                         var subRespone = await _subItemStandardService.GetSubItemStandardsBySubItemAsync(new SubItemStandardFilterParam() { SubitemName = subItem.TestItem });
                         if (subRespone.Status)
                         {
-                            if (subRespone.Result!=null)
+                            if (subRespone.Result != null)
                             {
                                 var subStandard = subRespone.Result.FirstOrDefault();
                                 if (subStandard != null)
@@ -507,6 +508,11 @@ namespace Lims.WPF.ViewModels
                     , "", this);
             }
         }
+        /// <summary>
+        /// 关联方法与记录模板
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
         [Command]
         public async Task AttachOriginalRecordTemplate(ItemDto item)
         {
@@ -527,9 +533,9 @@ namespace Lims.WPF.ViewModels
                         await _methodStandardService.UpdateAsync(item.MethodStandard);
                         showNotifaction("方法与原始记录模板关联成功！");
                     }
-                    else                    
+                    else
                         showNotifaction("未找到该方法！");
-                    
+
                 }
 
             }

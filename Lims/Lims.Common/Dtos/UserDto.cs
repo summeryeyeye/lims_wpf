@@ -85,7 +85,7 @@
             }
             set
             {
-                canRead = value; RaisePropertiesChanged(nameof(CanRead));
+                canRead = value; RaisePropertiyChanged(nameof(CanRead));
             }
         }
 
@@ -112,7 +112,7 @@
             }
             set
             {
-                canCheck = value; RaisePropertiesChanged(nameof(CanCheck));
+                canCheck = value; RaisePropertiyChanged(nameof(CanCheck));
             }
         }
 

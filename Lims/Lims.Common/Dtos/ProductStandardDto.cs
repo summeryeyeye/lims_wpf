@@ -18,7 +18,7 @@
         public int TestMethodId
         {
             get { return testMethodId; }
-            set { testMethodId = value; RaisePropertiesChanged(nameof(TestMethodId)); }
+            set { testMethodId = value; RaisePropertiyChanged(nameof(TestMethodId)); }
         }
         public string SampleState
         {

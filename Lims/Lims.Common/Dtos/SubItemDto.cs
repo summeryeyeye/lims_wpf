@@ -26,7 +26,7 @@
             set
             {
                 testItem = value;
-                RaisePropertiesChanged(nameof(TestItem));
+                RaisePropertiyChanged(nameof(TestItem));
             }
         }
         /// <summary>
@@ -43,7 +43,7 @@
             set
             {
                 firstTtestResult = value;
-                RaisePropertiesChanged(nameof(FirstTestResult));
+                RaisePropertiyChanged(nameof(FirstTestResult));
             }
         }
         private string? secondTestResult;
@@ -57,7 +57,7 @@
             set
             {
                 secondTestResult = value;
-                RaisePropertiesChanged(nameof(SecondTestResult));
+                RaisePropertiyChanged(nameof(SecondTestResult));
             }
         }
         private string? averageTestResult;
@@ -71,7 +71,7 @@
             set
             {
                 averageTestResult = value;
-                RaisePropertiesChanged(nameof(AverageTestResult));
+                RaisePropertiyChanged(nameof(AverageTestResult));
             }
         }
 
@@ -89,7 +89,7 @@
             set
             {
                 temp_TestResult = value;
-                RaisePropertiesChanged(nameof(Temp_TestResult));
+                RaisePropertiyChanged(nameof(Temp_TestResult));
             }
         }
 
@@ -104,7 +104,7 @@
             set
             {
                 testResult = value;
-                RaisePropertiesChanged(nameof(TestResult));
+                RaisePropertiyChanged(nameof(TestResult));
             }
         }
         private string? itemRemark;
@@ -118,7 +118,7 @@
             set
             {
                 itemRemark = value;
-                RaisePropertiesChanged(nameof(ItemRemark));
+                RaisePropertiyChanged(nameof(ItemRemark));
             }
         }
 
@@ -130,7 +130,7 @@
             set
             {
                 createTime = value;
-                RaisePropertiesChanged(nameof(CreateTime));
+                RaisePropertiyChanged(nameof(CreateTime));
             }
         }
 
@@ -145,7 +145,7 @@
             set
             {
                 indexRequest = value;
-                RaisePropertiesChanged(nameof(IndexRequest));
+                RaisePropertiyChanged(nameof(IndexRequest));
             }
         }
     }
