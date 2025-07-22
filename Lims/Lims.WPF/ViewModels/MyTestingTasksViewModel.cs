@@ -573,7 +573,13 @@ namespace Lims.WPF.ViewModels
             else
                 showNotifaction("检测日期提醒已关闭！");
         }
-        
+
+       
+
+
+
+
+
 
 
         protected override void ShowItemsOfFocusedSample(SampleDto sample)

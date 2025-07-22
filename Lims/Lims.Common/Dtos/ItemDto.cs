@@ -89,6 +89,23 @@ namespace Lims.Common.Dtos
             }
         }
 
+        private string? firstAttachmentpath;
+
+        public string? FirstAttachmentpath
+        {
+            get { return firstAttachmentpath; }
+            set { firstAttachmentpath = value; RaisePropertiyChanged(nameof(FirstAttachmentpath)); }
+        }
+
+        private string? secondAttachmentpath;
+
+        public string? SecondAttachmentpath
+        {
+            get { return secondAttachmentpath; }
+            set { secondAttachmentpath = value; RaisePropertiyChanged(nameof(SecondAttachmentpath)); }
+        }
+
+
 
 
 

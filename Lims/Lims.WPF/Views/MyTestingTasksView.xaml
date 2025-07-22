@@ -73,6 +73,11 @@
                     Glyph="{dx:DXImage 'Images/Edit/Edit_16x16.png'}"
                     CommandParameter="{Binding  FocusedItem}"
                     Content="编辑检测备注" />
+                <dxb:BarButtonItem
+                    Command="{Binding AddItemAttachmentCommand}"
+                    Glyph="{dx:DXImage 'Images/Mail/Attachment_16x16.png'}"
+                    CommandParameter="{Binding  FocusedItem}"
+                    Content="上传相关仪器报告" />
                 <dxb:BarSubItem
                     Content="模式管理"
                     Glyph="{dx:DXImage 'Images/XAF/ModelEditor_Action_Modules.png'}">

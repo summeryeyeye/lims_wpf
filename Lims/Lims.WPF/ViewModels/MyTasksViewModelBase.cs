@@ -14,6 +14,7 @@ using Lims.ToolsForClient;
 using Lims.ToolsForClient.Extensions;
 using Lims.WPF.Tools;
 using Spire.Doc;
+using System.Configuration;
 using System.Data;
 using System.Drawing.Printing;
 using System.IO;
@@ -158,12 +159,12 @@ namespace Lims.WPF.ViewModels
                         {
                             var testDate = SelectedTestDate;
                             focusedItem.TestDate = testDate;
-                           
+
                             TaskDatasSource.FirstOrDefault(i => i.ItemId == focusedItem.ItemId).TestDate = testDate;
 
                             await _itemService.UpdateAsync(focusedItem);
                             await ShowNotifaction("", "同步检测日期完成!", "");
-    
+
 
                         })},
                         new UICommand{Caption = "取消",IsDefault = false,IsCancel = true,}
@@ -412,7 +413,7 @@ namespace Lims.WPF.ViewModels
 
 
                 }
-                else if (std.KeyItem.Contains("Aa"))
+                else if (std.KeyItem.Contains("氨基酸"))
                 {
                     try
                     {
@@ -597,6 +598,71 @@ namespace Lims.WPF.ViewModels
 
 
         }
+
+
+        /// <summary>
+        /// 上传关联仪器报告
+        /// </summary>
+        /// <param name="item"></param>
+        [Command]
+        public void AddItemAttachment(ItemDto item)
+        {
+            TemplateInfo.FileName = string.Empty;
+            Microsoft.Win32.OpenFileDialog dlg = new()
+            {
+                Multiselect = true,
+                DefaultExt = ".docx",
+                Filter = "(*.doc,*.docx)|*.doc;*.docx"
+            };
+
+            bool? result = dlg.ShowDialog();
+
+            if ((bool)result)
+            {
+                var filepaths = dlg.FileNames;
+                var filenames = dlg.SafeFileNames;
+
+                var LimsPath = ConfigurationManager.AppSettings["LimsPath"].ToString();
+
+                var desDic = LimsPath + @$"\\附件\\{item.SampleCode}\\{item.TestItem}";
+                if (!Directory.Exists(desDic))
+                {
+                    Directory.CreateDirectory(desDic);
+                }
+
+                List<string> desFiles = new List<string>();
+
+
+                for (int i = 0; i < filepaths.Length; i++)
+                {
+                    var filePath = filepaths[i];
+                    var fileName = filenames[i];
+                    var extension = fileName.Split('.')[1];
+                    var filename = item.SampleCode + $"_{i + 1}.{extension}";
+                    var desFilePath = desDic + @$"\\{filename}";
+
+                    File.Copy(filePath, desFilePath, true);
+                    desFiles.Add(desFilePath);
+                }
+                showNotifaction("附件添加成功！");
+                if (item.MethodStandard.KeyItem.Contains("氨基酸"))
+                {
+                    if (_messageBoxService.ShowMessage("是否填充数据？", "氨基酸", MessageButton.YesNo) == MessageResult.Yes)
+                    {
+
+
+
+
+
+
+                    }
+
+                }
+            }
+        }
+
+
+
 
         [Command]
         public async Task MarkTaskListOriginalRecord()

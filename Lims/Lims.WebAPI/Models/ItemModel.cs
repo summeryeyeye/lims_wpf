@@ -34,6 +34,12 @@ namespace Lims.WebAPI.Models
         [SugarColumn(ColumnDataType = "varchar", IsNullable = true)]
         public string? SecondSampleWeight { get; set; }
 
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = true)]
+        public string? FirstAttachmentpath { get; set; }
+
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = true)]
+        public string? SecondAttachmentpath { get; set; }
+
         [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
         public string? TestItem { get; set; }
 
