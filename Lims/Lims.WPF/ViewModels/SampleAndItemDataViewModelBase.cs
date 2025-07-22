@@ -1593,7 +1593,7 @@ namespace Lims.WPF.ViewModels
             string sampleWeight = string.Empty;
             try
             {
-                Spire.Doc.Document document = new Spire.Doc.Document();
+                using Spire.Doc.Document document = new Spire.Doc.Document();
                 document.LoadFromFile(filepath);
 
                 string str = document.GetText();
@@ -1604,6 +1604,7 @@ namespace Lims.WPF.ViewModels
                     .ToList();
 
                 sampleWeight = str.Split("称样量（g）:\r\n")[1].Split("\r\n\r\n\r\n\r\n")[0];
+
 
             }
             catch (Exception)
@@ -1679,7 +1680,7 @@ namespace Lims.WPF.ViewModels
                         for (int j = 0; j < desFiles.Count; j++)
                         {
                             var file = desFiles[j];
-                            Spire.Doc.Document document = new Spire.Doc.Document();
+                            using Spire.Doc.Document document = new Spire.Doc.Document();
                             document.LoadFromFile(file);
 
                             var report = GetSpireDocDataFrom_HITACHIAA_Report(file);
@@ -1781,7 +1782,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                Spire.Doc.Document document = new Spire.Doc.Document();
+                using Spire.Doc.Document document = new Spire.Doc.Document();
                 PrintDocument printDocument;
                 if (item.FirstAttachmentpath != null)
                 {
@@ -1803,6 +1804,7 @@ namespace Lims.WPF.ViewModels
                 {
                     showNotifaction("请上传相关仪器报告！");
                 }
+
 
             }
             catch (Exception ex)

@@ -116,12 +116,12 @@
                 Command="{Binding AddItemAttachmentCommand}"
                 Glyph="{dx:DXImage 'Images/Mail/Attachment_16x16.png'}"
                 CommandParameter="{Binding  FocusedItem}"
-                Content="上传相关仪器报告" />
+                Content="上传仪器报告" />
             <dxb:BarButtonItem
                 Command="{Binding PrintItemAttachmentCommand}"
                 Glyph="{dx:DXImage 'Images/Print/PrintViaPDF_16x16.png'}"
                 CommandParameter="{Binding  FocusedItem}"
-                Content="打印相关仪器报告" />
+                Content="打印仪器报告" />
             <dxb:BarSubItem
                 Content="原始记录打印管理"
                 Glyph="{dx:DXImage 'Images/XAF/ActionGroup_EasyTestRecorder.png'}">
