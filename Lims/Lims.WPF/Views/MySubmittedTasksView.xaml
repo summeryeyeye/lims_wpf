@@ -83,6 +83,7 @@
                     Glyph="{dx:DXImage 'Images/Print/Printer_16x16.png'}"
                     Content="打印原始记录"
                     ToolTip="打印原始记录" />
+
                 <dxb:BarButtonItem
                     Content="编辑原始记录模板规则"
                     Glyph="{dx:DXImage 'Images/RichEdit/InsertColumnBreak_16x16.png'}"
@@ -111,7 +112,16 @@
                 IsEnabled="{Binding FocusedItem,Converter={StaticResource TestProgressToIsEnableConverter}}" />
             <dxb:BarButtonItem
                 Style="{StaticResource RefreshItemDatasButtonStyle}" />
-
+            <dxb:BarButtonItem
+                Command="{Binding AddItemAttachmentCommand}"
+                Glyph="{dx:DXImage 'Images/Mail/Attachment_16x16.png'}"
+                CommandParameter="{Binding  FocusedItem}"
+                Content="上传相关仪器报告" />
+            <dxb:BarButtonItem
+                Command="{Binding PrintItemAttachmentCommand}"
+                Glyph="{dx:DXImage 'Images/Print/PrintViaPDF_16x16.png'}"
+                CommandParameter="{Binding  FocusedItem}"
+                Content="打印相关仪器报告" />
             <dxb:BarSubItem
                 Content="原始记录打印管理"
                 Glyph="{dx:DXImage 'Images/XAF/ActionGroup_EasyTestRecorder.png'}">

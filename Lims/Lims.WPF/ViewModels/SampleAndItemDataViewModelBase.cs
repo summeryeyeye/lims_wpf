@@ -6,13 +6,18 @@ using DevExpress.Xpf.Editors.Helpers;
 using DevExpress.Xpf.Grid;
 using DevExpress.Xpf.Printing;
 using DevExpress.XtraPrinting;
+using DevExpress.XtraReports.Wizards.Templates;
 using Lims.Common.Dtos;
 using Lims.Common.Parameters;
 using Lims.ToolsForClient;
 using Lims.WPF.Resources;
 using Lims.WPF.Views.Dialogs;
+using RestSharp.Extensions;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
+using System.Drawing.Printing;
+using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -1240,7 +1245,7 @@ namespace Lims.WPF.ViewModels
                     {
                         //粘贴至平行一
                         case Key.Q:
-                            report = GetDataFrom_HITACHIAA_Report();
+                            report = GetCliboardDataFrom_HITACHIAA_Report();
                             strList = report.aaList;
                             for (int i = 0; i < SelectedEditableSubItems.Count; i++)
                             {
@@ -1279,7 +1284,7 @@ namespace Lims.WPF.ViewModels
                             break;
                         //粘贴至平行二
                         case Key.W:
-                            report = GetDataFrom_HITACHIAA_Report();
+                            report = GetCliboardDataFrom_HITACHIAA_Report();
                             strList = report.aaList;
                             for (int i = 0; i < SelectedEditableSubItems.Count; i++)
                             {
@@ -1315,7 +1320,7 @@ namespace Lims.WPF.ViewModels
                             await _itemService.UpdateAsync(EdittingItem);
                             break;
                     }
-                }    
+                }
             }
 
         }
@@ -1555,13 +1560,15 @@ namespace Lims.WPF.ViewModels
         /// 从日立氨基酸分析仪报告获取数据
         /// </summary>
         /// <returns></returns>
-        private HITACHIAA_Report GetDataFrom_HITACHIAA_Report()
+        private HITACHIAA_Report GetCliboardDataFrom_HITACHIAA_Report()
         {
             List<string> strList;
             string sampleWeight = string.Empty;
             try
             {
                 string str = Clipboard.GetText();
+
+                var ar = str.Split("\t\t\t\t\r\n\t\t");
 
                 strList = str.Split("\t\t\t\t\r\n\t\t")
                     .ToList()
@@ -1579,6 +1586,237 @@ namespace Lims.WPF.ViewModels
             }
             return new HITACHIAA_Report(strList, sampleWeight);
         }
+
+        protected HITACHIAA_Report GetSpireDocDataFrom_HITACHIAA_Report(string filepath)
+        {
+            List<string> strList = new List<string>();
+            string sampleWeight = string.Empty;
+            try
+            {
+                Spire.Doc.Document document = new Spire.Doc.Document();
+                document.LoadFromFile(filepath);
+
+                string str = document.GetText();
+                strList = str.Split("\r\n\r\n\r\n\r\n\r\n\r\n\r\n")
+                    .ToList()
+                    .GetRange(11, 17)
+                    .Select(s => IsNumeric(s.Split("\r\n").Last()) ? s.Split("\r\n").Last() : "")
+                    .ToList();
+
+                sampleWeight = str.Split("称样量（g）:\r\n")[1].Split("\r\n\r\n\r\n\r\n")[0];
+
+            }
+            catch (Exception)
+            {
+                return null;
+                // throw new Exception("剪切板为空/剪切板数据不匹配！");
+            }
+            return new HITACHIAA_Report(strList, sampleWeight);
+        }
+        /// <summary>
+        /// 上传关联仪器报告
+        /// </summary>
+        /// <param name="item"></param>
+        [Command]
+        public async void AddItemAttachment(ItemDto item)
+        {
+            //TemplateInfo.FileName = string.Empty;
+            Microsoft.Win32.OpenFileDialog dlg = new()
+            {
+                Multiselect = true,
+                DefaultExt = ".docx",
+                Filter = "(*.doc,*.docx)|*.doc;*.docx"
+            };
+
+            bool? result = dlg.ShowDialog();
+
+            if ((bool)result)
+            {
+                var filepaths = dlg.FileNames;
+                var filenames = dlg.SafeFileNames;
+
+                var LimsPath = ConfigurationManager.AppSettings["LimsPath"].ToString();
+
+                var desDic = LimsPath + @$"\\附件\\{item.SampleCode}\\{item.TestItem}";
+                if (!Directory.Exists(desDic))
+                {
+                    Directory.CreateDirectory(desDic);
+                }
+
+                List<string> desFiles = new List<string>();
+
+
+                for (int i = 0; i < filepaths.Length; i++)
+                {
+                    var filePath = filepaths[i];
+                    var fileName = filenames[i];
+                    var extension = fileName.Split('.')[1];
+                    var filename = item.SampleCode + $"_{i + 1}.{extension}";
+                    var desFilePath = desDic + @$"\\{filename}";
+
+                    File.Copy(filePath, desFilePath, true);
+                    desFiles.Add(desFilePath);
+                    switch (i)
+                    {
+                        case 0:
+                            item.FirstAttachmentpath = desFilePath;
+                            await _itemService.UpdateAsync(item);
+                            break;
+                        case 1:
+                            item.SecondAttachmentpath = desFilePath;
+                            await _itemService.UpdateAsync(item);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+                showNotifaction("附件添加成功！");
+                if (item.MethodStandard.KeyItem.Contains("氨基酸"))
+                {
+                    if (_messageBoxService.ShowMessage("是否填充数据？", "氨基酸", MessageButton.YesNo) == MessageResult.Yes)
+                    {
+                        for (int j = 0; j < desFiles.Count; j++)
+                        {
+                            var file = desFiles[j];
+                            Spire.Doc.Document document = new Spire.Doc.Document();
+                            document.LoadFromFile(file);
+
+                            var report = GetSpireDocDataFrom_HITACHIAA_Report(file);
+                            var strList = report.aaList;
+                            if (item.SubItems != null && item.SubItems.Count > 0)
+                            {
+                                for (int i = 0; i < item.SubItems.Count; i++)
+                                {
+                                    if (i == strList.Count)
+                                        return;
+                                    var subItem = item.SubItems[i];
+                                    if (IsJudgeLimitValue)
+                                    {
+                                        if (!string.IsNullOrEmpty(strList[i]))
+                                        {
+                                            if (IsNumeric(strList[i].Trim()))
+                                            {
+                                                switch (j)
+                                                {
+                                                    case 0:
+                                                        subItem.FirstTestResult =
+                                                    Convert.ToDecimal(strList[i].Trim()) <= Convert.ToDecimal(limitValue)
+                                                        ? overrunExpress
+                                                        : strList[i].Trim();
+                                                        await _subItemService.UpdateAsync(subItem);
+                                                        break;
+                                                    case 1:
+                                                        subItem.SecondTestResult =
+                                                    Convert.ToDecimal(strList[i].Trim()) <= Convert.ToDecimal(limitValue)
+                                                        ? overrunExpress
+                                                        : strList[i].Trim();
+                                                        await _subItemService.UpdateAsync(subItem);
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+
+                                                continue;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            switch (j)
+                                            {
+                                                case 0:
+                                                    subItem.FirstTestResult = overrunExpress;
+                                                    await _subItemService.UpdateAsync(subItem);
+                                                    break;
+                                                case 1:
+                                                    subItem.SecondTestResult = overrunExpress;
+                                                    await _subItemService.UpdateAsync(subItem);
+                                                    break;
+                                                default:
+
+                                                    break;
+                                            }
+                                            continue;
+                                        }
+                                    }
+                                    switch (j)
+                                    {
+                                        case 0:
+                                            subItem.FirstTestResult = strList[i].Trim();
+                                            await _subItemService.UpdateAsync(subItem);
+                                            break;
+                                        case 1:
+                                            subItem.SecondTestResult = strList[i].Trim();
+                                            await _subItemService.UpdateAsync(subItem);
+                                            break;
+                                        default:
+                                            break;
+                                    }
+
+                                }
+                            }
+                            switch (j)
+                            {
+                                case 0:
+                                    item.FirstSampleWeight = report.SampleWeight;
+                                    await _itemService.UpdateAsync(item);
+                                    break;
+                                case 1:
+                                    item.SecondSampleWeight = report.SampleWeight;
+                                    await _itemService.UpdateAsync(item);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        showNotifaction("填充完成！");
+                    }
+
+                }
+            }
+        }
+
+        [Command]
+        public void PrintItemAttachment(ItemDto item)
+        {
+            try
+            {
+                Spire.Doc.Document document = new Spire.Doc.Document();
+                PrintDocument printDocument;
+                if (item.FirstAttachmentpath != null)
+                {
+                    document.LoadFromFile(item.FirstAttachmentpath);
+                    printDocument = document.PrintDocument;
+                    printDocument.Print();
+                }
+                if (item.SecondAttachmentpath != null)
+                {
+                    document.LoadFromFile(item.SecondAttachmentpath);
+                    printDocument = document.PrintDocument;
+                    printDocument.Print();
+                }
+                if (document.ChildObjects.Count > 0)
+                {
+                    showNotifaction("打印成功！");
+                }
+                else
+                {
+                    showNotifaction("请上传相关仪器报告！");
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+
+
+        }
+
+
+
+
 
         public class HITACHIAA_Report
         {
