@@ -2,6 +2,6 @@
 {
     public class SubItemFilterParam
     {
-        public string? ItemId { get; set; }
+        public string? ItemId { get; set; }        
     }
 }

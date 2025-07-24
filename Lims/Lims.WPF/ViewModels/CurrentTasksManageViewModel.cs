@@ -62,7 +62,7 @@ namespace Lims.WPF.ViewModels
                     ItemFilterParam param = new ItemFilterParam()
                     {
                         TestProgress = (int)RelativeProgress,
-                        Operation = Operation.Lower,                       
+                        Operation = Operation.Lower,
                     };
                     var response = await _itemService.GetAllItemsByTestProgressAsync(param);
                     if (response.Status)
@@ -204,7 +204,7 @@ namespace Lims.WPF.ViewModels
         /// <param name="edittingSample"></param>
         /// <returns></returns>
         [Command]
-        public  void AddSampleAttachment(SampleDto edittingSample)
+        public void AddSampleAttachment(SampleDto edittingSample)
         {
             var data = _iOpenFileDialogService.ShowDialog();
 
@@ -399,7 +399,7 @@ namespace Lims.WPF.ViewModels
                     SamplesSource.Remove(sample);
                     FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
 
-                    var response = await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam(sample.SampleCode));
+                    var response = await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sample.SampleCode });
                     if (response.Status)
                     {
                         var items = response.Result;
@@ -497,7 +497,7 @@ namespace Lims.WPF.ViewModels
                 var checkedItems = subItems.Where(s => s.IsChecked);
                 DateTimeOffset currentTime = DateTimeOffset.Now;
 
-                var response = await _subItemService.GetSubItemByItemIdAsync(new SubItemFilterParam { ItemId = EdittingItem.ItemId });
+                var response = await _subItemService.GetSubItemByItemIdAsync(new SubItemFilterParam() { ItemId = EdittingItem.ItemId });
                 if (response.Result.Count > 0)
                 {
                     var subitems = response.Result;
@@ -578,7 +578,7 @@ namespace Lims.WPF.ViewModels
         /// <param name="e"></param>
         /// <returns></returns>
         [Command]
-        public  void PreviewSubItemsKeyUp(KeyEventArgs e)
+        public void PreviewSubItemsKeyUp(KeyEventArgs e)
         {
 
             switch (e.Key)
@@ -651,7 +651,7 @@ namespace Lims.WPF.ViewModels
 
         public List<SampleDto> RetestSamples { get; set; } = new();
 
-        private bool showCompeleteDatas=true;
+        private bool showCompeleteDatas = true;
 
         public bool ShowCompeleteDatas
         {
@@ -784,7 +784,7 @@ namespace Lims.WPF.ViewModels
                 RetestSamples = response.Result;
 
             var existSamples = (await _sampleService.GetAllAsync()).Result;
-            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam(sampleModel.SampleCode))).Result.ToObservableCollection();
+            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sampleModel.SampleCode })).Result.ToObservableCollection();
             var dialogService = GetService<IDialogService>("RetestSampleViewDialogService");
             dialogService.ShowDialog(
                 new List<UICommand> {

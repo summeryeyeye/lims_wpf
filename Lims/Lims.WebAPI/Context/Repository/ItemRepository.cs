@@ -30,15 +30,13 @@ namespace Lims.WebAPI.Context.Repository
         /// <returns></returns>
         public async Task<List<ItemModel>> RelativeQueryAsync(Expression<Func<ItemModel, bool>> func)
         {
-            var queryble = base.Context.Queryable<ItemModel>();
-            //if (parm.WithMethod)
+            var queryble = base.Context.Queryable<ItemModel>().Where(func);            
             queryble = queryble.Includes(i => i.MethodStandard);
-            //if (parm.WithPruduct)
             queryble = queryble.Includes(i => i.ProductStandard);
-           
             queryble = queryble.Includes(i => i.Sample, s => s.Items.ToList());
-            queryble = queryble.Includes(i => i.SubItems.OrderBy(i => i.SubItemId).ToList());
-            return await queryble.Where(func).ToListAsync();
+            queryble = queryble.Includes(i => i.SubItems.ToList());
+            queryble = queryble.Includes(i => i.ParallelTestings.OrderBy(i => i.ParallelIndex).ToList());
+            return await queryble.ToListAsync();
         }
 
         public async override Task<ItemModel> QueryFirstOrDefaultAsync(Expression<Func<ItemModel, bool>> func)
@@ -67,9 +65,10 @@ namespace Lims.WebAPI.Context.Repository
             queryble = queryble.Includes(i => i.MethodStandard);
             //if (parm.WithPruduct)
             queryble = queryble.Includes(i => i.ProductStandard);
-            
+
             queryble = queryble.Includes(i => i.Sample, s => s.Items.ToList());
-            queryble = queryble.Includes(i => i.SubItems.OrderBy(i => i.SubItemId).ToList());
+            queryble = queryble.Includes(i => i.SubItems.OrderBy(i => i.SubItemId).ToList(), s => s.ParallelTestings.OrderBy(p => p.ParallelIndex).ToList());
+            queryble = queryble.Includes(i => i.ParallelTestings.OrderBy(i => i.ParallelIndex).ToList());
             return await queryble.Where(func).ToPageListAsync(pageNumber, pageSize);
         }
     }

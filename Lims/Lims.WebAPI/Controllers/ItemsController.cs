@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+﻿  using AutoMapper;
 using Lims.Common.Dtos;
 using Lims.Common.Parameters;
 using Lims.WebAPI.Models;
@@ -9,11 +9,11 @@ namespace Lims.WebAPI.Controllers
 {
     public class ItemsController : MyBaseController<ItemModel, ItemDto>
     {
-        private readonly IItemService itemService;
+        private readonly IItemService _itemService;
 
         public ItemsController(IMapper mapper, IItemService itemService) : base(mapper, (BaseService<ItemModel>)itemService)
         {
-            this.itemService = itemService;
+            this._itemService = itemService;
         }
 
         /// <summary>
@@ -27,12 +27,12 @@ namespace Lims.WebAPI.Controllers
             switch (param.Operation)
             {
                 case Operation.Lower:
-                    return await itemService.RelativeQueryAsync(i => i.Tester == param.Tester && i.TestProgress < param.TestProgress);
+                    return await _itemService.RelativeQueryAsync(i => i.Tester == param.Tester && i.TestProgress < param.TestProgress);
                 case Operation.Equal:
-                    var response = await itemService.RelativeQueryAsync(i => i.Tester == param.Tester && i.TestProgress == param.TestProgress);
+                    var response = await _itemService.RelativeQueryAsync(i => i.Tester == param.Tester && i.TestProgress == param.TestProgress);
                     return response;
                 case Operation.Higher:
-                    return await itemService.RelativeQueryAsync(i => i.Tester == param.Tester && i.TestProgress > param.TestProgress && i.ResultSubmitTime >= param.MinDate && i.ResultSubmitTime <= param.MaxDate);
+                    return await _itemService.RelativeQueryAsync(i => i.Tester == param.Tester && i.TestProgress > param.TestProgress && i.ResultSubmitTime >= param.MinDate && i.ResultSubmitTime <= param.MaxDate);
                 default:
                     break;
             }
@@ -49,12 +49,12 @@ namespace Lims.WebAPI.Controllers
             switch (param.Operation)
             {
                 case Operation.Lower:
-                    return await itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode && i.Tester == param.Tester && i.TestProgress < param.TestProgress);
+                    return await _itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode && i.Tester == param.Tester && i.TestProgress < param.TestProgress);
                 case Operation.Equal:
-                    var response = await itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode && i.Tester == param.Tester && i.TestProgress == param.TestProgress);
+                    var response = await _itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode && i.Tester == param.Tester && i.TestProgress == param.TestProgress);
                     return response;
                 case Operation.Higher:
-                    return await itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode && i.Tester == param.Tester && i.TestProgress > param.TestProgress && i.ResultSubmitTime >= param.MinDate && i.ResultSubmitTime <= param.MaxDate);
+                    return await _itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode && i.Tester == param.Tester && i.TestProgress > param.TestProgress && i.ResultSubmitTime >= param.MinDate && i.ResultSubmitTime <= param.MaxDate);
                 default:
                     break;
             }
@@ -70,14 +70,14 @@ namespace Lims.WebAPI.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResponse> GetAllItemsByDate([FromQuery] ItemFilterParam param) => await itemService.RelativeQueryAsync(i => i.AppointTime >= param.MinDate && i.AppointTime <= param.MaxDate);
+        public async Task<ApiResponse> GetAllItemsByDate([FromQuery] ItemFilterParam param) => await _itemService.RelativeQueryAsync(i => i.AppointTime >= param.MinDate && i.AppointTime <= param.MaxDate);
         /// <summary>
         /// 根据样品编号获取相关项目
         /// </summary>
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResponse> GetAllItemsBySampleCode([FromQuery] ItemFilterParam param) => await itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode);
+        public async Task<ApiResponse> GetAllItemsBySampleCode([FromQuery] ItemFilterParam param) => await _itemService.RelativeQueryAsync(i => i.SampleCode == param.SampleCode);
         /// <summary>
         /// 根据项目检测进度获取相关项目
         /// </summary>
@@ -89,11 +89,11 @@ namespace Lims.WebAPI.Controllers
             switch (param.Operation)
             {
                 case Operation.Higher:
-                    return await itemService.RelativeQueryAsync(i => i.TestProgress > param.TestProgress);
+                    return await _itemService.RelativeQueryAsync(i => i.TestProgress > param.TestProgress);
                 case Operation.Lower:
-                    return await itemService.RelativeQueryAsync(i => i.TestProgress < param.TestProgress);
+                    return await _itemService.RelativeQueryAsync(i => i.TestProgress < param.TestProgress);
                 case Operation.Equal:
-                    return await itemService.RelativeQueryAsync(i => i.TestProgress == param.TestProgress);
+                    return await _itemService.RelativeQueryAsync(i => i.TestProgress == param.TestProgress);
             }
             return new ApiResponse("缺少操作符!");
         }
@@ -103,13 +103,13 @@ namespace Lims.WebAPI.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResponse> GetAllItemsByMethodStandardId([FromQuery] ItemFilterParam param) => await itemService.RelativeQueryAsync(i => i.MethodStandardId == param.MethodStandardId);
+        public async Task<ApiResponse> GetAllItemsByMethodStandardId([FromQuery] ItemFilterParam param) => await _itemService.RelativeQueryAsync(i => i.MethodStandardId == param.MethodStandardId);
 
         [HttpGet]
         public async Task<ApiResponse> GetAllItemsBySampleCodes([FromQuery] ItemFilterParam param)
         {
             var sampleCodes = param.SampleCodes.Split("and");
-            return await itemService.RelativeQueryAsync(i => sampleCodes.Contains(i.SampleCode));
+            return await _itemService.RelativeQueryAsync(i => sampleCodes.Contains(i.SampleCode));
         }
 
 
@@ -120,6 +120,6 @@ namespace Lims.WebAPI.Controllers
         /// <param name="param"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<ApiResponse> GetFirstItemBySampleCodeAndKeyItem([FromQuery] ItemFilterParam param) => await itemService.QueryFirstOrDefaultAsync(i => i.SampleCode == param.SampleCode && (i.MethodStandard.KeyItem == param.KeyItem));
+        public async Task<ApiResponse> GetFirstItemBySampleCodeAndKeyItem([FromQuery] ItemFilterParam param) => await _itemService.QueryFirstOrDefaultAsync(i => i.SampleCode == param.SampleCode && (i.MethodStandard.KeyItem == param.KeyItem));
     }
 }

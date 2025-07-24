@@ -21,8 +21,7 @@ namespace Lims.WPF.Services.Services
             };
             return await client.ExecuteAsync<List<ItemDto>>(request);
         }
-
-        public async Task<ApiResponse<List<ItemDto>?>> GetMyItemsAsync(ItemFilterParam param)
+        public async Task<ApiResponse<List<ItemDto>>> GetMyItemsAsync(ItemFilterParam param)
         {
             BaseRequest request = new()
             {
@@ -81,7 +80,7 @@ namespace Lims.WPF.Services.Services
             return await client.ExecuteAsync<List<ItemDto>>(request);
         }
 
-        public async Task<ApiResponse<List<ItemDto>?>> GetMyItemsBySampleCodeAsync(ItemFilterParam param)
+        public async Task<ApiResponse<List<ItemDto>>> GetMyItemsBySampleCodeAsync(ItemFilterParam param)
         {
             BaseRequest request = new()
             {

@@ -46,6 +46,11 @@ namespace Lims.WPF.ViewModels
         {
             return TestProgress.检测中;
         }
+        /// <summary>
+        /// 刷新ItemView
+        /// </summary>
+        /// <param name="sample"></param>
+        /// <returns></returns>
         [Command]
         public  override async Task RefreshItemDatas(SampleDto sample)
         {

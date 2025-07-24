@@ -46,6 +46,7 @@ namespace Lims.WPF
             ServiceContainer.Default.RegisterService(new ProductStandardService());
             ServiceContainer.Default.RegisterService(new MethodStandardService());
             ServiceContainer.Default.RegisterService(new ReagentService());
+            ServiceContainer.Default.RegisterService(new ParallelTestingService());
 
             //内置服务实例
             ServiceContainer.Default.RegisterService(new DXMessageBoxService());

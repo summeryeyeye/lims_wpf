@@ -44,28 +44,28 @@ namespace Lims.WPF.ViewModels
             else
             {
                 ShowMainDatasLoadingPanel = true;
-            pre_MyFocusedSampelRowIndex = FocusedSampleRowHandle;
-            TaskDatasSource = new ObservableCollection<ItemDto?>();
-            SamplesSource = new ObservableCollection<SampleDto?>();
+                pre_MyFocusedSampelRowIndex = FocusedSampleRowHandle;
+                TaskDatasSource = new ObservableCollection<ItemDto?>();
+                SamplesSource = new ObservableCollection<SampleDto?>();
 
-            ItemFilterParam itemFilterParam = new ItemFilterParam()
-            {
-                TestProgress = (int)RelativeProgress,
-                Tester = user.UserName,
-                Operation = Operation.Equal,
-            };
-            var response = await _itemService.GetMyItemsAsync(itemFilterParam);
-            if (response.Status)
-            {
-                TaskDatasSource = response.Result.OrderBy(t => t.AppointTime).Where(i => !i.IsOverDate)
-                    .ToObservableCollection();
-                SamplesSource = TaskDatasSource.Select(i => i.Sample).DistinctBy(s => s.SampleCode)
-                    .ToObservableCollection();
+                ItemFilterParam itemFilterParam = new ItemFilterParam()
+                {
+                    TestProgress = (int)RelativeProgress,
+                    Tester = user.UserName,
+                    Operation = Operation.Equal,
+                };
+                var response = await _itemService.GetMyItemsAsync(itemFilterParam);
+                if (response.Status)
+                {
+                    TaskDatasSource = response.Result.OrderBy(t => t.AppointTime).Where(i => !i.IsOverDate)
+                        .ToObservableCollection();
+                    SamplesSource = TaskDatasSource.Select(i => i.Sample).DistinctBy(s => s.SampleCode)
+                        .ToObservableCollection();
+                }
+
+                FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
+                ShowMainDatasLoadingPanel = false;
             }
-
-            FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
-            ShowMainDatasLoadingPanel = false;
-            }   
         }
 
         protected ObservableCollection<ItemDto> taskListPreviewSources = new();
@@ -96,7 +96,7 @@ namespace Lims.WPF.ViewModels
                         if (TaskListPreviewSources.Any(i => i.TestDate == null))
                         {
                             _messageBoxService.ShowMessage("存在项目未同步检测日期，请添加后重试！");
-                            return  Task.CompletedTask;
+                            return Task.CompletedTask;
                         }
                     ItemDto[] tasks = new ItemDto[TaskListPreviewSources.Count];
                     TaskListPreviewSources.CopyTo(tasks, 0);
@@ -198,7 +198,7 @@ namespace Lims.WPF.ViewModels
         }
 
 
-        public List<ItemDto> SubmitableItems { get; set; }=new List<ItemDto>();
+        public List<ItemDto> SubmitableItems { get; set; } = new List<ItemDto>();
 
         /// <summary>
         /// 提交样品窗口
@@ -216,7 +216,7 @@ namespace Lims.WPF.ViewModels
                         if (SubmitableItems.Any(i => i.TestDate == null))
                         {
                             _messageBoxService.ShowMessage("存在项目未同步检测日期，请添加后重试！");
-                            return ;
+                            return;
                         }
 
 
@@ -295,7 +295,7 @@ namespace Lims.WPF.ViewModels
         public async Task SubmitData(ItemDto item)
         {
             if (item == null)
-                return; 
+                return;
             if (AllowNoticeTestDate)
                 if (item.TestDate == null)
                 {
@@ -416,7 +416,7 @@ namespace Lims.WPF.ViewModels
                                     {
                                         var response =
                                             await _itemService.GetAllItemsBySampleCodeAsync(
-                                                new Common.Parameters.ItemFilterParam(editingSample.SampleCode));
+                                                new Common.Parameters.ItemFilterParam() { SampleCode = editingSample.SampleCode });
                                         if (response.Status)
                                         {
                                             editingSample.Items = response.Result.ToObservableCollection();
@@ -448,12 +448,12 @@ namespace Lims.WPF.ViewModels
             {
                 if (SelectedEditableSubItems.Count > 0)
                 {
-                    ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(item.SampleCode) { KeyItem = "密度" })).Result;
+                    ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
                     foreach (var subItem in SelectedEditableSubItems)
                     {
-                        if (IsNumeric(subItem.FirstTestResult) && IsNumeric(subItem.SecondTestResult))
+                        if (subItem.ParallelTestings.All(p => IsNumeric(p.TestResult)))
                         {
-                            var res = new decimal[] { subItem.FirstTestResult.TryConvertToDecimal(), subItem.SecondTestResult.TryConvertToDecimal() };
+                            var res = subItem.ParallelTestings.Select(p => Convert.ToDecimal(p.TestResult)).ToList();
 
                             var ave = Math.Round(res.Average(), 2, MidpointRounding.ToEven);
 
@@ -481,7 +481,7 @@ namespace Lims.WPF.ViewModels
                             await _subItemService.UpdateAsync(subItem);
 
                         }
-                        else if (subItem.FirstTestResult == "未检出" && subItem.SecondTestResult == "未检出")
+                        else if (subItem.ParallelTestings.All(p => p.TestResult == "未检出"))
                         {
 
                             subItem.AverageTestResult = "未检出";
@@ -489,7 +489,7 @@ namespace Lims.WPF.ViewModels
 
                             await _subItemService.UpdateAsync(subItem);
                         }
-                        else if ((subItem.FirstTestResult == "未检出" || subItem.SecondTestResult == "未检出") && subItem.FirstTestResult != subItem.SecondTestResult)
+                        else if (subItem.ParallelTestings.Any(p => p.TestResult == "未检出") && !subItem.ParallelTestings.All(p => p.TestResult == "未检出"))
                         {
                             _messageBoxService.ShowMessage("结果不平行！");
                             return;
@@ -541,7 +541,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void SwitchAutoRounding()
         {
-            AllowAutoRounding = !  AllowAutoRounding;
+            AllowAutoRounding = !AllowAutoRounding;
             cfa.AppSettings.Settings["AllowAutoRounding"].Value = AllowAutoRounding.ToString();
             cfa.Save();
             if (AllowAutoRounding)
@@ -555,7 +555,8 @@ namespace Lims.WPF.ViewModels
         public bool AllowNoticeTestDate
         {
             get { return allowNoticeTestDate; }
-            set {
+            set
+            {
                 allowNoticeTestDate = value;
                 RaisePropertyChanged(nameof(AllowNoticeTestDate));
             }
@@ -565,7 +566,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void SwitchNoticeTestDate()
         {
-            AllowNoticeTestDate = !AllowNoticeTestDate; 
+            AllowNoticeTestDate = !AllowNoticeTestDate;
             cfa.AppSettings.Settings["AllowNoticeTestDate"].Value = AllowNoticeTestDate.ToString();
             cfa.Save();
             if (AllowNoticeTestDate)
@@ -574,7 +575,7 @@ namespace Lims.WPF.ViewModels
                 showNotifaction("检测日期提醒已关闭！");
         }
 
-       
+
 
 
 

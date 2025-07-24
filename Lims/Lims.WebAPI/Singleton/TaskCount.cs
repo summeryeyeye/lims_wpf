@@ -31,54 +31,61 @@ namespace Lims.WebAPI.Singleton
         /// <summary>
         /// 监听postgresql
         /// </summary>
-        public void ListenPostgresql()
+        public async Task ListenPostgresql()
         {
-            GetTaskCount();            
+            await Task.Run(GetTaskCount);
             using var conn = new NpgsqlConnection(_connStr);
-            conn.Open();
+            await conn.OpenAsync();
 
             // 订阅通知
-            conn.Notification += (o, e) =>
+            conn.Notification += async (o, e) =>
             {
                 //Console.WriteLine($"收到通知: {e.Channel}, 数据: {e.Payload}");
 
                 // 在这里执行你的操作
-                GetTaskCount(); // 获取任务计数并发送到客户端
+                await Task.Run(GetTaskCount);// 获取任务计数并发送到客户端
             };
 
             using (var cmd = new NpgsqlCommand("LISTEN item_changed;LISTEN logger_changed", conn))
-                cmd.ExecuteNonQuery();
+                await cmd.ExecuteNonQueryAsync();
 
             // 持续监听
             while (true)
             {
-                conn.Wait();
+                await conn.WaitAsync();
             }
 
+
+
+
+
         }
-        public void GetTaskCount()
-        {           
+        public async Task GetTaskCount()
+        {
             using (var Db = _client)
             {
-                TaskCountDto taskCountDto = new TaskCountDto();
-                taskCountDto.MyReceivableTasks = Db.Ado.GetDataTable("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=101 Group BY tester");
-                taskCountDto.MyTestingTasks = Db.Ado.GetDataTable("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=103 Group BY tester");
-                taskCountDto.MyReturnedTasks = Db.Ado.GetDataTable("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=102 Group BY tester");
-                taskCountDto.MyUnreadLogs = Db.Ado.GetDataTable("SELECT receivername tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername");
-                taskCountDto.unFinishedTasks = Db.Ado.GetInt("SELECT Count(itemid) count FROM itemmodel WHERE testprogress<104");
-                taskCountDto.firstCheckTasks = Db.Ado.GetInt("SELECT COUNT(samplecode) count FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 104 THEN 1 ELSE 0 END) = 0 ) t");
-                taskCountDto.sencondCheckTasks = Db.Ado.GetInt("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 105 THEN 1 ELSE 0 END) = 0 ) t");
-                taskCountDto.thirdCheckTasks = Db.Ado.GetInt("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 106 THEN 1 ELSE 0 END) = 0 ) t");
+                try
+                {
+                    TaskCountDto taskCountDto = new TaskCountDto();
+                    taskCountDto.MyReceivableTasks = await Db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=101 Group BY tester");
+                    taskCountDto.MyTestingTasks = await Db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=103 Group BY tester");
+                    taskCountDto.MyReturnedTasks = await Db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=102 Group BY tester");
+                    taskCountDto.MyUnreadLogs = await Db.Ado.GetDataTableAsync("SELECT receivername tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername");
+                    taskCountDto.unFinishedTasks = await Db.Ado.GetIntAsync("SELECT Count(itemid) count FROM itemmodel WHERE testprogress<104");
+                    taskCountDto.firstCheckTasks = await Db.Ado.GetIntAsync("SELECT COUNT(samplecode) count FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 104 THEN 1 ELSE 0 END) = 0 ) t");
+                    taskCountDto.sencondCheckTasks = await Db.Ado.GetIntAsync("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 105 THEN 1 ELSE 0 END) = 0 ) t");
+                    taskCountDto.thirdCheckTasks = await Db.Ado.GetIntAsync("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 106 THEN 1 ELSE 0 END) = 0 ) t");
 
 
-                string json = Newtonsoft.Json.JsonConvert.SerializeObject(taskCountDto);
-                _context.Clients.All.SendAsync("TaskCount", json);
-
-                //ListenPostgresql();
-                //Db.Dispose();
-
+                    string json = Newtonsoft.Json.JsonConvert.SerializeObject(taskCountDto);
+                    _context.Clients.All.SendAsync("TaskCount", json);
+                }
+                catch (Exception)
+                {
+                    //throw;
+                }               
             }
         }
-       
+
     }
 }

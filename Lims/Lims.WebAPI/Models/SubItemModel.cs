@@ -1,4 +1,5 @@
 ﻿using SqlSugar;
+using System.Collections.ObjectModel;
 
 namespace Lims.WebAPI.Models
 {   
@@ -70,5 +71,8 @@ namespace Lims.WebAPI.Models
         /// </summary>
         [SugarColumn(ColumnDataType = "varchar", IsNullable = false, DefaultValue = "/")]
         public string? IndexRequest { get; set; }
+
+        [Navigate(NavigateType.OneToMany, nameof(ParallelTestingModel.ParentId))]
+        public ObservableCollection<ParallelTestingModel>? ParallelTestings { get; set; } 
     }
 }

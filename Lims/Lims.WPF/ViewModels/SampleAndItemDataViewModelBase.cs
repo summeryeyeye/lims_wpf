@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using static DevExpress.Xpo.Helpers.AssociatedCollectionCriteriaHelper;
 
 namespace Lims.WPF.ViewModels
 {
@@ -109,7 +110,7 @@ namespace Lims.WPF.ViewModels
 
         protected virtual async Task<ObservableCollection<ItemDto>?> GetAllItemsOfSample(SampleDto sample)
         {
-            return sample == null ? new ObservableCollection<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(sample.SampleCode))).Result?.OrderBy(i => i.ItemId).ToObservableCollection();
+            return sample == null ? new ObservableCollection<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, })).Result?.OrderBy(i => i.ItemId).ToObservableCollection();
         }
 
         protected async Task ExcuteIfNullSample(SampleDto sample, IEnumerable<ItemDto> currentItems)
@@ -138,7 +139,7 @@ namespace Lims.WPF.ViewModels
 
         protected virtual async Task<ObservableCollection<ItemDto?>> GetItemsSource(SampleDto sample)
         {
-            return (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam(sample.SampleCode))).Result.OrderBy(i => i.ItemId).ToObservableCollection();
+            return (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sample.SampleCode })).Result.OrderBy(i => i.ItemId).ToObservableCollection();
         }
         protected abstract override Task LoadMainDatas(UserDto? user);
 
@@ -170,7 +171,7 @@ namespace Lims.WPF.ViewModels
         {
             if (sample == null)
                 return;
-            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(sample.SampleCode))).Result.ToObservableCollection();
+            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode })).Result.ToObservableCollection();
             DevExpress.Mvvm.IDialogService dialogService = GetService<DevExpress.Mvvm.IDialogService>("AllItemsOfSamplePreviewDialogService");
             dialogService.ShowDialog(
                 new List<UICommand> {
@@ -1232,9 +1233,9 @@ namespace Lims.WPF.ViewModels
         #region 氨基酸临时工具
         public ObservableCollection<SubItemDto> SelectedEditableSubItems { get; set; } = new();
         [Command]
-        public async void EditableSubItemsViwKeyUp(KeyEventArgs e)
+        public void EditableSubItemsViwKeyUp(KeyEventArgs e)
         {
-
+            /*
             if (e.KeyboardDevice.Modifiers.HasFlag(ModifierKeys.Control))
             {
                 if (SelectedEditableSubItems.Count > 0)
@@ -1322,7 +1323,7 @@ namespace Lims.WPF.ViewModels
                     }
                 }
             }
-
+            */
         }
 
 
@@ -1331,17 +1332,21 @@ namespace Lims.WPF.ViewModels
         {
             if (SelectedEditableSubItems.Count > 0)
             {
+                if (SelectedEditableSubItems.Any(s => s.ParallelTestings == null))
+                    return;
+
                 foreach (var subItem in SelectedEditableSubItems)
                 {
-                    if (IsNumeric(subItem.FirstTestResult) && IsNumeric(subItem.SecondTestResult))
+
+                    if (subItem.ParallelTestings.All(p => IsNumeric(p.TestResult)))
                     {
-                        var res = new decimal[] { subItem.FirstTestResult.TryConvertToDecimal(), subItem.SecondTestResult.TryConvertToDecimal() };
+                        var res = subItem.ParallelTestings.Select(p => Convert.ToDecimal(p.TestResult)).ToList();
 
                         var ave = Math.Round(res.Average(), 2, MidpointRounding.ToEven);
 
                         subItem.AverageTestResult = ave.ToString();
 
-                        ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(item.SampleCode) { KeyItem = "密度" })).Result;
+                        ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
 
 
                         //已提交页面不修改Temp_TestResult
@@ -1355,7 +1360,7 @@ namespace Lims.WPF.ViewModels
 
                         await _subItemService.UpdateAsync(subItem);
                     }
-                    else if (subItem.FirstTestResult == "未检出" && subItem.SecondTestResult == "未检出")
+                    else if (subItem.ParallelTestings.All(p => p.TestResult == "未检出"))
                     {
 
                         subItem.AverageTestResult = "未检出";
@@ -1645,34 +1650,36 @@ namespace Lims.WPF.ViewModels
                 }
 
                 List<string> desFiles = new List<string>();
-
-
+                var parallelFilter = new ParallelTestingFilterParam()
+                {
+                    ParentKey = item.ItemId
+                };
+                var response = await _iParallelTestingParallelTestingService.GetParallelTestingsByParentIdAsync(parallelFilter);
+                int maxIndex = 0;
+                if (response.Status && response.Result != null)
+                {
+                    maxIndex = response.Result.Max(s => s.ParallelIndex);
+                }
                 for (int i = 0; i < filepaths.Length; i++)
                 {
                     var filePath = filepaths[i];
                     var fileName = filenames[i];
                     var extension = fileName.Split('.')[1];
-                    var filename = item.SampleCode + $"_{i + 1}.{extension}";
+                    var filename = item.SampleCode + $"_{maxIndex + i + 1}.{extension}";
                     var desFilePath = desDic + @$"\\{filename}";
 
                     File.Copy(filePath, desFilePath, true);
                     desFiles.Add(desFilePath);
-                    switch (i)
+                    await _iParallelTestingParallelTestingService.CreateAsync(new ParallelTestingDto
                     {
-                        case 0:
-                            item.FirstAttachmentpath = desFilePath;
-                            await _itemService.UpdateAsync(item);
-                            break;
-                        case 1:
-                            item.SecondAttachmentpath = desFilePath;
-                            await _itemService.UpdateAsync(item);
-                            break;
-
-                        default:
-                            break;
-                    }
+                        ParentId = item.ItemId,
+                        ParallelIndex = maxIndex + 1 + i,
+                        AttachmentPath = desFilePath,
+                    });
                 }
+
                 showNotifaction("附件添加成功！");
+
                 if (item.MethodStandard.KeyItem.Contains("氨基酸"))
                 {
                     if (_messageBoxService.ShowMessage("是否填充数据？", "氨基酸", MessageButton.YesNo) == MessageResult.Yes)
@@ -1692,83 +1699,46 @@ namespace Lims.WPF.ViewModels
                                     if (i == strList.Count)
                                         return;
                                     var subItem = item.SubItems[i];
+                                    string res = strList[i].Trim();
                                     if (IsJudgeLimitValue)
                                     {
                                         if (!string.IsNullOrEmpty(strList[i]))
                                         {
                                             if (IsNumeric(strList[i].Trim()))
-                                            {
-                                                switch (j)
-                                                {
-                                                    case 0:
-                                                        subItem.FirstTestResult =
-                                                    Convert.ToDecimal(strList[i].Trim()) <= Convert.ToDecimal(limitValue)
-                                                        ? overrunExpress
-                                                        : strList[i].Trim();
-                                                        await _subItemService.UpdateAsync(subItem);
-                                                        break;
-                                                    case 1:
-                                                        subItem.SecondTestResult =
-                                                    Convert.ToDecimal(strList[i].Trim()) <= Convert.ToDecimal(limitValue)
-                                                        ? overrunExpress
-                                                        : strList[i].Trim();
-                                                        await _subItemService.UpdateAsync(subItem);
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-
-                                                continue;
-                                            }
+                                                res = Convert.ToDecimal(strList[i].Trim()) <= Convert.ToDecimal(limitValue)
+                                                    ? overrunExpress
+                                                    : strList[i].Trim();
                                         }
                                         else
-                                        {
-                                            switch (j)
-                                            {
-                                                case 0:
-                                                    subItem.FirstTestResult = overrunExpress;
-                                                    await _subItemService.UpdateAsync(subItem);
-                                                    break;
-                                                case 1:
-                                                    subItem.SecondTestResult = overrunExpress;
-                                                    await _subItemService.UpdateAsync(subItem);
-                                                    break;
-                                                default:
+                                            res = overrunExpress;
 
-                                                    break;
-                                            }
-                                            continue;
-                                        }
                                     }
-                                    switch (j)
+                                    await _iParallelTestingParallelTestingService.CreateAsync(new ParallelTestingDto()
                                     {
-                                        case 0:
-                                            subItem.FirstTestResult = strList[i].Trim();
-                                            await _subItemService.UpdateAsync(subItem);
-                                            break;
-                                        case 1:
-                                            subItem.SecondTestResult = strList[i].Trim();
-                                            await _subItemService.UpdateAsync(subItem);
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                        ParentId = subItem.SubItemId,
+                                        ParallelIndex = maxIndex + 1 + j,
+                                        TestResult = res,
+                                    });
 
                                 }
                             }
-                            switch (j)
-                            {
-                                case 0:
-                                    item.FirstSampleWeight = report.SampleWeight;
-                                    await _itemService.UpdateAsync(item);
-                                    break;
-                                case 1:
-                                    item.SecondSampleWeight = report.SampleWeight;
-                                    await _itemService.UpdateAsync(item);
-                                    break;
-                                default:
-                                    break;
-                            }
+                            var parallelTesting = item.ParallelTestings.FirstOrDefault(p => p.ParallelIndex == maxIndex + 1 + j);
+                            parallelTesting.SampleWeight = report.SampleWeight;
+                            await _iParallelTestingParallelTestingService.UpdateAsync(parallelTesting);
+
+                            //switch (j)
+                            //{
+                            //    case 0:
+                            //        item.FirstSampleWeight = report.SampleWeight;
+                            //        await _itemService.UpdateAsync(item);
+                            //        break;
+                            //    case 1:
+                            //        item.SecondSampleWeight = report.SampleWeight;
+                            //        await _itemService.UpdateAsync(item);
+                            //        break;
+                            //    default:
+                            //        break;
+                            //}
                         }
                         showNotifaction("填充完成！");
                     }
@@ -1784,18 +1754,16 @@ namespace Lims.WPF.ViewModels
             {
                 using Spire.Doc.Document document = new Spire.Doc.Document();
                 PrintDocument printDocument;
-                if (item.FirstAttachmentpath != null)
+                foreach (var paralell in item.ParallelTestings)
                 {
-                    document.LoadFromFile(item.FirstAttachmentpath);
-                    printDocument = document.PrintDocument;
-                    printDocument.Print();
+                    if (paralell != null)
+                    {
+                        document.LoadFromFile(paralell.AttachmentPath);
+                        printDocument = document.PrintDocument;
+                        printDocument.Print();
+                    }
                 }
-                if (item.SecondAttachmentpath != null)
-                {
-                    document.LoadFromFile(item.SecondAttachmentpath);
-                    printDocument = document.PrintDocument;
-                    printDocument.Print();
-                }
+
                 if (document.ChildObjects.Count > 0)
                 {
                     showNotifaction("打印成功！");
@@ -1975,8 +1943,8 @@ namespace Lims.WPF.ViewModels
             foreach (var s in SelectedEditableSubItems)
             {
                 s.Temp_TestResult = string.Empty;
-                s.FirstTestResult = string.Empty;
-                s.SecondTestResult = string.Empty;
+                //s.FirstTestResult = string.Empty;
+                // s.SecondTestResult = string.Empty;
                 s.AverageTestResult = string.Empty;
                 await _subItemService.UpdateAsync(s);
             }
@@ -2096,24 +2064,26 @@ namespace Lims.WPF.ViewModels
 
         protected List<BindingColumn> GetEditedSubItemViewColumns(ItemDto item)
         {
-            return new List<BindingColumn>
+            List<BindingColumn> bs = new List<BindingColumn>();
+            bs.Add(new BindingColumn(SettingsType.Binding, "TestItem", "检测项目"));
+            if (item.ParallelTestings != null && item.ParallelTestings.Count > 0)
             {
-                new BindingColumn(SettingsType.Binding, "TestItem", "检测项目"),
-                //new BindingColumn(SettingsType.Binding,"ReportUnit","报告单位"),
+                foreach (var parallel in item.ParallelTestings)
+                {
+                    bs.Add(new BindingColumn(SettingsType.Binding, "TestResult", "平行一结果")
+                    {
 
-
-                new BindingColumn(SettingsType.Binding, "FirstTestResult", "平行一结果")
-                    { ReadOnly = false, Visible = item.TestItem.Contains("氨基酸") },
-                new BindingColumn(SettingsType.Binding, "SecondTestResult", "平行二结果")
-                    { ReadOnly = false, Visible = item.TestItem.Contains("氨基酸") },
-                new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
-                    { ReadOnly = false, Visible = item.TestItem.Contains("氨基酸") },
-
+                    });
+                }
+            }
+            bs.AddRange([new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
+                    { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
 
                 new BindingColumn(SettingsType.Binding, "Temp_TestResult", "检测结果") { ReadOnly = false },
                 new BindingColumn(SettingsType.Binding, "IndexRequest", "指标要求"),
-                new BindingColumn(SettingsType.Binding, "ItemRemark", "项目备注"),
-            };
+                new BindingColumn(SettingsType.Binding, "ItemRemark", "项目备注")]);
+            return bs;
+
         }
 
         /// <summary>

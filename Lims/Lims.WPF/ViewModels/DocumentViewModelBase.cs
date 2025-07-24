@@ -23,7 +23,7 @@ namespace Lims.WPF.ViewModels
     {
         protected HttpRestClient client => (HttpRestClient)ServiceContainer.GetService<IRestClient>();
         protected ISampleService _sampleService => ServiceContainer.GetService<ISampleService>();
-        protected IItemService _itemService => ServiceContainer.GetService<IItemService>();      
+        protected IItemService _itemService => ServiceContainer.GetService<IItemService>();
         protected ISubItemService _subItemService => ServiceContainer.GetService<ISubItemService>();
         protected IUserService _userService => ServiceContainer.GetService<IUserService>();
         protected ILoggerService _loggerService => ServiceContainer.GetService<ILoggerService>();
@@ -33,6 +33,7 @@ namespace Lims.WPF.ViewModels
         protected IMessageBoxService _messageBoxService => ServiceContainer.GetService<IMessageBoxService>();
         protected IOpenFileDialogService _iOpenFileDialogService => ServiceContainer.GetService<IOpenFileDialogService>();
         protected IReagentService _iReagentService => ServiceContainer.GetService<IReagentService>();
+        protected IParallelTestingService _iParallelTestingParallelTestingService => ServiceContainer.GetService<IParallelTestingService>();
         protected Configuration? cfa;
         protected override async void OnInitializeInRuntime()
         {
@@ -132,11 +133,11 @@ namespace Lims.WPF.ViewModels
         public List<FormattingRule> SampleFormatConditionRules
         {
             get; protected set;
-        }
+        } = new List<FormattingRule>();
         public List<FormattingRule> TaskListFormatConditionRules
         {
             get; protected set;
-        }
+        } = new List<FormattingRule>();
         protected virtual void GetFormattingRules()
         {
             var sampleRules = new List<FormattingRule>();
@@ -297,7 +298,7 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        public string SearchStandardKeyword { get; set; }
+        public string? SearchStandardKeyword { get; set; }
 
 
 

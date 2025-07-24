@@ -192,7 +192,7 @@ namespace Lims.WPF.ViewModels
             var sampleModel = (await _sampleService.GetSingleAsync(CurrentSampleCode)).Result;
             if (sampleModel != null)
             {
-                var response = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(CurrentSampleCode)));
+                var response = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = CurrentSampleCode }));
                 if (response.Status)
                     existItems = response.Result;
                 if (_messageBoxService.ShowMessage("编号已存在,是否继续?", "警告", MessageButton.OKCancel) == MessageResult.Cancel)
@@ -457,7 +457,7 @@ namespace Lims.WPF.ViewModels
                         if (menuNodes.First().Text != sample.SampleState)
                             SwitchSampleState();
 
-                        var existItems = await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam(sample.SampleCode));
+                        var existItems = await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sample.SampleCode });
                         var currentTime = DateTimeOffset.Now;
                         PreviewSources.Clear();
 

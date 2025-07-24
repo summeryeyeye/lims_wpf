@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 
 namespace Lims.WebAPI.Models
-{   
+{
     [Serializable]
     public class ItemModel : BaseModel
     {
@@ -27,7 +27,7 @@ namespace Lims.WebAPI.Models
         [Navigate(NavigateType.OneToOne, nameof(MethodStandardId))]
         public MethodStandardModel? MethodStandard { get; set; }
         #endregion
-
+        /*
         [SugarColumn(ColumnDataType = "varchar", IsNullable = true)]
         public string? FirstSampleWeight { get; set; }
 
@@ -39,7 +39,7 @@ namespace Lims.WebAPI.Models
 
         [SugarColumn(ColumnDataType = "varchar", IsNullable = true)]
         public string? SecondAttachmentpath { get; set; }
-
+        */
         [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
         public string? TestItem { get; set; }
 
@@ -71,6 +71,9 @@ namespace Lims.WebAPI.Models
         public string? TestResult { get; set; }
 
         [SugarColumn(ColumnDataType = "varchar", IsNullable = true)]
+        public string? AverageTestResult { get; set; }
+
+        [SugarColumn(ColumnDataType = "varchar", IsNullable = true)]
         public string? ItemRemark { get; set; }
 
         [SugarColumn(ColumnDataType = "varchar", IsNullable = true, DefaultValue = "/")]
@@ -100,6 +103,8 @@ namespace Lims.WebAPI.Models
         [Navigate(NavigateType.OneToOne, nameof(SampleCode))]
         public SampleModel? Sample { get; set; }
 
+        [Navigate(NavigateType.OneToMany, nameof(ParallelTestingModel.ParentId))]
+        public ObservableCollection<ParallelTestingModel>? ParallelTestings { get; set; }
         //[SugarColumn(IsIgnore = true)]
         //public ObservableCollection<SubItemModel>? SelectedRetestSubItems
         //{

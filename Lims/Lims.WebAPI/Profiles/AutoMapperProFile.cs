@@ -29,6 +29,7 @@ namespace Lims.WebAPI.Profiles
             CreateMap<LoggerModel, LoggerDto>().ReverseMap();
             CreateMap<UserModel, UserDto>().ReverseMap();
             CreateMap<ReagentModel, ReagentDto>().ReverseMap();
+            CreateMap<ParallelTestingModel, ParallelTestingDto>().ReverseMap();
         }
     }   
 }

@@ -1,4 +1,6 @@
-﻿namespace Lims.Common.Dtos
+﻿using System.Collections.ObjectModel;
+
+namespace Lims.Common.Dtos
 {
     public class SubItemDto : BaseDto
     {
@@ -29,6 +31,7 @@
                 RaisePropertiyChanged(nameof(TestItem));
             }
         }
+        /*
         /// <summary>
         /// 平行一结果
         /// </summary>
@@ -60,6 +63,7 @@
                 RaisePropertiyChanged(nameof(SecondTestResult));
             }
         }
+        */
         private string? averageTestResult;
 
         public string? AverageTestResult
@@ -74,9 +78,6 @@
                 RaisePropertiyChanged(nameof(AverageTestResult));
             }
         }
-
-
-
 
         private string? temp_TestResult;
 
@@ -146,6 +147,20 @@
             {
                 indexRequest = value;
                 RaisePropertiyChanged(nameof(IndexRequest));
+            }
+        }
+        private ObservableCollection<ParallelTestingDto>? parallelTestings;
+
+        public ObservableCollection<ParallelTestingDto>? ParallelTestings
+        {
+            get
+            {
+                return parallelTestings;
+            }
+            set
+            {
+                parallelTestings = value;
+                RaisePropertiyChanged(nameof(ParallelTestings));
             }
         }
     }

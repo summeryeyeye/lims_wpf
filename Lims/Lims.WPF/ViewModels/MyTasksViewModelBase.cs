@@ -332,7 +332,7 @@ namespace Lims.WPF.ViewModels
 
             List<string> fieldValues;
 
-            ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(item.SampleCode) { KeyItem = "密度" })).Result;
+            ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
 
             ReportModel reportModel = new ReportModel();
             reportModel.SampleCode = item.SampleCode;
@@ -340,8 +340,8 @@ namespace Lims.WPF.ViewModels
             reportModel.TestItem = item.TestItem;
             reportModel.TestResult = item.TestResult;
             reportModel.TestDate = item.TestDate?.ToString("yyyy-MM-dd");
-            reportModel.FirstSampleWeight = item.FirstSampleWeight;
-            reportModel.SecondSampleWeight = item.SecondSampleWeight;
+            reportModel.FirstSampleWeight = item.ParallelTestings?.FirstOrDefault()?.SampleWeight;// item.FirstSampleWeight;
+            reportModel.SecondSampleWeight = item.ParallelTestings?.LastOrDefault()?.SampleWeight;// item.SecondSampleWeight;
 
             //reportModel.Instruments = item.Instruments;
             //StringBuilder subInstruments = new StringBuilder();
@@ -431,8 +431,8 @@ namespace Lims.WPF.ViewModels
 
                             dr["Index"] = item.SubItems.IndexOf(subItem) + 1;
                             dr["SubItem"] = subItem.TestItem;
-                            dr["FirstSubItemTestResult"] = subItem.FirstTestResult;
-                            dr["SecondSubItemTestResult"] = subItem.SecondTestResult;
+                            dr["FirstSubItemTestResult"] = subItem.ParallelTestings?.FirstOrDefault()?.TestResult;
+                            dr["SecondSubItemTestResult"] = subItem.ParallelTestings?.LastOrDefault()?.TestResult;
                             dr["AverageTestResult"] = subItem.AverageTestResult;
                             dr["SubItemTestResult"] = subItem.TestResult;
 
@@ -600,7 +600,7 @@ namespace Lims.WPF.ViewModels
         }
 
 
-        
+
 
         [Command]
         public async Task MarkTaskListOriginalRecord()
@@ -656,9 +656,9 @@ namespace Lims.WPF.ViewModels
         {
             foreach (SampleDto sample in selectedSamples)
             {
-                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "水分" })).Result;
+                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() {SampleCode= sample.SampleCode, KeyItem = "水分" })).Result;
                 var moistureContent = MoistureItem != null ? $"{MoistureItem.TestResult} {MoistureItem.ReportUnit}" : "/";
-                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "密度" })).Result;
+                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "密度" })).Result;
                 var densityContent = DensityItem != null ? $"{DensityItem.TestResult} {DensityItem.ReportUnit}" : "/";
 
                 sample.MoistureContent = moistureContent;
@@ -683,9 +683,9 @@ namespace Lims.WPF.ViewModels
                 if (sample == null)
                     return;
 
-                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "水分" })).Result;
+                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "水分" })).Result;
                 MoistureContent = MoistureItem != null ? $"{MoistureItem.TestItem}: {MoistureItem.TestResult} {MoistureItem.ReportUnit}" : string.Empty;
-                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam(sample.SampleCode) { KeyItem = "密度" })).Result;
+                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "密度" })).Result;
                 Density = DensityItem != null ? $"{DensityItem.TestItem}: {DensityItem.TestResult} {DensityItem.ReportUnit}" : string.Empty;
                 if (string.IsNullOrEmpty(MoistureContent) && string.IsNullOrEmpty(Density))
                 {

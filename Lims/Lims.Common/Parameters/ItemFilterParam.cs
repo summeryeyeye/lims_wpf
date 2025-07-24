@@ -1,15 +1,12 @@
 ﻿namespace Lims.Common.Parameters
 {
+    [Serializable]
     public class ItemFilterParam
     {
         public ItemFilterParam()
         {
             
-        }
-        public ItemFilterParam(string? sampleCode)
-        {
-            this.SampleCode = sampleCode;
-        }
+        }        
         public Operation? Operation { get; set; }
         public string? Tester { get; set; }
         public string? SampleCode { get; set; }

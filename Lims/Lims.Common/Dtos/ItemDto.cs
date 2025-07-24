@@ -64,7 +64,7 @@ namespace Lims.Common.Dtos
 
         #endregion 方法属性
 
-
+        /*
         private string? firstSampleWeight;
 
         public string? FirstSampleWeight
@@ -104,13 +104,11 @@ namespace Lims.Common.Dtos
             get { return secondAttachmentpath; }
             set { secondAttachmentpath = value; RaisePropertiyChanged(nameof(SecondAttachmentpath)); }
         }
+        */
 
 
-
-
-
-        private string testItem;
-        public string TestItem
+        private string? testItem;
+        public string? TestItem
         {
             get
             {
@@ -208,7 +206,20 @@ namespace Lims.Common.Dtos
                 RaisePropertiyChanged(nameof(TestProgress));
             }
         }
+        private string? averageTestResult;
 
+        public string? AverageTestResult
+        {
+            get
+            {
+                return averageTestResult;
+            }
+            set
+            {
+                averageTestResult = value;
+                RaisePropertiyChanged(nameof(AverageTestResult));
+            }
+        }
         private string? temp_TestResult;
 
         public string? Temp_TestResult
@@ -341,7 +352,7 @@ namespace Lims.Common.Dtos
 
 
 
-        private ObservableCollection<SubItemDto>? subItems;
+        private ObservableCollection<SubItemDto>? subItems=new ObservableCollection<SubItemDto>();
 
         public ObservableCollection<SubItemDto>? SubItems
         {
@@ -355,7 +366,20 @@ namespace Lims.Common.Dtos
                 RaisePropertiyChanged(nameof(SubItems));
             }
         }
+        private ObservableCollection<ParallelTestingDto>? parallelTestings=new ObservableCollection<ParallelTestingDto>();
 
+        public ObservableCollection<ParallelTestingDto>? ParallelTestings
+        {
+            get
+            {
+                return parallelTestings;
+            }
+            set
+            {
+                parallelTestings = value;
+                RaisePropertiyChanged(nameof(ParallelTestings));
+            }
+        }
         private ObservableCollection<SubItemDto>? selectedRetestSubItems = new();
 
         public ObservableCollection<SubItemDto>? SelectedRetestSubItems

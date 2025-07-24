@@ -1,6 +1,6 @@
 ﻿namespace Lims.Common.Parameters
 {
-
+    [Serializable]
     public class SampleFilterParam
     {
         public string? SampleCodes { get; set; }

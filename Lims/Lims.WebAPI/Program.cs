@@ -13,8 +13,6 @@ using SqlSugar.IOC;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-
 var conStr = AppConfigurtaionServices.Configuration.GetSection("ConnectionStrings:POSTGRESQL").Value;
 
 //if (builder.Environment.IsDevelopment())
@@ -30,14 +28,14 @@ builder.Services.AddScoped<ISqlSugarClient>(s =>
         ConnectionString = conStr,
         DbType = SqlSugar.DbType.PostgreSQL,
         IsAutoCloseConnection = true,
-        //MoreSettings = new ConnMoreSettings
-        //{
-        //    PgSqlIsAutoToLower = false, //不自动转换为小写
-        //    PgSqlIsAutoToLowerCodeFirst = false //代码优先不自动转换为小写
-        //}
+        InitKeyType = InitKeyType.Attribute,
+        ConfigureExternalServices = new ConfigureExternalServices()
+        {
+            EntityService = (c, p) => p.IsNullable = true,
+        }
     });
-});   
-  
+});
+
 //添加AutoMapper
 var automapperConfog = new MapperConfiguration(config =>
 {
@@ -86,7 +84,8 @@ builder.Services.AddTransient<IMethodStandardService, MethodStandardService>();
 builder.Services.AddScoped<IReagentRepository, ReagentRepository>();
 builder.Services.AddTransient<IReagentService, ReagentService>();
 
-
+builder.Services.AddScoped<IParallelTestingRepository, ParallelTestingRepository>();
+builder.Services.AddTransient<IParallelTestingService, ParallelTestingService>();
 
 
 builder.Services.Configure<KestrelServerOptions>(options =>
@@ -98,16 +97,12 @@ builder.Services.Configure<IISServerOptions>(options =>
     options.AllowSynchronousIO = true;
 });
 
-
-
 var app = builder.Build();
 
 app.UseRouting();
 
 //启用https重定向
 //app.UseHttpsRedirection();
-
-
 
 //Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
