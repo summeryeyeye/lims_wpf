@@ -10,6 +10,5 @@ namespace Lims.WPF.Services.Interface
 {
     public interface IParallelTestingService : IBaseService<ParallelTestingDto>
     {
-        Task<ApiResponse<List<ParallelTestingDto>>> GetParallelTestingsByParentIdAsync(ParallelTestingFilterParam param);
     }
 }

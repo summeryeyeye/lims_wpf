@@ -8,57 +8,113 @@ namespace Lims.Common.Dtos
 {
     public class ParallelTestingDto : BaseDto
     {
-        private int id;
-
-        public int Id
+        public ParallelTestingDto()
         {
-            get { return id; }
-            set { id = value; }
+            
+        }
+        public ParallelTestingDto(string ItemId)
+        {
+            this.ItemId = ItemId;
+        }
+        private string? itemId;
+
+        public string? ItemId
+        {
+            get
+            {
+                return itemId;
+            }
+            set
+            {
+                itemId = value;
+            }
         }
 
-        private string? parentId;
+        private string? firstSampleWeight;
 
-        public string? ParentId
+        public string? FirstSampleWeight
         {
-            get { return parentId; }
-            set { parentId = value; }
+            get
+            {
+                return firstSampleWeight;
+            }
+            set
+            {
+                firstSampleWeight = value;
+                RaisePropertiyChanged(nameof(FirstSampleWeight));
+            }
         }
+        private string? secondSampleWeight;
 
-        private string? sampleWeight;
-
-        public string? SampleWeight
+        public string? SecondSampleWeight
         {
-            get { return sampleWeight; }
-            set { sampleWeight = value; RaisePropertiyChanged(nameof(SampleWeight)); }
+            get
+            {
+                return secondSampleWeight;
+            }
+            set
+            {
+                secondSampleWeight = value;
+                RaisePropertiyChanged(nameof(SecondSampleWeight));
+            }
         }
+        private string? firstTestResult;
 
-        private string? testResult;
-
-        public string? TestResult
+        public string? FirstTestResult
         {
-            get { return testResult; }
-            set { testResult = value; RaisePropertiyChanged(nameof(TestResult)); }
+            get
+            {
+                return firstTestResult;
+            }
+            set
+            {
+                firstTestResult = value;
+                RaisePropertiyChanged(nameof(FirstTestResult));
+            }
         }
+        private string? secondTestResult;
 
-
-
-
-        private int parallelIndex;
-
-        public int ParallelIndex
+        public string? SecondTestResult
         {
-            get { return parallelIndex; }
-            set { parallelIndex = value; RaisePropertiyChanged(nameof(ParallelIndex)); }
-        }
+            get
+            {
+                return secondTestResult;
+            }
+            set
+            {
+                secondTestResult = value;
+                RaisePropertiyChanged(nameof(SecondTestResult));
+            }
+        }                
 
-        private string? attachmentPath;
+        private string? firstAttachmentPath;
 
-        public string? AttachmentPath
+        public string? FirstAttachmentPath
         {
-            get { return attachmentPath; }
-            set { attachmentPath = value; RaisePropertiyChanged(nameof(AttachmentPath)); }
+            get
+            {
+                return firstAttachmentPath;
+            }
+            set
+            {
+                firstAttachmentPath = value;
+                RaisePropertiyChanged(nameof(FirstAttachmentPath));
+            }
         }
+        private string? secondAttachmentPath;
 
+        public string? SecondAttachmentPath
+        {
+            get
+            {
+                return secondAttachmentPath;
+            }
+            set
+            {
+                secondAttachmentPath = value;
+                RaisePropertiyChanged(nameof(SecondAttachmentPath));
+            }
+        }
 
 
 

@@ -3,7 +3,7 @@ using Lims.ToolsForClient;
 
 namespace Lims.WPF.Resources.Converters
 {
-    [ValueConversion(typeof(ObservableCollection<ItemDto>), typeof(int))]
+    [ValueConversion(typeof(IEnumerable<ItemDto>), typeof(int))]
     public class OriginalRecordCompeleteItemsCountConverter : IValueConverter
     {
         private string UserName = UserDto.Inatance.UserName; //"杨升";
@@ -15,7 +15,7 @@ namespace Lims.WPF.Resources.Converters
                 try
                 {
                     //string[] progresses = new string[] { "数据一审", "数据二审", "数据三审", "已完成" };
-                    var items = value as ObservableCollection<ItemDto>;
+                    var items = value as IEnumerable<ItemDto>;
                     int count = items.Where(i => i.Tester == UserName && i.TestProgress > (int)TestProgress.检测中).Count();
                     int filledCount = items.Where(i => i.Tester == UserName && i.TestProgress > (int)TestProgress.检测中 && i.IsOriginalRecordComplete).Count();
 

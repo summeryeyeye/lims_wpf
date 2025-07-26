@@ -535,7 +535,38 @@
         <Setter Property="Content"
                 Value="刷新" />
     </Style>
-    
+
+    <Style
+        x:Key="RefreshItemDatasButtonStyle"
+        TargetType="dxb:BarButtonItem">
+        <Setter
+            Property="Glyph"
+            Value="{dx:DXImage 'Images/Spreadsheet/RefreshAllPivotTable_16x16.png'}" />
+        <Setter
+            Property="Command"
+            Value="{Binding RefreshItemDatasCommand}" />
+        <Setter
+            Property="CommandParameter"
+            Value="{Binding FocusedSample}" />
+
+
+
+
+        <Setter
+            Property="ToolTip"
+            Value="刷新" />
+        <Setter
+            Property="KeyGesture"
+            Value="F5" />
+        <Setter
+            Property="Content"
+            Value="刷新" />
+    </Style>
+
+
+
+
+
     <Style x:Key="SearchByCurrentCellValueButtonStyle"
            TargetType="dxb:BarButtonItem">
         <Setter Property="Glyph"
@@ -603,9 +634,12 @@
         <Setter Property="Command"
                 Value="{Binding ShowMoistureContentAndDensityCommand}" />
         <Setter Property="ToolTip"
-                Value="查看水分/密度" />
+                Value="查看选中样品水分/密度" />
         <Setter Property="Content"
-                Value="查看水分/密度" />
+            Value="查看选中样品水分/密度" />
+        <Setter
+            Property="IsEnabled"
+            Value="{Binding SelectedSamples.Count}" />
     </Style>
 
     <Style x:Key="CopySampleInfoToClipBoradButtonStyle"

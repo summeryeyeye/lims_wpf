@@ -3,7 +3,7 @@ using Lims.ToolsForClient;
 
 namespace Lims.WPF.Resources.Converters
 {
-    [ValueConversion(typeof(ObservableCollection<ItemDto>), typeof(bool))]
+    [ValueConversion(typeof(IEnumerable<ItemDto>), typeof(bool))]
     public class SubmitableItemsToIsEnableConverter : IValueConverter
     {
         private string UserName = UserDto.Inatance.UserName; // "杨升";
@@ -12,7 +12,7 @@ namespace Lims.WPF.Resources.Converters
         {
             if (value != null)
             {
-                var items = value as ObservableCollection<ItemDto>;
+                var items = value as IEnumerable<ItemDto>;
                 if (items.Any(i => i.Tester == UserName && i.TestProgress == ((int)TestProgress.检测中) && !string.IsNullOrWhiteSpace(i.Temp_TestResult)))
                 {
                     return true;

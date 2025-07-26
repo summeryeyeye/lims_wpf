@@ -3,7 +3,7 @@ using Lims.ToolsForClient;
 
 namespace Lims.WPF.Resources.Converters
 {
-    [ValueConversion(typeof(ObservableCollection<ItemDto>), typeof(string))]
+    [ValueConversion(typeof(IEnumerable<ItemDto>), typeof(string))]
     public class TasksCheckProgressConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -13,8 +13,8 @@ namespace Lims.WPF.Resources.Converters
                 try
                 {
                     //string[] progresses = new string[] { "数据一审", "数据二审", "数据三审", "已完成" };
-                    var items = value as ObservableCollection<ItemDto>;
-                    int count = items.Count;
+                    var items = value as IEnumerable<ItemDto>;
+                    int count = items.Count();
                     int filledCount = items.Where(i => i.TestProgress > (int)TestProgress.检测中).Count();
                     return System.Convert.ToInt32(((double)filledCount / count * 100));
                 }

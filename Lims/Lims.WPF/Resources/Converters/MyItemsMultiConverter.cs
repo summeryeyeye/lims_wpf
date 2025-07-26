@@ -10,7 +10,7 @@ namespace Lims.WPF.Resources.Converters
             {
                 var sampleCode = (values[0] as SampleDto).SampleCode;
 
-                IEnumerable<string> arr = (values[1] as IEnumerable<ItemDto>).Where(t => t.SampleCode == sampleCode).Select(i => i.TestItem);
+                var arr = (values[1] as IEnumerable<ItemDto>).Where(t => t.SampleCode == sampleCode).Select(i => i.TestItem);
                 ;
                 return string.Join(',', arr);
             }

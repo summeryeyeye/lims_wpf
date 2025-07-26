@@ -31,7 +31,7 @@ namespace Lims.Common.Dtos
                 RaisePropertiyChanged(nameof(TestItem));
             }
         }
-        /*
+        
         /// <summary>
         /// 平行一结果
         /// </summary>
@@ -63,7 +63,7 @@ namespace Lims.Common.Dtos
                 RaisePropertiyChanged(nameof(SecondTestResult));
             }
         }
-        */
+        
         private string? averageTestResult;
 
         public string? AverageTestResult
@@ -148,20 +148,6 @@ namespace Lims.Common.Dtos
                 indexRequest = value;
                 RaisePropertiyChanged(nameof(IndexRequest));
             }
-        }
-        private ObservableCollection<ParallelTestingDto>? parallelTestings;
-
-        public ObservableCollection<ParallelTestingDto>? ParallelTestings
-        {
-            get
-            {
-                return parallelTestings;
-            }
-            set
-            {
-                parallelTestings = value;
-                RaisePropertiyChanged(nameof(ParallelTestings));
-            }
-        }
+        }        
     }
 }

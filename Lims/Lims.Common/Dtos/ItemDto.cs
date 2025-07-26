@@ -352,9 +352,9 @@ namespace Lims.Common.Dtos
 
 
 
-        private ObservableCollection<SubItemDto>? subItems=new ObservableCollection<SubItemDto>();
+        private List<SubItemDto>? subItems=new();
 
-        public ObservableCollection<SubItemDto>? SubItems
+        public List<SubItemDto>? SubItems
         {
             get
             {
@@ -366,18 +366,18 @@ namespace Lims.Common.Dtos
                 RaisePropertiyChanged(nameof(SubItems));
             }
         }
-        private ObservableCollection<ParallelTestingDto>? parallelTestings=new ObservableCollection<ParallelTestingDto>();
+        private ParallelTestingDto? parallelTesting;
 
-        public ObservableCollection<ParallelTestingDto>? ParallelTestings
+        public ParallelTestingDto? ParallelTesting
         {
             get
             {
-                return parallelTestings;
+                return parallelTesting;
             }
             set
             {
-                parallelTestings = value;
-                RaisePropertiyChanged(nameof(ParallelTestings));
+                parallelTesting = value;
+                RaisePropertiyChanged(nameof(ParallelTesting));
             }
         }
         private ObservableCollection<SubItemDto>? selectedRetestSubItems = new();

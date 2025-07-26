@@ -16,14 +16,6 @@ namespace Lims.WPF.Services.Services
         {
         }
 
-        public async Task<ApiResponse<List<ParallelTestingDto>>> GetParallelTestingsByParentIdAsync(ParallelTestingFilterParam param)
-        {
-            BaseRequest request = new BaseRequest()
-            {
-                Method = RestSharp.Method.GET,
-                Route = $"api/{serviceName}/GetParallelTestingsByParentId?ParentId={param.ParentKey}"
-            };
-            return await client.ExecuteAsync<List<ParallelTestingDto>>(request);
-        }
+        
     }
 }

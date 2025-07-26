@@ -12,7 +12,7 @@ namespace Lims.WPF.Services
         public HttpRestClient(string apiUrl)
         {
             this.apiUrl = apiUrl;
-            client = new RestClient();          
+            client = new RestClient();
         }
 
         public async Task<ApiResponse<T>> ExecuteAsync<T>(BaseRequest baseRequest)
@@ -28,7 +28,7 @@ namespace Lims.WPF.Services
 
                 IRestResponse response = await client.ExecuteAsync(request);
 
-                  if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var settings = new JsonSerializerSettings
                     {
@@ -48,7 +48,7 @@ namespace Lims.WPF.Services
             }
             catch (Exception e)
             {
-               
+
                 throw new Exception(e.Message);
             }
 

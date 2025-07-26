@@ -3,7 +3,7 @@ using Lims.ToolsForClient;
 
 namespace Lims.WPF.Resources.Converters
 {
-    [ValueConversion(typeof(ObservableCollection<ItemDto>), typeof(string))]
+    [ValueConversion(typeof(IEnumerable<ItemDto>), typeof(string))]
     public class ItemsToMyTestingItemsCountConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -12,7 +12,7 @@ namespace Lims.WPF.Resources.Converters
             int myCount = 0;
             try
             {
-                if (value is ObservableCollection<ItemDto> items)
+                if (value is IEnumerable<ItemDto> items)
                     myCount = items.Where(i => i.TestProgress == (int)TestProgress.检测中 && i.Tester == UserDto.Inatance.UserName).Count();
             }
             catch (Exception)

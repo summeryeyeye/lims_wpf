@@ -156,7 +156,7 @@
                 <dx:SimpleButton
                     Margin="2"
                     Grid.Column="1"
-                    Glyph="{Binding Path=RowData.Row.IsOriginalRecordComplete,Converter={StaticResource BooleanToGlyphConverter} , ConverterParameter='pack://application:,,,/DevExpress.Images.v24.2;component/Images/Reports/DeleteHeader_16x16.png|pack://application:,,,/DevExpress.Images.v24.2;component/Images/Tasks/Status_16x16.png'}"
+                    Glyph="{Binding Path=RowData.Row.IsOriginalRecordComplete,Converter={StaticResource BooleanToGlyphConverter} , ConverterParameter='pack://application:,,,/DevExpress.Images.v25.1;component/Images/Reports/DeleteHeader_16x16.png|pack://application:,,,/DevExpress.Images.v25.1;component/Images/Tasks/Status_16x16.png'}"
                     Content="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=RowData.Row.IsOriginalRecordComplete,  Converter={StaticResource BooleanToContentConverter}, ConverterParameter='标记|撤销'}"
                     Command="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}, Path=DataContext.MarkOriginalRecordCommand}"
                     CommandParameter="{Binding RelativeSource={RelativeSource Mode=TemplatedParent},Path=RowData.Row}">

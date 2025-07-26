@@ -108,9 +108,9 @@ namespace Lims.WPF.ViewModels
 
 
 
-        protected virtual async Task<ObservableCollection<ItemDto>?> GetAllItemsOfSample(SampleDto sample)
+        protected virtual async Task<List<ItemDto>> GetAllItemsOfSample(SampleDto sample)
         {
-            return sample == null ? new ObservableCollection<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, })).Result?.OrderBy(i => i.ItemId).ToObservableCollection();
+            return sample == null ? new List<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, })).Result?.OrderBy(i => i.ItemId).ToList();
         }
 
         protected async Task ExcuteIfNullSample(SampleDto sample, IEnumerable<ItemDto> currentItems)
@@ -213,7 +213,7 @@ namespace Lims.WPF.ViewModels
         {
             if (sample != null)
             {
-                AllItemsOfFocusedSample = await GetAllItemsOfSample(sample); //TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode).ToObservableCollection();
+                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).ToObservableCollection(); //TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode).ToObservableCollection();
                 if (AllItemsOfFocusedSample != null && AllItemsOfFocusedSample.Count > 0)
                 {
                     var items = new ItemDto[AllItemsOfFocusedSample.Count];
@@ -305,13 +305,12 @@ namespace Lims.WPF.ViewModels
             {
                 new BindingColumn(SettingsType.Binding,"TestItem", "检测项目"),
                 //new BindingColumn(SettingsType.Binding,"ReportUnit","报告单位"),
-
                  new BindingColumn(SettingsType.Binding, "FirstTestResult", "平行一结果")
-                    { ReadOnly = false, Visible = item.TestItem.Contains("氨基酸") },
+                    { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
                 new BindingColumn(SettingsType.Binding, "SecondTestResult", "平行二结果")
-                    { ReadOnly = false, Visible = item.TestItem.Contains("氨基酸") },
+                    { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
                 new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
-                    { ReadOnly = false, Visible = item.TestItem.Contains("氨基酸") },
+                    { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
 
 
                 new BindingColumn(SettingsType.Binding,"TestResult", "检测结果"),
@@ -1332,17 +1331,18 @@ namespace Lims.WPF.ViewModels
         {
             if (SelectedEditableSubItems.Count > 0)
             {
-                if (SelectedEditableSubItems.Any(s => s.ParallelTestings == null))
-                    return;
 
                 foreach (var subItem in SelectedEditableSubItems)
                 {
+                    var res = new List<string> { subItem.FirstTestResult, subItem.SecondTestResult };
 
-                    if (subItem.ParallelTestings.All(p => IsNumeric(p.TestResult)))
+
+
+                    if (res.All(p => IsNumeric(p)))
                     {
-                        var res = subItem.ParallelTestings.Select(p => Convert.ToDecimal(p.TestResult)).ToList();
+                        //var res = subItem.ParallelTestings.Select(p => Convert.ToDecimal(p.TestResult)).ToList();
 
-                        var ave = Math.Round(res.Average(), 2, MidpointRounding.ToEven);
+                        var ave = Math.Round(res.Select(p => Convert.ToDecimal(p)).ToList().Average(), 2, MidpointRounding.ToEven);
 
                         subItem.AverageTestResult = ave.ToString();
 
@@ -1360,7 +1360,7 @@ namespace Lims.WPF.ViewModels
 
                         await _subItemService.UpdateAsync(subItem);
                     }
-                    else if (subItem.ParallelTestings.All(p => p.TestResult == "未检出"))
+                    else if (res.All(p => p == "未检出"))
                     {
 
                         subItem.AverageTestResult = "未检出";
@@ -1626,6 +1626,9 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async void AddItemAttachment(ItemDto item)
         {
+            if (item == null)
+                return;
+
             //TemplateInfo.FileName = string.Empty;
             Microsoft.Win32.OpenFileDialog dlg = new()
             {
@@ -1638,6 +1641,12 @@ namespace Lims.WPF.ViewModels
 
             if ((bool)result)
             {
+                if (dlg.FileNames.Length != 2)
+                {
+                    _messageBoxService.ShowMessage("必须指定2个文件！");
+                    return;
+                }
+
                 var filepaths = dlg.FileNames;
                 var filenames = dlg.SafeFileNames;
 
@@ -1650,34 +1659,50 @@ namespace Lims.WPF.ViewModels
                 }
 
                 List<string> desFiles = new List<string>();
-                var parallelFilter = new ParallelTestingFilterParam()
-                {
-                    ParentKey = item.ItemId
-                };
-                var response = await _iParallelTestingParallelTestingService.GetParallelTestingsByParentIdAsync(parallelFilter);
-                int maxIndex = 0;
-                if (response.Status && response.Result != null)
-                {
-                    maxIndex = response.Result.Max(s => s.ParallelIndex);
-                }
+
+
+                var response = await _iParallelTestingService.GetSingleAsync(item.ItemId);
+
+                var paratesting = new ParallelTestingDto(item.ItemId);
                 for (int i = 0; i < filepaths.Length; i++)
                 {
                     var filePath = filepaths[i];
                     var fileName = filenames[i];
                     var extension = fileName.Split('.')[1];
-                    var filename = item.SampleCode + $"_{maxIndex + i + 1}.{extension}";
+                    var filename = item.SampleCode + $"_{i + 1}.{extension}";
                     var desFilePath = desDic + @$"\\{filename}";
 
                     File.Copy(filePath, desFilePath, true);
                     desFiles.Add(desFilePath);
-                    await _iParallelTestingParallelTestingService.CreateAsync(new ParallelTestingDto
+
+
+
+                    switch (i)
                     {
-                        ParentId = item.ItemId,
-                        ParallelIndex = maxIndex + 1 + i,
-                        AttachmentPath = desFilePath,
-                    });
+                        case 0:
+                            paratesting.FirstAttachmentPath = desFilePath;
+                            break;
+                        case 1:
+                            paratesting.SecondAttachmentPath = desFilePath;
+                            break;
+                        default:
+                            break;
+                    }
+
+                }
+                if (response.Status && response.Result != null)
+                {
+
+
+
+                    await _iParallelTestingService.UpdateAsync(paratesting);
+                }
+                else
+                {
+                    await _iParallelTestingService.CreateAsync(paratesting);
                 }
 
+                item.ParallelTesting = paratesting;
                 showNotifaction("附件添加成功！");
 
                 if (item.MethodStandard.KeyItem.Contains("氨基酸"))
@@ -1687,11 +1712,12 @@ namespace Lims.WPF.ViewModels
                         for (int j = 0; j < desFiles.Count; j++)
                         {
                             var file = desFiles[j];
-                            using Spire.Doc.Document document = new Spire.Doc.Document();
-                            document.LoadFromFile(file);
+                            //using Spire.Doc.Document document = new Spire.Doc.Document();
+                            //document.LoadFromFile(file);
 
                             var report = GetSpireDocDataFrom_HITACHIAA_Report(file);
                             var strList = report.aaList;
+
                             if (item.SubItems != null && item.SubItems.Count > 0)
                             {
                                 for (int i = 0; i < item.SubItems.Count; i++)
@@ -1713,32 +1739,39 @@ namespace Lims.WPF.ViewModels
                                             res = overrunExpress;
 
                                     }
-                                    await _iParallelTestingParallelTestingService.CreateAsync(new ParallelTestingDto()
+                                    switch (j)
                                     {
-                                        ParentId = subItem.SubItemId,
-                                        ParallelIndex = maxIndex + 1 + j,
-                                        TestResult = res,
-                                    });
-
+                                        case 0:
+                                            subItem.FirstTestResult = res;
+                                            await _subItemService.UpdateAsync(subItem);
+                                            break;
+                                        case 1:
+                                            subItem.SecondTestResult = res;
+                                            await _subItemService.UpdateAsync(subItem);
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
                             }
-                            var parallelTesting = item.ParallelTestings.FirstOrDefault(p => p.ParallelIndex == maxIndex + 1 + j);
-                            parallelTesting.SampleWeight = report.SampleWeight;
-                            await _iParallelTestingParallelTestingService.UpdateAsync(parallelTesting);
+                            //item.ParallelTestings.Add(parallelTesting);
+                            //var parallelTesting = item.ParallelTesting;
+                            // parallelTesting.SampleWeight = report.SampleWeight;
+                            //await _iParallelTestingService.UpdateAsync(parallelTesting);
 
-                            //switch (j)
-                            //{
-                            //    case 0:
-                            //        item.FirstSampleWeight = report.SampleWeight;
-                            //        await _itemService.UpdateAsync(item);
-                            //        break;
-                            //    case 1:
-                            //        item.SecondSampleWeight = report.SampleWeight;
-                            //        await _itemService.UpdateAsync(item);
-                            //        break;
-                            //    default:
-                            //        break;
-                            //}
+                            switch (j)
+                            {
+                                case 0:
+                                    item.ParallelTesting.FirstSampleWeight = report.SampleWeight;
+                                    break;
+                                case 1:
+                                    item.ParallelTesting.SecondSampleWeight = report.SampleWeight;
+
+                                    break;
+                                default:
+                                    break;
+                            }
+                            await _iParallelTestingService.UpdateAsync(item.ParallelTesting);
                         }
                         showNotifaction("填充完成！");
                     }
@@ -1754,14 +1787,18 @@ namespace Lims.WPF.ViewModels
             {
                 using Spire.Doc.Document document = new Spire.Doc.Document();
                 PrintDocument printDocument;
-                foreach (var paralell in item.ParallelTestings)
+
+                if (item.ParallelTesting?.FirstAttachmentPath != null)
                 {
-                    if (paralell != null)
-                    {
-                        document.LoadFromFile(paralell.AttachmentPath);
-                        printDocument = document.PrintDocument;
-                        printDocument.Print();
-                    }
+                    document.LoadFromFile(item.ParallelTesting.FirstAttachmentPath);
+                    printDocument = document.PrintDocument;
+                    printDocument.Print();
+                }
+                if (item.ParallelTesting?.SecondAttachmentPath != null)
+                {
+                    document.LoadFromFile(item.ParallelTesting.SecondAttachmentPath);
+                    printDocument = document.PrintDocument;
+                    printDocument.Print();
                 }
 
                 if (document.ChildObjects.Count > 0)
@@ -2064,24 +2101,22 @@ namespace Lims.WPF.ViewModels
 
         protected List<BindingColumn> GetEditedSubItemViewColumns(ItemDto item)
         {
-            List<BindingColumn> bs = new List<BindingColumn>();
-            bs.Add(new BindingColumn(SettingsType.Binding, "TestItem", "检测项目"));
-            if (item.ParallelTestings != null && item.ParallelTestings.Count > 0)
-            {
-                foreach (var parallel in item.ParallelTestings)
-                {
-                    bs.Add(new BindingColumn(SettingsType.Binding, "TestResult", "平行一结果")
-                    {
+            List<BindingColumn> bs =
+            [
+                new BindingColumn(SettingsType.Binding, "TestItem", "检测项目"),
 
-                    });
-                }
-            }
-            bs.AddRange([new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
-                    { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
+                new BindingColumn(SettingsType.Binding, "FirstTestResult", "平行一")
+                        { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
+                new BindingColumn(SettingsType.Binding, "SecondTestResult", "平行二")
+                        { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
 
-                new BindingColumn(SettingsType.Binding, "Temp_TestResult", "检测结果") { ReadOnly = false },
-                new BindingColumn(SettingsType.Binding, "IndexRequest", "指标要求"),
-                new BindingColumn(SettingsType.Binding, "ItemRemark", "项目备注")]);
+new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
+                        { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
+
+                    new BindingColumn(SettingsType.Binding, "Temp_TestResult", "检测结果") { ReadOnly = false },
+                    new BindingColumn(SettingsType.Binding, "IndexRequest", "指标要求"),
+                    new BindingColumn(SettingsType.Binding, "ItemRemark", "项目备注"),
+            ];
             return bs;
 
         }

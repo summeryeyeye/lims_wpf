@@ -5,23 +5,45 @@ namespace Lims.WebAPI.Models
     [Serializable]
     public class ParallelTestingModel
     {
-        [SugarColumn(ColumnDataType = "int4", IsPrimaryKey = true, IsNullable = false, IsIdentity = true)]
-        public int Id { get; set; }
 
-        [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
-        public string? ParentId { get; set; }
-
-        [SugarColumn(ColumnDataType = "varchar")]
-        public string? SampleWeight { get; set; }
+        [SugarColumn(ColumnDataType = "varchar", IsPrimaryKey = true, IsNullable = false)]
+        public string? ItemId
+        {
+            get; set;
+        }
 
         [SugarColumn(ColumnDataType = "varchar")]
-        public string? TestResult { get; set; }
-
-        [SugarColumn(ColumnDataType = "varchar", IsNullable = false)]
-        public int ParallelIndex { get; set; }
+        public string? FirstSampleWeight
+        {
+            get; set;
+        }
+        [SugarColumn(ColumnDataType = "varchar")]
+        public string? SecondSampleWeight
+        {
+            get; set;
+        }
 
         [SugarColumn(ColumnDataType = "varchar")]
-        public string? AttachmentPath { get; set; }
+        public string? FirstTestResult
+        {
+            get; set;
+        }
+        [SugarColumn(ColumnDataType = "varchar")]
+        public string? SecondTestResult
+        {
+            get; set;
+        }
+
+        [SugarColumn(ColumnDataType = "varchar")]
+        public string? FirstAttachmentPath
+        {
+            get; set;
+        }
+        [SugarColumn(ColumnDataType = "varchar")]
+        public string? SecondAttachmentPath
+        {
+            get; set;
+        }
 
     }
 }

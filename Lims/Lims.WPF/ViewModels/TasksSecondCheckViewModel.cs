@@ -1,5 +1,6 @@
 ﻿using DevExpress.Mvvm;
 using DevExpress.Mvvm.DataAnnotations;
+using DevExpress.Mvvm.Native;
 using DevExpress.Mvvm.POCO;
 using Lims.Common.Dtos;
 using Lims.ToolsForClient;
@@ -42,7 +43,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                AllItemsOfFocusedSample = await GetAllItemsOfSample(sample);
+                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).ToObservableCollection();
                 var dialogService = GetService<IDialogService>("AllItemsOfSamplePreviewDialogService");
                 dialogService.ShowDialog(
                     new List<UICommand> {

@@ -3,14 +3,14 @@ using Lims.ToolsForClient;
 
 namespace Lims.WPF.Resources.Converters
 {
-    [ValueConversion(typeof(ObservableCollection<ItemDto>), typeof(int))]
+    [ValueConversion(typeof(IEnumerable<ItemDto>), typeof(int))]
     public class SubmittedItemsCountConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
-                var source = value as ObservableCollection<ItemDto>;
+                var source = value as IEnumerable<ItemDto>;
 
                 return source.Where(s => s.TestProgress > (int)TestProgress.检测中).Count();
             }

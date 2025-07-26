@@ -419,7 +419,7 @@ namespace Lims.WPF.ViewModels
                                                 new Common.Parameters.ItemFilterParam() { SampleCode = editingSample.SampleCode });
                                         if (response.Status)
                                         {
-                                            editingSample.Items = response.Result.ToObservableCollection();
+                                            editingSample.Items = response.Result;
                                             FocusedSample = editingSample;
                                         }
                                     }
@@ -435,7 +435,10 @@ namespace Lims.WPF.ViewModels
                 , "", this);
         }
 
-        public int SelectedTesterIndex { get; set; }
+        public int SelectedTesterIndex
+        {
+            get; set;
+        }
         /// <summary>
         /// 计算子项目平均值
         /// </summary>
@@ -451,11 +454,12 @@ namespace Lims.WPF.ViewModels
                     ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
                     foreach (var subItem in SelectedEditableSubItems)
                     {
-                        if (subItem.ParallelTestings.All(p => IsNumeric(p.TestResult)))
+                        List<string> res = new List<string>();
+                        if (IsNumeric(subItem.FirstTestResult) && IsNumeric(subItem.SecondTestResult))
                         {
-                            var res = subItem.ParallelTestings.Select(p => Convert.ToDecimal(p.TestResult)).ToList();
+                            res = new List<string> { subItem.FirstTestResult, subItem.SecondTestResult };
 
-                            var ave = Math.Round(res.Average(), 2, MidpointRounding.ToEven);
+                            var ave = Math.Round(res.Select(r => r.TryConvertToDecimal()).ToList().Average(), 2, MidpointRounding.ToEven);
 
                             subItem.AverageTestResult = ave.ToString();
 
@@ -481,7 +485,7 @@ namespace Lims.WPF.ViewModels
                             await _subItemService.UpdateAsync(subItem);
 
                         }
-                        else if (subItem.ParallelTestings.All(p => p.TestResult == "未检出"))
+                        else if (res.All(r => r.ToString() == "未检出"))
                         {
 
                             subItem.AverageTestResult = "未检出";
@@ -489,7 +493,7 @@ namespace Lims.WPF.ViewModels
 
                             await _subItemService.UpdateAsync(subItem);
                         }
-                        else if (subItem.ParallelTestings.Any(p => p.TestResult == "未检出") && !subItem.ParallelTestings.All(p => p.TestResult == "未检出"))
+                        else if (res.Any(p => p == "未检出") && !res.All(p => p == "未检出"))
                         {
                             _messageBoxService.ShowMessage("结果不平行！");
                             return;
@@ -554,7 +558,10 @@ namespace Lims.WPF.ViewModels
 
         public bool AllowNoticeTestDate
         {
-            get { return allowNoticeTestDate; }
+            get
+            {
+                return allowNoticeTestDate;
+            }
             set
             {
                 allowNoticeTestDate = value;
@@ -574,15 +581,6 @@ namespace Lims.WPF.ViewModels
             else
                 showNotifaction("检测日期提醒已关闭！");
         }
-
-
-
-
-
-
-
-
-
         protected override void ShowItemsOfFocusedSample(SampleDto sample)
         {
             try

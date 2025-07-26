@@ -17,7 +17,7 @@ namespace Lims.WPF.ViewModels
             {
                 ShowItemGridLoadingPanel = true;
                 ItemsSource = await GetItemsSource(sample);
-                sample.Items = ItemsSource;
+                sample.Items = ItemsSource.ToList();
                 ShowItemGridLoadingPanel = false;
             }
             catch (System.Exception)
@@ -73,11 +73,11 @@ namespace Lims.WPF.ViewModels
         }
 
         [Command]
-        public override  async Task RefreshItemDatas(SampleDto sample)
+        public override async Task RefreshItemDatas(SampleDto sample)
         {
             if (sample != null)
             {
-                 ItemsSource = await GetAllItemsOfSample(sample);
+                ItemsSource = (await GetAllItemsOfSample(sample)).ToObservableCollection();
                 //ItemFilterParam itemFilterParam = new ItemFilterParam()
                 //{
                 //    SampleCode = sample.SampleCode,

@@ -11,7 +11,7 @@ namespace Lims.WPF.Resources.Converters
                 var sample = values[0] as SampleDto;
                 if (sample == null)
                     return null;
-                ObservableCollection<ItemDto> allItems = values[1] as ObservableCollection<ItemDto>;
+                var allItems = values[1] as IEnumerable<ItemDto>;
 
                 return allItems.Where(i => i.SampleCode == sample.SampleCode);
             }

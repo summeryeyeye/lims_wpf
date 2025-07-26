@@ -200,9 +200,9 @@ namespace Lims.Common.Dtos
 
 
 
-        private ObservableCollection<ItemDto>? items;
+        private List<ItemDto?> items;
 
-        public ObservableCollection<ItemDto>? Items
+        public List<ItemDto?> Items
         {
             get => items;
             set

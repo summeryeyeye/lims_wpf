@@ -7,7 +7,7 @@ namespace Lims.WPF.Resources.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string param = parameter as string;
+            var param = parameter as string;
             var result = Regex.IsMatch(param, @"\|{1}") ? (bool)value ? param.Split('|')[1] : param.Split('|')[0] : Binding.DoNothing;
             return result;
         }

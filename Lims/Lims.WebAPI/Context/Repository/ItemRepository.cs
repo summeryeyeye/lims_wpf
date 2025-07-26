@@ -1,5 +1,6 @@
 ﻿using Lims.WebAPI.Context.UnitOfWork;
 using Lims.WebAPI.Models;
+using SqlSugar;
 using System.Linq.Expressions;
 
 namespace Lims.WebAPI.Context.Repository
@@ -18,7 +19,7 @@ namespace Lims.WebAPI.Context.Repository
         public async Task<List<ItemModel>> QuerySampleOfItemAsync(Expression<Func<ItemModel, bool>> func)
         {
             var queryble = base.Context.Queryable<ItemModel>();
-            queryble = queryble.Includes(i => i.Sample, s => s.Items.ToList());
+            queryble = queryble.Includes(i => i.Sample, s => s.Items);
             return await queryble.Where(func).ToListAsync();
         }
 
@@ -30,12 +31,12 @@ namespace Lims.WebAPI.Context.Repository
         /// <returns></returns>
         public async Task<List<ItemModel>> RelativeQueryAsync(Expression<Func<ItemModel, bool>> func)
         {
-            var queryble = base.Context.Queryable<ItemModel>().Where(func);            
+            var queryble = base.Context.Queryable<ItemModel>().Where(func);
             queryble = queryble.Includes(i => i.MethodStandard);
             queryble = queryble.Includes(i => i.ProductStandard);
             queryble = queryble.Includes(i => i.Sample, s => s.Items.ToList());
-            queryble = queryble.Includes(i => i.SubItems.ToList());
-            queryble = queryble.Includes(i => i.ParallelTestings.OrderBy(i => i.ParallelIndex).ToList());
+            queryble = queryble.Includes(i => i.SubItems.OrderBy(i => i.SubItemId).ToList());
+            queryble = queryble.Includes(i => i.ParallelTesting);
             return await queryble.ToListAsync();
         }
 
@@ -67,8 +68,8 @@ namespace Lims.WebAPI.Context.Repository
             queryble = queryble.Includes(i => i.ProductStandard);
 
             queryble = queryble.Includes(i => i.Sample, s => s.Items.ToList());
-            queryble = queryble.Includes(i => i.SubItems.OrderBy(i => i.SubItemId).ToList(), s => s.ParallelTestings.OrderBy(p => p.ParallelIndex).ToList());
-            queryble = queryble.Includes(i => i.ParallelTestings.OrderBy(i => i.ParallelIndex).ToList());
+            queryble = queryble.Includes(i => i.SubItems.OrderBy(i => i.SubItemId));
+            queryble = queryble.Includes(i => i.ParallelTesting);
             return await queryble.Where(func).ToPageListAsync(pageNumber, pageSize);
         }
     }

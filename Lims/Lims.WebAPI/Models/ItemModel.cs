@@ -103,8 +103,8 @@ namespace Lims.WebAPI.Models
         [Navigate(NavigateType.OneToOne, nameof(SampleCode))]
         public SampleModel? Sample { get; set; }
 
-        [Navigate(NavigateType.OneToMany, nameof(ParallelTestingModel.ParentId))]
-        public ObservableCollection<ParallelTestingModel>? ParallelTestings { get; set; }
+        [Navigate(NavigateType.OneToOne, nameof(ParallelTestingModel.ItemId))]
+        public ParallelTestingModel? ParallelTesting { get; set; }
         //[SugarColumn(IsIgnore = true)]
         //public ObservableCollection<SubItemModel>? SelectedRetestSubItems
         //{

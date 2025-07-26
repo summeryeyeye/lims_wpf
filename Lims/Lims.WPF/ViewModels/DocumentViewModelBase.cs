@@ -33,7 +33,7 @@ namespace Lims.WPF.ViewModels
         protected IMessageBoxService _messageBoxService => ServiceContainer.GetService<IMessageBoxService>();
         protected IOpenFileDialogService _iOpenFileDialogService => ServiceContainer.GetService<IOpenFileDialogService>();
         protected IReagentService _iReagentService => ServiceContainer.GetService<IReagentService>();
-        protected IParallelTestingService _iParallelTestingParallelTestingService => ServiceContainer.GetService<IParallelTestingService>();
+        protected IParallelTestingService _iParallelTestingService => ServiceContainer.GetService<IParallelTestingService>();
         protected Configuration? cfa;
         protected override async void OnInitializeInRuntime()
         {

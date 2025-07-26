@@ -19,23 +19,7 @@ namespace Lims.WebAPI.Service
             base._iBaseRepository = iParallelTestingRepository;
             base.mapper = mapper;
             this.iParallelTestingRepository = iParallelTestingRepository;
-        }
-        public async Task<ApiResponse> GetParallelTestingsByParentIdAsync(Expression<Func<ParallelTestingModel, bool>> func)
-        {
-            try
-            {
-                var data = await iParallelTestingRepository.QueryAsync(func);
-                var dataDto = mapper.Map<List<ParallelTestingDto>>(data);
-                return new ApiResponse(true, dataDto);
-            }
-            catch (Exception ex)
-            {
-                return new ApiResponse(ex.Message);
-            }
-        }
-
-
-
+        }  
         #region 查询函数
         public override async Task<ApiResponse> SearchAsync(dynamic primaryKey)
         {

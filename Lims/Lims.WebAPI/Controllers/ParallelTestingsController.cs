@@ -15,10 +15,10 @@ namespace Lims.WebAPI.Controllers
         {
             this._parallelTestingService = parallelTestingService;
         }
-        [HttpGet]
-        public async Task<ApiResponse> GetParallelTestingsByParentId([FromQuery] ParallelTestingFilterParam param)
-        {
-            return await _parallelTestingService.GetParallelTestingsByParentIdAsync(p => p.ParentId == param.ParentKey);
-        }
+        //[HttpGet]
+        //public async Task<ApiResponse> GetParallelTestingsByParentId([FromQuery] ParallelTestingFilterParam param)
+        //{
+        //    return await _parallelTestingService.GetParallelTestingsByParentIdAsync(p => p.ParentId == param.ParentId);
+        //}
     }
 }

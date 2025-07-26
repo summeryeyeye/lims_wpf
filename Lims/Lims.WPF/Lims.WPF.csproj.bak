@@ -20,11 +20,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="DevExpress.Mvvm" Version="23.2.4" />
-    <PackageReference Include="DevExpress.Wpf" Version="23.2.4" />
-    <PackageReference Include="DevExpress.Wpf.ThemesLW" Version="23.2.4" />
-    <PackageReference Include="FreeSpire.Doc" Version="11.6.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+    <PackageReference Include="DevExpress.Mvvm" Version="24.2.7" />
+    <PackageReference Include="DevExpress.Wpf" Version="24.2.7" />
+    <PackageReference Include="DevExpress.Wpf.ThemesLW" Version="24.2.7" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="8.0.0" />
     <PackageReference Include="Mono.Cecil" Version="0.11.5" />
   </ItemGroup>
 
