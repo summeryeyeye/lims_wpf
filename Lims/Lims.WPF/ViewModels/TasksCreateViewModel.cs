@@ -28,12 +28,25 @@ namespace Lims.WPF.ViewModels
         }
         public TasksCreateViewModel()
         {
+            try
+            {
+                /*
+                var sampleInfo = File.ReadAllText(limsPath + @"\工具库\配置文件\DefaultSampleInfo.json");
+                if (sampleInfo != null)
+                {
+                }
+                */
+                defaultsample = new SampleDto() { SampleCode = "2025-0", SampleState = "固体" };//JsonConvert.DeserializeObject<SampleDto>(sampleInfo);
+                InitSampleInfo();
+            }
+            catch (Exception)
+            {
 
-            defaultsample = JsonConvert.DeserializeObject<SampleDto>(File.ReadAllText(limsPath + @"\工具库\配置文件\DefaultSampleInfo.json"));
+                //throw;
+
+            }
 
 
-
-            InitSampleInfo();
 
         }
         protected override async void OnInitializeInRuntime()
@@ -150,8 +163,15 @@ namespace Lims.WPF.ViewModels
 
         public bool IsOverDate
         {
-            get { return isOverDate; }
-            set { isOverDate = value; RaisePropertyChanged(nameof(IsOverDate)); }
+            get
+            {
+                return isOverDate;
+            }
+            set
+            {
+                isOverDate = value;
+                RaisePropertyChanged(nameof(IsOverDate));
+            }
         }
 
 
@@ -341,7 +361,10 @@ namespace Lims.WPF.ViewModels
                 No = 0;
             return No + 1;
         }
-        public MicroorganismTesterModel CurrentMicroorganesmTesterModel { get; set; }
+        public MicroorganismTesterModel CurrentMicroorganesmTesterModel
+        {
+            get; set;
+        }
         /// <summary>
         /// 微生物分析人管理
         /// </summary>
@@ -499,10 +522,6 @@ namespace Lims.WPF.ViewModels
                                 s.Temp_TestResult = string.Empty;
                             }
                         }
-
-
-
-
                         PreviewSources.AddRange(existItems.Result);
                     }
                 }
@@ -681,9 +700,11 @@ namespace Lims.WPF.ViewModels
             ProductStandards = new ObservableCollection<ProductNode>();
             MenuNodes.Clear();
 
+
             //bool _searchBySampleState = SearchBySampleState;
             string _sampleState = CurrentSample?.SampleState;// RadioButton.Content;
 
+            //_sampleState = "固体";
             ProductNode rootNode = new()
             {
                 Text = _sampleState,
@@ -693,10 +714,10 @@ namespace Lims.WPF.ViewModels
 
             menuNodes.Add(rootNode);
 
-            SearchResultProductInfos = _ProductStandardDBInfos.Where(s => s.SampleState == _sampleState && s.ExecuteStandard.Contains(searchParam) && s.ExecuteStandard.Trim().Length > 1).ToList();
-            List<string> products = SearchResultProductInfos.DistinctBy(s => s.ExecuteStandard).Select(s => s.ExecuteStandard).ToList();
+            SearchResultProductInfos = _ProductStandardDBInfos.Where(s => s.SampleState == _sampleState && s.ExecuteStandard.Contains(searchParam) && s.ExecuteStandard.Trim().Length > 1).ToObservableCollection();
+            var products = SearchResultProductInfos.DistinctBy(s => s.ExecuteStandard).Select(s => s.ExecuteStandard);
 
-            SampleStates[selectedSampleStateIndex].ProductsCount = products.Count;
+            SampleStates[selectedSampleStateIndex].ProductsCount = products.Count();
             var data = _ProductStandardDBInfos.Where(s => s.SampleState == SampleStates[Math.Abs(selectedSampleStateIndex - 1)].SampleState && s.ExecuteStandard.Contains(searchParam) && s.ExecuteStandard.Trim().Length > 1).DistinctBy(s => s.ExecuteStandard).Count();
 
             SampleStates[Math.Abs(selectedSampleStateIndex - 1)].ProductsCount = data;
@@ -714,7 +735,7 @@ namespace Lims.WPF.ViewModels
             }
         }
         [Command]
-        public void AddToPreviewSubItems(List<SubItem> subItems)
+        public void AddToPreviewSubItems(IEnumerable<SubItem> subItems)
         {
             var checkedItems = subItems.Where(s => s.IsChecked).ToList();
             if (EdittingItem.SubItems == null)
@@ -763,7 +784,7 @@ namespace Lims.WPF.ViewModels
         {
             get; set;
         }
-        public List<SubItemClass> StandardSubItems { get; set; } = new();
+        public ObservableCollection<SubItemClass> StandardSubItems { get; set; } = new();
 
         [Command]
         public async Task AddSubItems(ItemDto itemModel)
@@ -811,7 +832,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task AddItemsToPreviewByProductStandard(ObservableCollection<ProductNode> nodes)
         {
-            List<ProductNode> checkedNodes = nodes.Where(n => n.IsChecked).ToList();
+            var checkedNodes = nodes.Where(n => n.IsChecked);
             //List<ItemDto> items = new();
             foreach (var node in checkedNodes)
             {
@@ -876,7 +897,7 @@ namespace Lims.WPF.ViewModels
         {
             SelectedPreviewSubItems = selectedPreviewSubItems;
         }
-        public List<ProductStandardDto> SearchResultProductInfos { get; set; } = new();
+        public ObservableCollection<ProductStandardDto> SearchResultProductInfos { get; set; } = new();
         [Command]
         public async Task ScrollsKeyUp(KeyEventArgs e)
         {
@@ -1005,10 +1026,10 @@ namespace Lims.WPF.ViewModels
             }
         }
         private List<ProductStandardDto> newSources = new();
-        private void GetStandardNodes(ProductNode node, List<ProductStandardDto> sources)
+        private void GetStandardNodes(ProductNode node, IEnumerable<ProductStandardDto> sources)
         {
             productStandards.Clear();
-            newSources = sources;
+            newSources = sources.ToList();
             string sampleState = CurrentSample.SampleState;// RadioButton.Content;
             ProductLevel level = node.ProductLevel;
             foreach (var item in menuNodes)
@@ -1019,7 +1040,7 @@ namespace Lims.WPF.ViewModels
             newSources = newSources.Where(s => s.GetType().GetProperty(level.ToString()).GetValue(s, null).ToString() == node.Text).ToList();
             level++;
             _currentProductLevel = level;
-            List<string> texts = newSources.Select(s => s.GetType().GetProperty(level.ToString()).GetValue(s, null).ToString()).Distinct().ToList();
+            var texts = newSources.Select(s => s.GetType().GetProperty(level.ToString()).GetValue(s, null).ToString()).Distinct();
 
             ObservableCollection<ProductNode> nds = new();
             foreach (var text in texts)
@@ -1454,59 +1475,119 @@ namespace Lims.WPF.ViewModels
         private string lastCode_A;
         public string LastCode_A
         {
-            get { return lastCode_A; }
-            set { lastCode_A = value; }
+            get
+            {
+                return lastCode_A;
+            }
+            set
+            {
+                lastCode_A = value;
+            }
         }
         private string tester_A;
         public string Tester_A
         {
-            get { return tester_A; }
-            set { tester_A = value; }
+            get
+            {
+                return tester_A;
+            }
+            set
+            {
+                tester_A = value;
+            }
         }
         private string lastCode_B;
         public string LastCode_B
         {
-            get { return lastCode_B; }
-            set { lastCode_B = value; }
+            get
+            {
+                return lastCode_B;
+            }
+            set
+            {
+                lastCode_B = value;
+            }
         }
         private string tester_B;
         public string Tester_B
         {
-            get { return tester_B; }
-            set { tester_B = value; }
+            get
+            {
+                return tester_B;
+            }
+            set
+            {
+                tester_B = value;
+            }
         }
         private string lastCode_C;
         public string LastCode_C
         {
-            get { return lastCode_C; }
-            set { lastCode_C = value; }
+            get
+            {
+                return lastCode_C;
+            }
+            set
+            {
+                lastCode_C = value;
+            }
         }
         private string tester_C;
         public string Tester_C
         {
-            get { return tester_C; }
-            set { tester_C = value; }
+            get
+            {
+                return tester_C;
+            }
+            set
+            {
+                tester_C = value;
+            }
         }
         private string item;
         public string Item
         {
-            get { return item; }
-            set { item = value; }
+            get
+            {
+                return item;
+            }
+            set
+            {
+                item = value;
+            }
         }
         private string tester_D;
         public string Tester_D
         {
-            get { return tester_D; }
-            set { tester_D = value; }
+            get
+            {
+                return tester_D;
+            }
+            set
+            {
+                tester_D = value;
+            }
         }
         private string turnLastCode;
         public string TurnLastCode
         {
-            get { return turnLastCode; }
-            set { turnLastCode = value; }
+            get
+            {
+                return turnLastCode;
+            }
+            set
+            {
+                turnLastCode = value;
+            }
         }
-        public int LastMicroorganismTester { get; set; }
-        public List<string> Testers { get; set; }
+        public int LastMicroorganismTester
+        {
+            get; set;
+        }
+        public List<string>? Testers
+        {
+            get; set;
+        }
     }
 
 }

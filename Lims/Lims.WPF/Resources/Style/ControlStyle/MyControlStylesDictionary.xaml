@@ -586,7 +586,7 @@
     <Style x:Key="OnlyViewUrgentButtonStyle"
            TargetType="dxb:BarCheckItem">
         <Setter Property="Glyph"
-                Value="{Binding Converter={StaticResource BooleanToContentConverter}, Path=IsChecked,RelativeSource={RelativeSource Mode=Self},  ConverterParameter='pack://application:,,,/DevExpress.Images.v24.2;component/Images/Business Objects/BOContact_16x16.png|pack://application:,,,/DevExpress.Images.v24.2;component/Images/Miscellaneous/ViewOnWeb_16x16.png'}" />
+                Value="{Binding Converter={StaticResource BooleanToContentConverter}, Path=IsChecked,RelativeSource={RelativeSource Mode=Self},  ConverterParameter='pack://application:,,,/DevExpress.Images.v25.1;component/Images/Business Objects/BOContact_16x16.png|pack://application:,,,/DevExpress.Images.v25.1;component/Images/Miscellaneous/ViewOnWeb_16x16.png'}" />
         <Setter Property="KeyGesture"
                 Value="F4" />
         <Setter Property="IsChecked"

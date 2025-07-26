@@ -678,19 +678,19 @@ namespace Lims.WPF.ViewModels
         {
             UserDto.Inatance = new UserDto() { UserName = "guest" };
 
-            unFinishedTasksNavigationItem = new NavigationItem("未完成任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Toolbox Items/Subreport_16x16.png")) };
+            unFinishedTasksNavigationItem = new NavigationItem("未完成任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Toolbox Items/Subreport_16x16.png")) };
             var indexs = new List<NavigationItem>() { new NavigationItem("首页",false) {
                 Childrens =
                 [
                     new NavigationItem("首页")
                     {
                         Glyph = new BitmapImage(new Uri(
-                            "pack://application:,,,/DevExpress.Images.v24.2;component/Images/Navigation/Home_16x16.png"))
+                            "pack://application:,,,/DevExpress.Images.v25.1;component/Images/Navigation/Home_16x16.png"))
                     },
                     new NavigationItem("所有任务")
                     {
                         Glyph = new BitmapImage(new Uri(
-                            "pack://application:,,,/DevExpress.Images.v24.2;component/Images/RichEdit/ViewMergedData_16x16.png"))
+                            "pack://application:,,,/DevExpress.Images.v25.1;component/Images/RichEdit/ViewMergedData_16x16.png"))
                     },
                     unFinishedTasksNavigationItem
                 ]
@@ -702,23 +702,23 @@ namespace Lims.WPF.ViewModels
                 UserDto.Inatance = CurrentUser;
                 if (CurrentUser != null && CurrentUser.CanTest)
                 {
-                    myReceivableTasksNavigationItem = new NavigationItem("待领取任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Tasks/NewTask_16x16.png")) };
-                    myTestingTasksNavigationItem = new NavigationItem("检测中任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Tasks/EditTask_16x16.png")) };
-                    myReturnedTasksNavigationItem = new NavigationItem("已退回任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Spreadsheet/TableConvertToRange_16x16.png")) };
+                    myReceivableTasksNavigationItem = new NavigationItem("待领取任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Tasks/NewTask_16x16.png")) };
+                    myTestingTasksNavigationItem = new NavigationItem("检测中任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Tasks/EditTask_16x16.png")) };
+                    myReturnedTasksNavigationItem = new NavigationItem("已退回任务") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Spreadsheet/TableConvertToRange_16x16.png")) };
                     var myTasks = new List<NavigationItem>() { new NavigationItem("我的任务",false) {
                         Childrens = new List<NavigationItem?>() {
                     myReceivableTasksNavigationItem,
                     myTestingTasksNavigationItem,
                     myReturnedTasksNavigationItem,
-                    new NavigationItem("已提交任务") { Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Tasks/Task_16x16.png")) } ,
+                    new NavigationItem("已提交任务") { Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Tasks/Task_16x16.png")) } ,
                  } } };
                     NavigationItems.AddRange(myTasks);
                 }
                 if (CurrentUser != null && CurrentUser.CanCheck)
                 {
-                    firstCheckTasksNavigationItem = new NavigationItem("数据一审") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/People/User_16x16.png")) };
-                    sencondCheckTasksNavigationItem = new NavigationItem("数据二审") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Scheduling/GroupByResource_16x16.png")) };
-                    thirdCheckTasksNavigationItem = new NavigationItem("数据三审") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Business Objects/BOPosition2_16x16.png")) };
+                    firstCheckTasksNavigationItem = new NavigationItem("数据一审") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/People/User_16x16.png")) };
+                    sencondCheckTasksNavigationItem = new NavigationItem("数据二审") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Scheduling/GroupByResource_16x16.png")) };
+                    thirdCheckTasksNavigationItem = new NavigationItem("数据三审") { ShowCount = true, Glyph = new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Business Objects/BOPosition2_16x16.png")) };
                     var checkTasks = new List<NavigationItem>() { new NavigationItem("任务审核",false) {
                         Childrens = new List<NavigationItem?>() {
                     firstCheckTasksNavigationItem,
@@ -735,14 +735,14 @@ namespace Lims.WPF.ViewModels
                             new NavigationItem("任务指派")
                             {
                                 Glyph = new BitmapImage(new Uri(
-                                    "pack://application:,,,/DevExpress.Images.v24.2;component/Images/Snap/Datasource_16x16.png"))
+                                    "pack://application:,,,/DevExpress.Images.v25.1;component/Images/Snap/Datasource_16x16.png"))
                             },
                             new NavigationItem("任务管理")
                             {
                                 Glyph = new BitmapImage(new Uri(
-                                    "pack://application:,,,/DevExpress.Images.v24.2;component/Images/Conditional Formatting/ManageRules_16x16.png"))
+                                    "pack://application:,,,/DevExpress.Images.v25.1;component/Images/Conditional Formatting/ManageRules_16x16.png"))
                             }
-                            //new NavigationItem("数据恢复") {Glyph=new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v24.2;component/Images/Data/ManageQueries_16x16.png"))},
+                            //new NavigationItem("数据恢复") {Glyph=new BitmapImage(new Uri("pack://application:,,,/DevExpress.Images.v25.1;component/Images/Data/ManageQueries_16x16.png"))},
 
                         ]
                     } };
@@ -756,12 +756,12 @@ namespace Lims.WPF.ViewModels
                             new NavigationItem("用户管理")
                             {
                                 Glyph = new BitmapImage(new Uri(
-                                    "pack://application:,,,/DevExpress.Images.v24.2;component/Images/Business Objects/BOUser_16x16.png"))
+                                    "pack://application:,,,/DevExpress.Images.v25.1;component/Images/Business Objects/BOUser_16x16.png"))
                             },
                             new NavigationItem("标准库管理")
                             {
                                 Glyph = new BitmapImage(new Uri(
-                                    "pack://application:,,,/DevExpress.Images.v24.2;component/Images/Maps/WeightedPies_16x16.png"))
+                                    "pack://application:,,,/DevExpress.Images.v25.1;component/Images/Maps/WeightedPies_16x16.png"))
                             }
                         ]
                     } };
@@ -776,7 +776,7 @@ namespace Lims.WPF.ViewModels
                         new NavigationItem("试剂管理")
                         {
                             Glyph = new BitmapImage(new Uri(
-                                "pack://application:,,,/DevExpress.Images.v24.2;component/Images/Business Objects/BOUser_16x16.png"))
+                                "pack://application:,,,/DevExpress.Images.v25.1;component/Images/Business Objects/BOUser_16x16.png"))
                         }
                     ]
                 } };

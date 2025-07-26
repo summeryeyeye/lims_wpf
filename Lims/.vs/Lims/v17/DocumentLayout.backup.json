@@ -1,112 +1,29 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\",
+  "WorkspaceRootPath": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\services\\services\\itemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\services\\services\\itemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\services\\interface\\iitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\services\\interface\\iitemservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\views\\datarecoveryview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\views\\datarecoveryview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\taskscreateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\taskscreateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\currenttasksmanageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\currenttasksmanageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{2F5CC224-742D-486B-A921-9537B55D1EEA}|Lims.ToolsForClient\\Lims.ToolsForClient.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.toolsforclient\\extensions\\collectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{2F5CC224-742D-486B-A921-9537B55D1EEA}|Lims.ToolsForClient\\Lims.ToolsForClient.csproj|solutionrelative:lims.toolsforclient\\extensions\\collectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\resources\\converters\\myconvertersdictionary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\resources\\converters\\myconvertersdictionary.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\sampleanditemdataviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\sampleanditemdataviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Administrator\\AppData\\Local\\Temp\\.vsdbgsrc\\5d7d5f7d0725f674a09a06b24a1906f2a613803180e0b896818a0927d6258886\\CommandBase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\taskscheckviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\taskscheckviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\mytasksviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\mytasksviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\mytestingtasksviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\mytestingtasksviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.common\\dtos\\sampledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|solutionrelative:lims.common\\dtos\\sampledto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.webapi\\models\\samplemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\models\\samplemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.webapi\\models\\itemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\models\\itemmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.common\\dtos\\subitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|solutionrelative:lims.common\\dtos\\subitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.common\\dtos\\itemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|solutionrelative:lims.common\\dtos\\itemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\views\\taskscreateview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\views\\taskscreateview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\views\\mytestingtasksview.xaml.bak||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\views\\mytestingtasksview.xaml.bak||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.webapi\\singleton\\taskcount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\repos\\github\\202507262136\\lims_wpf\\lims\\lims.webapi\\singleton\\taskcount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\singleton\\taskcount.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\datarecoveryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\datarecoveryviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\repos\\github\\202507262136\\lims_wpf\\lims\\lims.webapi\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\hubs\\chathub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\views\\datarecoveryview.xaml.bak||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\views\\datarecoveryview.xaml.bak||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\repos\\github\\202507262136\\lims_wpf\\lims\\lims.wpf\\viewmodels\\taskscreateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\taskscreateviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\repos\\github\\202507262136\\lims_wpf\\lims\\lims.wpf\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\repos\\github\\202507262136\\lims_wpf\\lims\\lims.wpf\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.common\\lims.common.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{B55C0619-AA53-4DFB-AA31-2A91D8ED60C4}|Lims.Common\\Lims.Common.csproj|solutionrelative:lims.common\\lims.common.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.wpf\\lims.wpf.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\lims.wpf.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\github\\202507260517\\lims_wpf\\lims\\lims.webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\repos\\github\\202507262136\\lims_wpf\\lims\\lims.webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     }
   ],
@@ -117,358 +34,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ItemService.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Services\\Services\\ItemService.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\Services\\Services\\ItemService.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Services\\Services\\ItemService.cs*",
-              "RelativeToolTip": "Lims.WPF\\Services\\Services\\ItemService.cs*",
-              "ViewState": "AgIAAE4AAAAAAAAAAAAxwFkAAABBAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:41:42.334Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "CollectionExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.ToolsForClient\\Extensions\\CollectionExtensions.cs",
-              "RelativeDocumentMoniker": "Lims.ToolsForClient\\Extensions\\CollectionExtensions.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.ToolsForClient\\Extensions\\CollectionExtensions.cs*",
-              "RelativeToolTip": "Lims.ToolsForClient\\Extensions\\CollectionExtensions.cs*",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAgwBMAAAAbAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:40:50.262Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "IItemService.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Services\\Interface\\IItemService.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\Services\\Interface\\IItemService.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Services\\Interface\\IItemService.cs*",
-              "RelativeToolTip": "Lims.WPF\\Services\\Interface\\IItemService.cs*",
-              "ViewState": "AgIAAAMAAAAAAAAAAADwvwUAAAAbAAAAAAAAAA==",
+              "Title": "ChatHub.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WebAPI\\Hubs\\ChatHub.cs",
+              "RelativeDocumentMoniker": "Lims.WebAPI\\Hubs\\ChatHub.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WebAPI\\Hubs\\ChatHub.cs",
+              "RelativeToolTip": "Lims.WebAPI\\Hubs\\ChatHub.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAywBEAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:39:42.877Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "CommandBase.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\.vsdbgsrc\\5d7d5f7d0725f674a09a06b24a1906f2a613803180e0b896818a0927d6258886\\CommandBase.cs",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\5d7d5f7d0725f674a09a06b24a1906f2a613803180e0b896818a0927d6258886\\CommandBase.cs",
-              "ToolTip": "C:\\Users\\Administrator\\AppData\\Local\\Temp\\.vsdbgsrc\\5d7d5f7d0725f674a09a06b24a1906f2a613803180e0b896818a0927d6258886\\CommandBase.cs [\u53EA\u8BFB]",
-              "RelativeToolTip": "..\\..\\..\\..\\..\\AppData\\Local\\Temp\\.vsdbgsrc\\5d7d5f7d0725f674a09a06b24a1906f2a613803180e0b896818a0927d6258886\\CommandBase.cs [\u53EA\u8BFB]",
-              "ViewState": "AgIAAGYAAAAAAAAAAAAIwHEAAAACAAAAAQAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:39:26.694Z",
-              "EditorCaption": " [\u53EA\u8BFB]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "SampleDto.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Dtos\\SampleDto.cs",
-              "RelativeDocumentMoniker": "Lims.Common\\Dtos\\SampleDto.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Dtos\\SampleDto.cs",
-              "RelativeToolTip": "Lims.Common\\Dtos\\SampleDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:35:58.222Z",
+              "WhenOpened": "2025-07-26T14:11:20.465Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "TasksCreateViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\TasksCreateViewModel.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\TasksCreateViewModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\TasksCreateViewModel.cs*",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\TasksCreateViewModel.cs*",
-              "ViewState": "AgIAALYAAAAAAAAAAAAlwL4AAAAgAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "TaskCount.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WebAPI\\Singleton\\TaskCount.cs",
+              "RelativeDocumentMoniker": "Lims.WebAPI\\Singleton\\TaskCount.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WebAPI\\Singleton\\TaskCount.cs*",
+              "RelativeToolTip": "Lims.WebAPI\\Singleton\\TaskCount.cs*",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAADwAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:32:31.509Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CurrentTasksManageViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\CurrentTasksManageViewModel.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\CurrentTasksManageViewModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\CurrentTasksManageViewModel.cs*",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\CurrentTasksManageViewModel.cs*",
-              "ViewState": "AgIAABkDAAAAAAAAAAAlwBwDAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:24:29.013Z",
+              "WhenOpened": "2025-07-26T14:10:53.085Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "DataRecoveryView.xaml",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\DataRecoveryView.xaml",
-              "RelativeDocumentMoniker": "Lims.WPF\\Views\\DataRecoveryView.xaml",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\DataRecoveryView.xaml",
-              "RelativeToolTip": "Lims.WPF\\Views\\DataRecoveryView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-26T09:24:32.629Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MyConvertersDictionary.xaml",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Resources\\Converters\\MyConvertersDictionary.xaml",
-              "RelativeDocumentMoniker": "Lims.WPF\\Resources\\Converters\\MyConvertersDictionary.xaml",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Resources\\Converters\\MyConvertersDictionary.xaml",
-              "RelativeToolTip": "Lims.WPF\\Resources\\Converters\\MyConvertersDictionary.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-26T09:35:09.754Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "SampleModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\Models\\SampleModel.cs",
-              "RelativeDocumentMoniker": "Lims.WebAPI\\Models\\SampleModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\Models\\SampleModel.cs",
-              "RelativeToolTip": "Lims.WebAPI\\Models\\SampleModel.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Title": "TasksCreateViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\TasksCreateViewModel.cs",
+              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\TasksCreateViewModel.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\TasksCreateViewModel.cs",
+              "RelativeToolTip": "Lims.WPF\\ViewModels\\TasksCreateViewModel.cs",
+              "ViewState": "AgIAALwAAAAAAAAAAADwv9IAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:36:35.518Z",
+              "WhenOpened": "2025-07-26T13:40:17.473Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "MyTestingTasksViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MyTestingTasksViewModel.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\MyTestingTasksViewModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MyTestingTasksViewModel.cs",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\MyTestingTasksViewModel.cs",
-              "ViewState": "AgIAAJcBAAAAAAAAAAAlwKUBAABqAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:36:55.4Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "SampleAndItemDataViewModelBase.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\SampleAndItemDataViewModelBase.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\SampleAndItemDataViewModelBase.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\SampleAndItemDataViewModelBase.cs",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\SampleAndItemDataViewModelBase.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAAAowHAAAABQAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:25:39.617Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TasksCheckViewModelBase.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\TasksCheckViewModelBase.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\TasksCheckViewModelBase.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\TasksCheckViewModelBase.cs",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\TasksCheckViewModelBase.cs",
-              "ViewState": "AgIAAHUAAAAAAAAAAAAlwIMAAABaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:38:25.929Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "MyTasksViewModelBase.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
-              "ViewState": "AgIAAHQCAAAAAAAAAAAlwIICAABpAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:25:17.581Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "ItemDto.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Dtos\\ItemDto.cs",
-              "RelativeDocumentMoniker": "Lims.Common\\Dtos\\ItemDto.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Dtos\\ItemDto.cs",
-              "RelativeToolTip": "Lims.Common\\Dtos\\ItemDto.cs",
-              "ViewState": "AgIAAF0BAAAAAAAAAAAUwGIBAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:34:42.159Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "SubItemDto.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Dtos\\SubItemDto.cs",
-              "RelativeDocumentMoniker": "Lims.Common\\Dtos\\SubItemDto.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Dtos\\SubItemDto.cs",
-              "RelativeToolTip": "Lims.Common\\Dtos\\SubItemDto.cs",
-              "ViewState": "AgIAAHkAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:36:15.462Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "ItemModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\Models\\ItemModel.cs",
-              "RelativeDocumentMoniker": "Lims.WebAPI\\Models\\ItemModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\Models\\ItemModel.cs",
-              "RelativeToolTip": "Lims.WebAPI\\Models\\ItemModel.cs",
-              "ViewState": "AgIAAF8AAAAAAAAAAAAQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:36:26.959Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "TasksCreateView.xaml",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\TasksCreateView.xaml",
-              "RelativeDocumentMoniker": "Lims.WPF\\Views\\TasksCreateView.xaml",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\TasksCreateView.xaml",
-              "RelativeToolTip": "Lims.WPF\\Views\\TasksCreateView.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2025-07-26T09:31:01.308Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "MyTestingTasksView.xaml.bak",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\MyTestingTasksView.xaml.bak",
-              "RelativeDocumentMoniker": "Lims.WPF\\Views\\MyTestingTasksView.xaml.bak",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\MyTestingTasksView.xaml.bak",
-              "RelativeToolTip": "Lims.WPF\\Views\\MyTestingTasksView.xaml.bak",
-              "ViewState": "AgIAALcBAAAAAAAAAAAqwMEBAADVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-26T09:24:56.033Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "DataRecoveryViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\DataRecoveryViewModel.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\DataRecoveryViewModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\DataRecoveryViewModel.cs",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\DataRecoveryViewModel.cs",
-              "ViewState": "AgIAAAwDAAAAAAAAAAAAAAkDAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:24:52.511Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "TaskCount.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\Singleton\\TaskCount.cs",
-              "RelativeDocumentMoniker": "Lims.WebAPI\\Singleton\\TaskCount.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\Singleton\\TaskCount.cs",
-              "RelativeToolTip": "Lims.WebAPI\\Singleton\\TaskCount.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAIwFMAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:27:09.109Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "DataRecoveryView.xaml.bak",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\DataRecoveryView.xaml.bak",
-              "RelativeDocumentMoniker": "Lims.WPF\\Views\\DataRecoveryView.xaml.bak",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Views\\DataRecoveryView.xaml.bak",
-              "RelativeToolTip": "Lims.WPF\\Views\\DataRecoveryView.xaml.bak",
-              "ViewState": "AgIAAAIBAAAAAAAAAAAAAAUBAABLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-07-26T09:24:38.601Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 3,
               "Title": "MainViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MainViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MainViewModel.cs",
               "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\MainViewModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MainViewModel.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MainViewModel.cs",
               "RelativeToolTip": "Lims.WPF\\ViewModels\\MainViewModel.cs",
-              "ViewState": "AgIAAJ4CAAAAAAAAAAAgwKgCAACrAAAAAAAAAA==",
+              "ViewState": "AgIAAJgCAAAAAAAAAADwv6gCAACrAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-26T09:20:11.221Z",
+              "WhenOpened": "2025-07-26T13:39:24.022Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "App.config",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\App.config",
-              "RelativeDocumentMoniker": "Lims.WPF\\App.config",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\App.config",
-              "RelativeToolTip": "Lims.WPF\\App.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-07-26T09:20:27.132Z",
+              "DocumentIndex": 4,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WPF\\App.xaml.cs",
+              "RelativeDocumentMoniker": "Lims.WPF\\App.xaml.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WPF\\App.xaml.cs",
+              "RelativeToolTip": "Lims.WPF\\App.xaml.cs",
+              "ViewState": "AgIAAD8AAAAAAAAAAAAYwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-26T13:39:18.03Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Lims.Common",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Lims.Common.csproj",
-              "RelativeDocumentMoniker": "Lims.Common\\Lims.Common.csproj",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.Common\\Lims.Common.csproj",
-              "RelativeToolTip": "Lims.Common\\Lims.Common.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAxAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-26T09:19:49.575Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "Lims.WPF",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Lims.WPF.csproj",
-              "RelativeDocumentMoniker": "Lims.WPF\\Lims.WPF.csproj",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WPF\\Lims.WPF.csproj",
-              "RelativeToolTip": "Lims.WPF\\Lims.WPF.csproj",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-07-26T09:19:14.68Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 5,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WebAPI\\appsettings.json",
               "RelativeDocumentMoniker": "Lims.WebAPI\\appsettings.json",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507260517\\lims_wpf\\Lims\\Lims.WebAPI\\appsettings.json",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\repos\\github\\202507262136\\lims_wpf\\Lims\\Lims.WebAPI\\appsettings.json",
               "RelativeToolTip": "Lims.WebAPI\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAkAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAADwvwkAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-26T09:19:04.046Z",
+              "WhenOpened": "2025-07-26T13:39:02.782Z",
               "EditorCaption": ""
             }
           ]

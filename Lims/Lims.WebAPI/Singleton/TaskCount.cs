@@ -54,11 +54,6 @@ namespace Lims.WebAPI.Singleton
             {
                 await conn.WaitAsync();
             }
-
-
-
-
-
         }
         public async Task GetTaskCount()
         {

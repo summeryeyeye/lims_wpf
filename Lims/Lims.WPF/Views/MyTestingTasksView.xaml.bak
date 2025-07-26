@@ -151,7 +151,7 @@
                                     Style="{StaticResource toolBarStyle}"
                                     VerticalAlignment="Center">
                     <dxb:BarCheckItem IsChecked="{Binding AllowAutoRounding}"
-                                      Glyph="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsChecked,Converter={StaticResource BooleanToGlyphConverter}, ConverterParameter='pack://application:,,,/DevExpress.Images.v24.2;component/Images/Actions/Cancel_16x16.png|pack://application:,,,/DevExpress.Images.v24.2;component/Images/Actions/Apply_16x16.png'}"
+                                      Glyph="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsChecked,Converter={StaticResource BooleanToGlyphConverter}, ConverterParameter='pack://application:,,,/DevExpress.Images.v25.1;component/Images/Actions/Cancel_16x16.png|pack://application:,,,/DevExpress.Images.v25.1;component/Images/Actions/Apply_16x16.png'}"
                                       Content="{Binding RelativeSource={RelativeSource Mode=Self},Path=IsChecked,Converter={StaticResource BooleanToContentConverter}, ConverterParameter='开启自动修约|关闭自动修约'}" />
 
                 </dxb:ToolBarControl>
