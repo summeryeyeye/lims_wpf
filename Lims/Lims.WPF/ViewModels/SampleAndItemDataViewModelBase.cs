@@ -120,7 +120,7 @@ namespace Lims.WPF.ViewModels
                 var items = await GetAllItemsOfSample(sample);
                 if (currentItems.Count() > 0)
                 {
-                    sample.Items = items;
+                    sample.Items = items.ToObservableCollection();
                     FocusedSample = sample;
                 }
                 else
@@ -1980,8 +1980,8 @@ namespace Lims.WPF.ViewModels
             foreach (var s in SelectedEditableSubItems)
             {
                 s.Temp_TestResult = string.Empty;
-                //s.FirstTestResult = string.Empty;
-                // s.SecondTestResult = string.Empty;
+                s.FirstTestResult = string.Empty;
+                 s.SecondTestResult = string.Empty;
                 s.AverageTestResult = string.Empty;
                 await _subItemService.UpdateAsync(s);
             }
@@ -2085,7 +2085,7 @@ namespace Lims.WPF.ViewModels
             {
                 var edittingSample = SamplesSource.FirstOrDefault(s => s?.SampleCode == editingItem.SampleCode);
                 if (edittingSample != null)
-                    edittingSample.Items = await GetAllItemsOfSample(edittingSample);
+                    edittingSample.Items = (await GetAllItemsOfSample(edittingSample)).ToObservableCollection();
             }
         }
 

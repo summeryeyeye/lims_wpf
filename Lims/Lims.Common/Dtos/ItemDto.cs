@@ -352,9 +352,9 @@ namespace Lims.Common.Dtos
 
 
 
-        private List<SubItemDto>? subItems=new();
+        private ObservableCollection<SubItemDto>? subItems=new();
 
-        public List<SubItemDto>? SubItems
+        public ObservableCollection<SubItemDto>? SubItems
         {
             get
             {

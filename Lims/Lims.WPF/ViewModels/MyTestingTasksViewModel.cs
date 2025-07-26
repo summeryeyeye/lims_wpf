@@ -419,7 +419,7 @@ namespace Lims.WPF.ViewModels
                                                 new Common.Parameters.ItemFilterParam() { SampleCode = editingSample.SampleCode });
                                         if (response.Status)
                                         {
-                                            editingSample.Items = response.Result;
+                                            editingSample.Items = response.Result.ToObservableCollection();
                                             FocusedSample = editingSample;
                                         }
                                     }

@@ -188,7 +188,7 @@ namespace Lims.WPF.ViewModels
                 return;
             }
 
-            List<ItemDto> existItems = null;
+            ObservableCollection<ItemDto> existItems = null;
             var sampleModel = (await _sampleService.GetSingleAsync(CurrentSampleCode)).Result;
             if (sampleModel != null)
             {
@@ -783,7 +783,7 @@ namespace Lims.WPF.ViewModels
                 {
                     var subs = subItemStandards.Where(s => s.SubitemType == item.Text);
 
-                    List<SubItem> subitems = new();
+                    ObservableCollection<SubItem> subitems = new();
 
                     foreach (var s in subs)
                     {
@@ -1141,7 +1141,7 @@ namespace Lims.WPF.ViewModels
     {
         public SubItemClass()
         {
-            SubItems = new List<SubItem>();
+            SubItems = new ObservableCollection<SubItem>();
         }
 
         public string Text
@@ -1154,7 +1154,7 @@ namespace Lims.WPF.ViewModels
             get; set;
         }
 
-        public List<SubItem> SubItems
+        public ObservableCollection<SubItem> SubItems
         {
             get; set;
         }

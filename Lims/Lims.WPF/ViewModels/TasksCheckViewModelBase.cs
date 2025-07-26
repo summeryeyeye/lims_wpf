@@ -17,7 +17,7 @@ namespace Lims.WPF.ViewModels
             {
                 ShowItemGridLoadingPanel = true;
                 ItemsSource = await GetItemsSource(sample);
-                sample.Items = ItemsSource.ToList();
+                sample.Items = ItemsSource;
                 ShowItemGridLoadingPanel = false;
             }
             catch (System.Exception)
@@ -129,7 +129,7 @@ namespace Lims.WPF.ViewModels
                               SamplesSource.Remove(editingSample);
                             }else
                             {
-                                editingSample.Items=edittingItems;
+                                editingSample.Items=edittingItems.ToObservableCollection();
                             }
 
 

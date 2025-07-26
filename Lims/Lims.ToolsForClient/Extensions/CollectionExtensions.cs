@@ -17,7 +17,7 @@ namespace Lims.ToolsForClient.Extensions
         {
             return items.IndexOf(items.FirstOrDefault(t => t.ItemId == item.ItemId));
         }
-        public static void AddRange<T>(this Collection<T> tasks1, List<T> items2)
+        public static void AddRange<T>(this Collection<T> tasks1, IEnumerable<T> items2)
         {
             foreach (var item in items2)            
                 tasks1.Add(item);  

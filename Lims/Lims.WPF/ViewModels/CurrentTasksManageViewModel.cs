@@ -285,7 +285,7 @@ namespace Lims.WPF.ViewModels
 
                 ItemsSource.Remove(item);
 
-                sample.Items = await GetAllItemsOfSample(sample);
+                sample.Items = (await GetAllItemsOfSample(sample)).ToObservableCollection();
                 FocusedSample = sample;
                 if (ItemsSource.Count > 0)
                 {
@@ -458,7 +458,7 @@ namespace Lims.WPF.ViewModels
                 {
                     var subs = subItemStandards.Where(s => s.SubitemType == item.Text);
 
-                    List<SubItem> subitems = new List<SubItem>();
+                    ObservableCollection<SubItem> subitems = new ObservableCollection<SubItem>();
 
                     foreach (var s in subs)
                     {
@@ -793,7 +793,7 @@ namespace Lims.WPF.ViewModels
 
                             string? newSampleCode=sampleModel.SampleCode+'F'+RetestTimes;
 
-                            List<ItemDto> existItems = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(){SampleCode=newSampleCode})).Result;
+                            var existItems = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(){SampleCode=newSampleCode})).Result;
 
                             DateTimeOffset currentTime=DateTimeOffset.Now;
                             if (!existSamples.Any(s=>s.SampleCode==newSampleCode))

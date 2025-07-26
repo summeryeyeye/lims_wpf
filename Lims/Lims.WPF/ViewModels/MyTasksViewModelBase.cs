@@ -640,7 +640,7 @@ namespace Lims.WPF.ViewModels
 
             var editingSample = SamplesSource.FirstOrDefault(s => s?.SampleCode == item.SampleCode);
             if (editingSample != null)
-                editingSample.Items = await GetAllItemsOfSample(editingSample);
+                editingSample.Items = (await GetAllItemsOfSample(editingSample)).ToObservableCollection();
 
         }
         #endregion

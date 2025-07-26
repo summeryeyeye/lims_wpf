@@ -62,19 +62,19 @@ namespace Lims.WebAPI.Singleton
         }
         public async Task GetTaskCount()
         {
-            using (var Db = _client)
+            using (var db = _client)
             {
                 try
                 {
                     TaskCountDto taskCountDto = new TaskCountDto();
-                    taskCountDto.MyReceivableTasks = await Db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=101 Group BY tester");
-                    taskCountDto.MyTestingTasks = await Db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=103 Group BY tester");
-                    taskCountDto.MyReturnedTasks = await Db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=102 Group BY tester");
-                    taskCountDto.MyUnreadLogs = await Db.Ado.GetDataTableAsync("SELECT receivername tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername");
-                    taskCountDto.unFinishedTasks = await Db.Ado.GetIntAsync("SELECT Count(itemid) count FROM itemmodel WHERE testprogress<104");
-                    taskCountDto.firstCheckTasks = await Db.Ado.GetIntAsync("SELECT COUNT(samplecode) count FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 104 THEN 1 ELSE 0 END) = 0 ) t");
-                    taskCountDto.sencondCheckTasks = await Db.Ado.GetIntAsync("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 105 THEN 1 ELSE 0 END) = 0 ) t");
-                    taskCountDto.thirdCheckTasks = await Db.Ado.GetIntAsync("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 106 THEN 1 ELSE 0 END) = 0 ) t");
+                    taskCountDto.MyReceivableTasks = await db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=101 Group BY tester");
+                    taskCountDto.MyTestingTasks = await db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=103 Group BY tester");
+                    taskCountDto.MyReturnedTasks = await db.Ado.GetDataTableAsync("SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=102 Group BY tester");
+                    taskCountDto.MyUnreadLogs = await db.Ado.GetDataTableAsync("SELECT receivername tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername");
+                    taskCountDto.unFinishedTasks = await db.Ado.GetIntAsync("SELECT Count(itemid) count FROM itemmodel WHERE testprogress<104");
+                    taskCountDto.firstCheckTasks = await db.Ado.GetIntAsync("SELECT COUNT(samplecode) count FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 104 THEN 1 ELSE 0 END) = 0 ) t");
+                    taskCountDto.sencondCheckTasks = await db.Ado.GetIntAsync("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 105 THEN 1 ELSE 0 END) = 0 ) t");
+                    taskCountDto.thirdCheckTasks = await db.Ado.GetIntAsync("SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 106 THEN 1 ELSE 0 END) = 0 ) t");
 
 
                     string json = Newtonsoft.Json.JsonConvert.SerializeObject(taskCountDto);
@@ -83,7 +83,11 @@ namespace Lims.WebAPI.Singleton
                 catch (Exception)
                 {
                     //throw;
-                }               
+                }
+                finally
+                {
+                    db.Dispose();
+                }              
             }
         }
 
