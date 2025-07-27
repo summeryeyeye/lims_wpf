@@ -28,33 +28,26 @@ namespace Lims.WPF.ViewModels
         }
         public TasksCreateViewModel()
         {
-            try
-            {
-                /*
-                var sampleInfo = File.ReadAllText(limsPath + @"\工具库\配置文件\DefaultSampleInfo.json");
-                if (sampleInfo != null)
-                {
-                }
-                */
-                defaultsample = new SampleDto() { SampleCode = "2025-0", SampleState = "固体" };//JsonConvert.DeserializeObject<SampleDto>(sampleInfo);
-                InitSampleInfo();
-            }
-            catch (Exception)
-            {
-
-                //throw;
-
-            }
-
-
 
         }
         protected override async void OnInitializeInRuntime()
         {
             base.OnInitializeInRuntime();
 
+            try
+            {
+                var sampleInfo = await File.ReadAllTextAsync(limsPath + @"\工具库\配置文件\DefaultSampleInfo.json");
+                defaultsample = JsonConvert.DeserializeObject<SampleDto>(sampleInfo);
+            }
+            catch (Exception)
+            {
+                defaultsample = new SampleDto() { SampleCode = "2025-0", SampleState = "固体" };//JsonConvert.DeserializeObject<SampleDto>(sampleInfo);
+            }
+            finally
+            {
+                InitSampleInfo();
 
-
+            }
             await InitMethodInfo();
             //await GetTesterNames();
         }
