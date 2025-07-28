@@ -482,7 +482,7 @@
                                            CommandParameter="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=dxb:PopupMenu}, Path=PlacementTarget}" />
                         <dxb:BarCheckItem IsChecked="{Binding OnlyViewUrgent}"
                                           KeyGesture="F4"
-                                          Glyph="{Binding Converter={StaticResource BooleanToContentConverter}, Path=IsChecked,RelativeSource={RelativeSource Mode=Self},  ConverterParameter='pack://application:,,,/DevExpress.Images.v25.1;component/Images/Business Objects/BOContact_16x16.png|pack://application:,,,/DevExpress.Images.v25.1;component/Images/Miscellaneous/ViewOnWeb_16x16.png'}"
+                                          Glyph="{Binding Converter={StaticResource BooleanToContentConverter}, Path=IsChecked,RelativeSource={RelativeSource Mode=Self},  ConverterParameter='pack://application:,,,/DevExpress.Images.v24.2;component/Images/Business Objects/BOContact_16x16.png|pack://application:,,,/DevExpress.Images.v24.2;component/Images/Miscellaneous/ViewOnWeb_16x16.png'}"
                                           Content="{Binding Converter={StaticResource BooleanToContentConverter}, Path=IsChecked,RelativeSource={RelativeSource Mode=Self},  ConverterParameter='只看加急|查看所有'}" />
                     </dxb:PopupMenu.Items>
                 </dxb:PopupMenu>

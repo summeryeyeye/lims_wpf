@@ -340,8 +340,8 @@ namespace Lims.WPF.ViewModels
             reportModel.TestItem = item.TestItem;
             reportModel.TestResult = item.TestResult;
             reportModel.TestDate = item.TestDate?.ToString("yyyy-MM-dd");
-            reportModel.FirstSampleWeight = item.ParallelTesting.FirstSampleWeight;// item.FirstSampleWeight;
-            reportModel.SecondSampleWeight = item.ParallelTesting.SecondSampleWeight;// item.SecondSampleWeight;
+            reportModel.FirstSampleWeight = item.ParallelTesting?.FirstSampleWeight;// item.FirstSampleWeight;
+            reportModel.SecondSampleWeight = item.ParallelTesting?.SecondSampleWeight;// item.SecondSampleWeight;
 
             //reportModel.Instruments = item.Instruments;
             //StringBuilder subInstruments = new StringBuilder();

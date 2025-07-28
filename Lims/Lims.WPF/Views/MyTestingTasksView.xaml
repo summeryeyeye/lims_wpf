@@ -23,6 +23,10 @@
             EventName="KeyUp"
             Command="{Binding DocumentKeyUpCommand}"
             PassEventArgsToCommand="True" />
+        <dxmvvm:EventToCommand
+            EventName="Unloaded"
+            Command="{Binding DocumentUnloadedCommand}"
+            PassEventArgsToCommand="True" />
     </dxmvvm:Interaction.Behaviors>
     <UserControl.Resources>
         <dxb:PopupMenu

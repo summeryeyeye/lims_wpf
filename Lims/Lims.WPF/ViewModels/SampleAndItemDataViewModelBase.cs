@@ -159,6 +159,15 @@ namespace Lims.WPF.ViewModels
             }
         }
         [Command]
+        public void DocumentUnloaded()
+        {
+            GC.Collect();
+            this.Dispose();
+        }
+
+
+
+        [Command]
         public virtual void ItemRowDoubleClick(RowClickArgs args)
         {
 
@@ -1342,7 +1351,7 @@ namespace Lims.WPF.ViewModels
                     {
                         //var res = subItem.ParallelTestings.Select(p => Convert.ToDecimal(p.TestResult)).ToList();
 
-                        var ave = Math.Round(res.Select(p => Convert.ToDecimal(p)).ToList().Average(), 2, MidpointRounding.ToEven);
+                        var ave = Math.Round(res.Select(p => Convert.ToDecimal(p)).ToList().Average(), 4, MidpointRounding.ToEven);
 
                         subItem.AverageTestResult = ave.ToString();
 
@@ -1981,7 +1990,7 @@ namespace Lims.WPF.ViewModels
             {
                 s.Temp_TestResult = string.Empty;
                 s.FirstTestResult = string.Empty;
-                 s.SecondTestResult = string.Empty;
+                s.SecondTestResult = string.Empty;
                 s.AverageTestResult = string.Empty;
                 await _subItemService.UpdateAsync(s);
             }

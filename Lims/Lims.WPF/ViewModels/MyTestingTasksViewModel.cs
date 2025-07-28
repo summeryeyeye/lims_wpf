@@ -10,6 +10,7 @@ using Lims.ToolsForClient;
 using Lims.ToolsForClient.Extensions;
 using Lims.WPF.Resources;
 using MathNet.Numerics;
+using MathNet.Numerics.Statistics.Mcmc;
 using System.Data;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -459,7 +460,7 @@ namespace Lims.WPF.ViewModels
                         {
                             res = new List<string> { subItem.FirstTestResult, subItem.SecondTestResult };
 
-                            var ave = Math.Round(res.Select(r => r.TryConvertToDecimal()).ToList().Average(), 2, MidpointRounding.ToEven);
+                            var ave = Math.Round(res.Select(r => r.TryConvertToDecimal()).ToList().Average(), 4, MidpointRounding.ToEven);
 
                             subItem.AverageTestResult = ave.ToString();
 
@@ -479,7 +480,7 @@ namespace Lims.WPF.ViewModels
                             }
                             else
                             {
-                                subItem.Temp_TestResult = ave.ToString();
+                                subItem.Temp_TestResult = Math.Round(ave , 2, MidpointRounding.ToEven).ToString();
 
                             }
                             await _subItemService.UpdateAsync(subItem);

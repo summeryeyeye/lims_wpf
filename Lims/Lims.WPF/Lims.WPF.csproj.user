@@ -9,6 +9,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Resources\UserControls\DocumentUserControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Resources\UserControls\DragForm.cs">
       <SubType>Form</SubType>
     </Compile>

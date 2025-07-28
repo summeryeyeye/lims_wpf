@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="DevExpress.Xpf.Core.v25.1">
+    <Reference Include="DevExpress.Xpf.Core.v24.2">
       
     </Reference>
   </ItemGroup>
