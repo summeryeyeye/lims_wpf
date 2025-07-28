@@ -390,9 +390,9 @@ namespace Lims.WPF.ViewModels
         /// <summary>
         /// 选中样品下所有项目
         /// </summary>
-        private ObservableCollection<ItemDto> itemsOfFocusedSample;
+        private ObservableCollection<ItemDto?> itemsOfFocusedSample;
 
-        public ObservableCollection<ItemDto> AllItemsOfFocusedSample
+        public ObservableCollection<ItemDto?> AllItemsOfFocusedSample
         {
             get => itemsOfFocusedSample;
             set
@@ -610,13 +610,7 @@ namespace Lims.WPF.ViewModels
         }
 
         protected async void ReturnTask(ItemDto edittingItem, SampleDto editingSample, string message, int preTestProgress = (int)TestProgress.无)
-        {
-            //int preTestProgress = edittingItem.TestProgress;
-
-            var sample = edittingItem.Sample;
-            sample.CompleteTime = null;
-            await _sampleService.UpdateAsync(sample);
-
+        { 
             edittingItem.PreTestProgress = preTestProgress;
             edittingItem.TestProgress = (int)TestProgress.任务已退回;
             edittingItem.TestResult = null;
@@ -646,6 +640,9 @@ namespace Lims.WPF.ViewModels
                 Message = message
             };
             await _loggerService.CreateAsync(log);
+            var sample = edittingItem.Sample;
+            sample.CompleteTime = null;
+            await _sampleService.UpdateAsync(sample);
         }
 
         #region 定制工具    

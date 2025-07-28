@@ -770,7 +770,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task RetestSample(SampleDto sampleModel)
         {
-            if (sampleModel.SampleCode.Contains('F'))
+            if (sampleModel.SampleCode!.Contains('F'))
             {
                 _messageBoxService.ShowMessage("请选择初始样品进行复测操作！");
                 return;
@@ -780,11 +780,12 @@ namespace Lims.WPF.ViewModels
             string originalCode = sampleModel.SampleCode.PadLeft(10);
 
             var response = await _sampleService.GetSamplesBySampleCodeKeyWordAsync(new SampleFilterParam() { SampleCodeKeyWord = originalCode });
-            if (response.Status)
+            if (response.Status && response.Result != null)
                 RetestSamples = response.Result;
 
             var existSamples = (await _sampleService.GetAllAsync()).Result;
-            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sampleModel.SampleCode })).Result.ToObservableCollection();
+            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sampleModel.SampleCode })).Result;
+
             var dialogService = GetService<IDialogService>("RetestSampleViewDialogService");
             dialogService.ShowDialog(
                 new List<UICommand> {
@@ -815,7 +816,7 @@ namespace Lims.WPF.ViewModels
                             RetestingItems.CopyTo(midItems,0);
                             string preIdentityCode = DateTimeOffset.Now.ToString("yyyyMMddHHmmss");
                             string? itemId;
-                            SampleDto existSample=(await _sampleService.GetSingleAsync(newSampleCode)).Result;
+                            //SampleDto existSample=(await _sampleService.GetSingleAsync(newSampleCode)).Result;
                             for (int i = 0; i < midItems.Count(); i++)
                             {
                                 ItemDto item=midItems[i];
