@@ -82,6 +82,11 @@
                     Glyph="{dx:DXImage 'Images/Mail/Attachment_16x16.png'}"
                     CommandParameter="{Binding  FocusedItem}"
                     Content="上传仪器报告" />
+                <dxb:BarButtonItem
+                    Command="{Binding ViewItemAttachmentCommand}"
+                    Glyph="{dx:DXImage 'Images/Actions/Open2_16x16.png'}"
+                    CommandParameter="{Binding  FocusedItem}"
+                    Content="查看仪器报告" />
                 <dxb:BarSubItem
                     Content="模式管理"
                     Glyph="{dx:DXImage 'Images/XAF/ModelEditor_Action_Modules.png'}">
@@ -99,14 +104,19 @@
                     Glyph="{dx:DXImage 'Images/XAF/ActionGroup_EasyTestRecorder.png'}">
                     <dxb:BarButtonItem
                         Content="关联原始记录模板"
-                        Glyph="{dx:DXImage 'Images/XAF/Action_FileAttachment_Attach.png'}"
+                        Glyph="{dx:DXImage 'Images/Business Objects/BOFileAttachment_16x16.png'}"
                         Command="{Binding AttachOriginalRecordTemplateCommand}"
                         CommandParameter="{Binding  FocusedItem}" />
-
+                    <dxb:BarButtonItem
+                        Command="{Binding OpenAttachedOriginalRecordTemplateCommand}"
+                        Glyph="{dx:DXImage 'Images/XAF/Action_Printing_Preview.png'}"
+                        CommandParameter="{Binding  FocusedItem}"
+                        Content="打开关联原始记录模板" />
                     <dxb:BarButtonItem
                         Content="编辑原始记录模板规则"
                         Glyph="{dx:DXImage 'Images/RichEdit/InsertColumnBreak_16x16.png'}"
                         Command="{Binding OriginalRecordTemplateEditCommand}" />
+                    
                 </dxb:BarSubItem>
             </dxb:PopupMenu.Items>
         </dxb:PopupMenu>

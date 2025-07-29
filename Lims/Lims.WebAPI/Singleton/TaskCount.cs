@@ -11,12 +11,12 @@ using DbType = SqlSugar.DbType;
 namespace Lims.WebAPI.Singleton
 {
     public class TaskCount
-    {       
+    {
 
         private readonly IHubContext<ChatHub> _context;
         public TaskCount(IHubContext<ChatHub> context)
         {
-            this._context = context;       
+            this._context = context;
         }
 
         private readonly static string _connStr = AppConfigurtaionServices.Configuration.GetSection("ConnectionStrings:POSTGRESQL").Value;
@@ -51,40 +51,52 @@ namespace Lims.WebAPI.Singleton
         {
             using (NpgsqlConnection con = new NpgsqlConnection(_connStr))
             {
-                TaskCountDto taskCountDto = new TaskCountDto();
-
-                var cmdStr = "SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=101 Group BY tester;SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=103 Group BY tester;SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=102 Group BY tester;SELECT receivername tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername;";
-                con.Open();
-                using (NpgsqlCommand cmd = new NpgsqlCommand(cmdStr, con))
+                try
                 {
-                    using (Npgsql.NpgsqlDataReader reader = cmd.ExecuteReader())
+                    TaskCountDto taskCountDto = new TaskCountDto();
+                    var cmdStr = "SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=101 Group BY tester;SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=103 Group BY tester;SELECT tester,Count(itemid) count FROM itemmodel WHERE testprogress=102 Group BY tester;SELECT receivername tester, COUNT(id) count FROM loggermodel WHERE isreaded=FALSE AND loglevel=3 Group BY receivername;";
+                    if (con.State != ConnectionState.Open)
+                        con.Open();
+                    using (NpgsqlCommand cmd = new NpgsqlCommand(cmdStr, con))
                     {
-                        taskCountDto.MyReceivableTasks = ConvertDataReaderToDataTable(reader);
-                        if (reader.NextResult())
-                            taskCountDto.MyTestingTasks = ConvertDataReaderToDataTable(reader);
-                        if (reader.NextResult())
-                            taskCountDto.MyReturnedTasks = ConvertDataReaderToDataTable(reader);
-                        if (reader.NextResult())
-                            taskCountDto.MyUnreadLogs = ConvertDataReaderToDataTable(reader);
+                        using (Npgsql.NpgsqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            taskCountDto.MyReceivableTasks = ConvertDataReaderToDataTable(reader);
+                            if (reader.NextResult())
+                                taskCountDto.MyTestingTasks = ConvertDataReaderToDataTable(reader);
+                            if (reader.NextResult())
+                                taskCountDto.MyReturnedTasks = ConvertDataReaderToDataTable(reader);
+                            if (reader.NextResult())
+                                taskCountDto.MyUnreadLogs = ConvertDataReaderToDataTable(reader);
+                        }
                     }
+                    using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT Count(itemid) count FROM itemmodel WHERE testprogress<104;SELECT COUNT(samplecode) count FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 104 THEN 1 ELSE 0 END) = 0 ) t;SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 105 THEN 1 ELSE 0 END) = 0 ) t;SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 106 THEN 1 ELSE 0 END) = 0 ) t", con))
+                    {
+                        var reader = cmd.ExecuteReader();
+                        while (reader.Read())
+                            taskCountDto.unFinishedTasks = reader.GetInt32(0);
+                        if (reader.NextResult())
+                            while (reader.Read())
+                                taskCountDto.firstCheckTasks = reader.GetInt32(0);
+                        if (reader.NextResult())
+                            while (reader.Read())
+                                taskCountDto.sencondCheckTasks = reader.GetInt32(0);
+                        if (reader.NextResult())
+                            while (reader.Read())
+                                taskCountDto.thirdCheckTasks = reader.GetInt32(0);
+                    }
+                    string json = Newtonsoft.Json.JsonConvert.SerializeObject(taskCountDto);
+                    await _context.Clients.All.SendAsync("TaskCount", json);
                 }
-                using (NpgsqlCommand cmd = new NpgsqlCommand("SELECT Count(itemid) count FROM itemmodel WHERE testprogress<104;SELECT COUNT(samplecode) count FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 104 THEN 1 ELSE 0 END) = 0 ) t;SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 105 THEN 1 ELSE 0 END) = 0 ) t;SELECT COUNT(samplecode) count  FROM (SELECT samplecode FROM itemmodel GROUP BY samplecode HAVING SUM(CASE WHEN testprogress <> 106 THEN 1 ELSE 0 END) = 0 ) t", con))
+                catch (Exception)
                 {
-                    var reader = cmd.ExecuteReader();
-                    while (reader.Read())
-                        taskCountDto.unFinishedTasks = reader.GetInt32(0);
-                    if (reader.NextResult())
-                        while (reader.Read())
-                            taskCountDto.firstCheckTasks = reader.GetInt32(0);
-                    if (reader.NextResult())
-                        while (reader.Read())
-                            taskCountDto.sencondCheckTasks = reader.GetInt32(0);
-                    if (reader.NextResult())
-                        while (reader.Read())
-                            taskCountDto.thirdCheckTasks = reader.GetInt32(0);
+
+                    //throw;
                 }
-                string json = Newtonsoft.Json.JsonConvert.SerializeObject(taskCountDto);
-                await _context.Clients.All.SendAsync("TaskCount", json);
+                finally
+                {
+                    con.Close();
+                }
             }
 
         }

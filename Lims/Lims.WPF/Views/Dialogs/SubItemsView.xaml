@@ -86,7 +86,7 @@
                                     Command="{Binding ClearTempSubItemTestResultColumnCommand}"
                                     Glyph="{dx:DXImage 'Images/Actions/ClearTableStyle_16x16.png'}"
                                     CommandParameter="{Binding  FocusedItem}"
-                                    Content="清空结果栏" />
+                                    Content="清理结果栏及关联资料" />
                                 <dxb:BarButtonItem
                                     Command="{Binding CaculateSubTestResultAverageCommand}"
                                     Glyph="{dx:DXImage 'Images/Conditional Formatting/AboveAverage_16x16.png'}"

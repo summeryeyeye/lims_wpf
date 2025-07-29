@@ -377,9 +377,9 @@ namespace Lims.WPF.ViewModels
         /// </summary>
         /// <param name="sample"></param>
         [Command]
-        public async Task DeleteSamples(ObservableCollection<SampleDto> samples)
+        public async Task DeleteSamples(IEnumerable<SampleDto> samples)
         {
-            if (samples.Count > 5)
+            if (samples.Count() > 5)
             {
                 _messageBoxService.ShowMessage("一次删除样品数量不得超过5个，请重试！");
                 return;
@@ -389,9 +389,9 @@ namespace Lims.WPF.ViewModels
             MessageResult result = _messageBoxService.ShowMessage($"确定删除勾选样品？", "删除", MessageButton.YesNo, MessageIcon.Warning, MessageResult.Cancel);
             if (result == MessageResult.Yes)
             {
-                for (int i = samples.Count - 1; i > -1; i--)
+                for (int i = samples.Count() - 1; i > -1; i--)
                 {
-                    var sample = samples[i];
+                    var sample = samples.ToArray()[i];
 
                     var tempSample = (SampleDto)sample.Clone();
 
@@ -489,7 +489,7 @@ namespace Lims.WPF.ViewModels
         }
 
         [Command]
-        public async Task AddToPreviewSubItems(List<SubItem> subItems)
+        public async Task AddToPreviewSubItems(IEnumerable<SubItem> subItems)
         {
             if (_messageBoxService.ShowMessage("确认添加子项目到该项目下？", "确认", MessageButton.OKCancel, MessageIcon.Question, MessageResult.OK) == MessageResult.OK)
             {

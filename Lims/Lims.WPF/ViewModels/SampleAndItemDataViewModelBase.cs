@@ -610,7 +610,7 @@ namespace Lims.WPF.ViewModels
         }
 
         protected async void ReturnTask(ItemDto edittingItem, SampleDto editingSample, string message, int preTestProgress = (int)TestProgress.无)
-        { 
+        {
             edittingItem.PreTestProgress = preTestProgress;
             edittingItem.TestProgress = (int)TestProgress.任务已退回;
             edittingItem.TestResult = null;
@@ -760,7 +760,7 @@ namespace Lims.WPF.ViewModels
 #pragma warning disable CA1041 // 提供 ObsoleteAttribute 消息
         [Obsolete]
 #pragma warning restore CA1041 // 提供 ObsoleteAttribute 消息
-        protected async Task ExportTo微生物下单表(List<ItemDto> sources, string filepath)
+        protected async Task ExportTo微生物下单表(IEnumerable<ItemDto> sources, string filepath)
         {
             List<微生物下单表Class> list = new();
             Type t = typeof(微生物下单表Class);
@@ -1052,7 +1052,7 @@ namespace Lims.WPF.ViewModels
 #pragma warning disable CA1041 // 提供 ObsoleteAttribute 消息
         [Obsolete]
 #pragma warning restore CA1041 // 提供 ObsoleteAttribute 消息
-        protected async Task ExportTo元素下单表(List<ItemDto> sources, string filepath)
+        protected async Task ExportTo元素下单表(IEnumerable<ItemDto> sources, string filepath)
         {
             List<元素下单表Class> list = new();
             Type t = typeof(元素下单表Class);
@@ -1146,7 +1146,7 @@ namespace Lims.WPF.ViewModels
 #pragma warning disable CA1041 // 提供 ObsoleteAttribute 消息
         [Obsolete]
 #pragma warning restore CA1041 // 提供 ObsoleteAttribute 消息
-        protected Task Export微生物结果统计表(List<ItemDto> sources, string filepath)
+        protected Task Export微生物结果统计表(IEnumerable<ItemDto> sources, string filepath)
         {
             List<微生物结果统计Class> list = new();
             Type t = typeof(微生物结果统计Class);
@@ -1335,10 +1335,10 @@ namespace Lims.WPF.ViewModels
         [Command]
         protected virtual async Task CaculateSubTestResultAverage(ItemDto item)
         {
-            if (SelectedEditableSubItems.Count > 0)
+            if (item.SubItems != null && item.SubItems.Count > 0)
             {
 
-                foreach (var subItem in SelectedEditableSubItems)
+                foreach (var subItem in item.SubItems)
                 {
                     var res = new List<string> { subItem.FirstTestResult, subItem.SecondTestResult };
 
@@ -1753,6 +1753,7 @@ namespace Lims.WPF.ViewModels
                                             break;
                                         case 1:
                                             subItem.SecondTestResult = res;
+                                            // subItem.AverageTestResult =
                                             await _subItemService.UpdateAsync(subItem);
                                             break;
                                         default:
@@ -1760,10 +1761,6 @@ namespace Lims.WPF.ViewModels
                                     }
                                 }
                             }
-                            //item.ParallelTestings.Add(parallelTesting);
-                            //var parallelTesting = item.ParallelTesting;
-                            // parallelTesting.SampleWeight = report.SampleWeight;
-                            //await _iParallelTestingService.UpdateAsync(parallelTesting);
 
                             switch (j)
                             {
@@ -1779,12 +1776,32 @@ namespace Lims.WPF.ViewModels
                             }
                             await _iParallelTestingService.UpdateAsync(item.ParallelTesting);
                         }
+                        await CaculateSubTestResultAverage(item);
                         showNotifaction("填充完成！");
                     }
 
                 }
             }
         }
+
+        [Command]
+        public async Task ViewItemAttachment(ItemDto item)
+        {
+            await Task.Run(() =>
+            {
+                var LimsPath = ConfigurationManager.AppSettings["LimsPath"].ToString();
+
+                var desDic = LimsPath + @$"\\附件\\{item.SampleCode}\\{item.TestItem}";
+                if (!Directory.Exists(desDic))
+                {
+                    Directory.CreateDirectory(desDic);
+                }
+                _ = Process.Start(new ProcessStartInfo($@"{desDic}") { UseShellExecute = true });
+
+            });
+        }
+
+
 
         [Command]
         public void PrintItemAttachment(ItemDto item)
@@ -1823,11 +1840,41 @@ namespace Lims.WPF.ViewModels
 
                 throw new Exception(ex.Message);
             }
+        }
+        [Command]
+        public async Task OpenAttachedOriginalRecordTemplate(ItemDto item)
+        {
+            if (item.MethodStandard != null && !string.IsNullOrEmpty(item.MethodStandard.OriginalRecordTemplateFilePath))
+            {
+                if (File.Exists(item.MethodStandard.OriginalRecordTemplateFilePath))
+                {
+                    await Task.Run(() =>
+                    {
+                        ProcessStartInfo processStartInfo = new(item.MethodStandard.OriginalRecordTemplateFilePath);
+                        Process process = new()
+                        {
+                            StartInfo = processStartInfo
+                        };
+                        process.StartInfo.UseShellExecute = true;
+                        process.Start();
 
+
+
+
+                    });
+                }
+                else
+                {
+                    _messageBoxService.ShowMessage($"模板文件({item.MethodStandard.OriginalRecordTemplateFilePath})不存在，请核对信息后重试！");
+                }
+
+            }
+            else
+            {
+                _messageBoxService.ShowMessage("请添加关联原始记录模板！");
+            }
 
         }
-
-
 
 
 
@@ -1981,20 +2028,39 @@ namespace Lims.WPF.ViewModels
         /// 清空子项目结果编辑页面结果
         /// </summary>
         [Command]
-        public async void ClearTempSubItemTestResultColumn()
+        public async void ClearTempSubItemTestResultColumn(ItemDto item)
         {
-            foreach (var s in SelectedEditableSubItems)
+            if (item.SubItems != null && item.SubItems.Count > 0)
             {
-                s.Temp_TestResult = string.Empty;
-                s.FirstTestResult = string.Empty;
-                s.SecondTestResult = string.Empty;
-                s.AverageTestResult = string.Empty;
-                await _subItemService.UpdateAsync(s);
+                foreach (var s in item.SubItems)
+                {
+                    s.Temp_TestResult = string.Empty;
+                    s.FirstTestResult = string.Empty;
+                    s.SecondTestResult = string.Empty;
+                    s.AverageTestResult = string.Empty;
+                }
+
+                await _subItemService.UpdateRangeAsync(item.SubItems.ToList());
+                if (item.ParallelTesting != null)
+                {
+                    if (item.ParallelTesting.FirstAttachmentPath != null && File.Exists(item.ParallelTesting.FirstAttachmentPath))
+                        File.Delete(item.ParallelTesting.FirstAttachmentPath);
+
+                    if (item.ParallelTesting.SecondAttachmentPath != null && File.Exists(item.ParallelTesting.SecondAttachmentPath))
+                        File.Delete(item.ParallelTesting.SecondAttachmentPath);
+
+                    item.ParallelTesting.FirstAttachmentPath = null;
+                    item.ParallelTesting.SecondAttachmentPath = null;
+                    item.ParallelTesting.FirstSampleWeight = null;
+                    item.ParallelTesting.SecondSampleWeight = null;
+                    await _itemService.UpdateAsync(item);
+                }
+                await ShowNotifaction("提示", "清理完成！", "");
             }
         }
 
         [Command]
-        public async void ClearItemTestResultColumn()
+        public async void ClearItemTestResultColumn(ItemDto item)
         {
             foreach (var s in selectedTaskDatas)
             {

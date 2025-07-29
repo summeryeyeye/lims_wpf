@@ -886,9 +886,9 @@ namespace Lims.WPF.ViewModels
             SelectedPreviewSubItem = selectedPreviewSubItem;
         }
         public List<SubItemDto> SelectedPreviewSubItems { get; set; } = new();
-        public TasksCreateViewModel(List<SubItemDto> selectedPreviewSubItems)
+        public TasksCreateViewModel(IEnumerable<SubItemDto> selectedPreviewSubItems)
         {
-            SelectedPreviewSubItems = selectedPreviewSubItems;
+            SelectedPreviewSubItems = selectedPreviewSubItems.ToList();
         }
         public ObservableCollection<ProductStandardDto> SearchResultProductInfos { get; set; } = new();
         [Command]

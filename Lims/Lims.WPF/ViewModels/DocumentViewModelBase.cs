@@ -14,6 +14,7 @@ using RestSharp;
 using Spire.Doc;
 using Spire.Doc.Documents;
 using System.Configuration;
+using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Windows.Input;
 
@@ -356,14 +357,8 @@ namespace Lims.WPF.ViewModels
                         new UICommand{Caption="关闭",IsDefault=false,IsCancel=true,},
 
                 }, "", this);
-
-
-
-
-
             }
-        }
-
+        }       
         /// <summary>
         /// 查看项目备注
         /// </summary>
