@@ -6,6 +6,7 @@ namespace Lims.WebAPI.Context.UnitOfWork
     public interface IBaseRepository<TEntity> where TEntity : class, new()
     {
         Task<bool> CreateAsync(TEntity entity);
+        Task<bool> CreateRangeAsync(IEnumerable<TEntity> entities);
 
         Task<bool> DeleteAsync(string primmaryKey);
         //Task<bool> CreateRangeAsync(TEntity[] entitys);
@@ -13,7 +14,7 @@ namespace Lims.WebAPI.Context.UnitOfWork
 
         Task<bool> EditAsync(TEntity entity);
 
-        Task<bool> EditRangeAsync(List<TEntity> updateObjs);
+        Task<bool> EditRangeAsync(IEnumerable<TEntity> entities);
 
         Task<TEntity> SearchAsync(string primmaryKey);
 

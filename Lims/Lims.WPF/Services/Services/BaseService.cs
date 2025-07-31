@@ -33,7 +33,16 @@ namespace Lims.WPF.Services.Services
             };
             return await client.ExecuteAsync<bool>(request);
         }
-
+        public async Task<ApiResponse<bool>> CreateRangeAsync(IEnumerable<TEntity> entities)
+        {
+            BaseRequest request = new BaseRequest()
+            {
+                Method = RestSharp.Method.POST,
+                Route = $"api/{serviceName}/CreateRange",
+                Parameter = entities,
+            };
+            return await client.ExecuteAsync<bool>(request);
+        }
 
         public async Task<ApiResponse<bool>> DeleteAsync(dynamic? primmaryKey)
         {
@@ -56,13 +65,13 @@ namespace Lims.WPF.Services.Services
         }
 
 
-        public async Task<ApiResponse<bool>> UpdateRangeAsync(List<TEntity> updateObjs)
+        public async Task<ApiResponse<bool>> UpdateRangeAsync(IEnumerable<TEntity> entities)
         {
             BaseRequest request = new BaseRequest()
             {
                 Method = RestSharp.Method.POST,
                 Route = $"api/{serviceName}/UpdateRange",
-                Parameter = updateObjs,
+                Parameter = entities,
             };
 
             return await client.ExecuteAsync<bool>(request);

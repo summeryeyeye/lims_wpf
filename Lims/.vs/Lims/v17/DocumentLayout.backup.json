@@ -1,7 +1,20 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.wpf\\viewmodels\\mytasksviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\mytasksviewmodelbase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.wpf\\views\\mysubmittedtasksview.xaml.bak||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\views\\mysubmittedtasksview.xaml.bak||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.wpf\\views\\myreturnedtasksview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\views\\myreturnedtasksview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +22,49 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MyTasksViewModelBase.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
+              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
+              "RelativeToolTip": "Lims.WPF\\ViewModels\\MyTasksViewModelBase.cs",
+              "ViewState": "AgIAALkBAAAAAAAAAAAEwMQBAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-31T01:30:37.867Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MySubmittedTasksView.xaml.bak",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\Views\\MySubmittedTasksView.xaml.bak",
+              "RelativeDocumentMoniker": "Lims.WPF\\Views\\MySubmittedTasksView.xaml.bak",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\Views\\MySubmittedTasksView.xaml.bak",
+              "RelativeToolTip": "Lims.WPF\\Views\\MySubmittedTasksView.xaml.bak",
+              "ViewState": "AgIAAFAAAAAAAAAAAAAAAGIAAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-07-31T01:30:35.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MyReturnedTasksView.xaml",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\Views\\MyReturnedTasksView.xaml",
+              "RelativeDocumentMoniker": "Lims.WPF\\Views\\MyReturnedTasksView.xaml",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\Views\\MyReturnedTasksView.xaml",
+              "RelativeToolTip": "Lims.WPF\\Views\\MyReturnedTasksView.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2025-07-31T01:30:34.242Z",
+              "EditorCaption": ""
             }
           ]
         }

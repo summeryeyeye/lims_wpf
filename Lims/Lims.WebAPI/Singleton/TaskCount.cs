@@ -27,8 +27,9 @@ namespace Lims.WebAPI.Singleton
         {
             GetTaskCount();
             using var conn = new NpgsqlConnection(_connStr);
-            conn.Open();
 
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
             // 订阅通知
             conn.Notification += (o, e) =>
             {
@@ -38,14 +39,19 @@ namespace Lims.WebAPI.Singleton
                 GetTaskCount();// 获取任务计数并发送到客户端
             };
 
-            using (var cmd = new NpgsqlCommand("LISTEN item_changed;LISTEN sample_changed;LISTEN logger_changed;", conn))
-                cmd.ExecuteNonQuery();
+            using var cmd = new NpgsqlCommand("LISTEN item_changed;LISTEN sample_changed;LISTEN logger_changed;", conn);
+
+            cmd.ExecuteNonQuery();
+            //cmd.Dispose();
 
             // 持续监听
             while (true)
             {
                 conn.Wait();
             }
+
+
+
         }
         public async void GetTaskCount()
         {

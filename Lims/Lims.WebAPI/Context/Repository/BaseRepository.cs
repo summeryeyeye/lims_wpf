@@ -17,6 +17,10 @@ namespace Lims.WebAPI.Context.Repository
         {
             return await base.InsertAsync(entity);
         }
+        public async Task<bool> CreateRangeAsync(IEnumerable<TEntity> entities)
+        {
+            return await base.InsertRangeAsync(entities.ToList());
+        }
 
         public async Task<bool> EditAsync(TEntity entity)
         {
@@ -26,11 +30,11 @@ namespace Lims.WebAPI.Context.Repository
         /// <summary>
         /// 批量修改数据
         /// </summary>
-        /// <param name="updateObjs"></param>
+        /// <param name="entities"></param>
         /// <returns></returns>
-        public async Task<bool> EditRangeAsync(List<TEntity> updateObjs)
+        public async Task<bool> EditRangeAsync(IEnumerable<TEntity> entities)
         {
-            return await base.UpdateRangeAsync(updateObjs);
+            return await base.UpdateRangeAsync(entities.ToList());
         }
 
 

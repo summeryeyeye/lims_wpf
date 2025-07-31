@@ -6,12 +6,13 @@ namespace Lims.WebAPI.Service.Interface
     public interface IBaseService<TEntity> where TEntity : class, new()
     {
         Task<ApiResponse> CreateAsync(TEntity entity);
+        Task<ApiResponse> CreateRangeAsync(IEnumerable<TEntity> entities);
 
         Task<ApiResponse> DeleteAsync(string primmaryKey);
 
         Task<ApiResponse> EditAsync(TEntity entity);
 
-        Task<ApiResponse> EditRangeAsync(List<TEntity> updateObjs);
+        Task<ApiResponse> EditRangeAsync(IEnumerable<TEntity> entities);
 
         Task<ApiResponse> SearchAsync(dynamic primmaryKey);
 

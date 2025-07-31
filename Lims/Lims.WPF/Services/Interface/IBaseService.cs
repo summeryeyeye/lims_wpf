@@ -3,9 +3,10 @@
     public interface IBaseService<TEntity> where TEntity : class, new()
     {
         Task<ApiResponse<bool>> CreateAsync(TEntity entity);
+        Task<ApiResponse<bool>> CreateRangeAsync(IEnumerable<TEntity> entities);
         Task<ApiResponse<bool>> DeleteAsync(dynamic primmaryKey);
         Task<ApiResponse<bool>> UpdateAsync(TEntity entity);
-        Task<ApiResponse<bool>> UpdateRangeAsync(List<TEntity> updateObjs);
+        Task<ApiResponse<bool>> UpdateRangeAsync(IEnumerable<TEntity> entities);
 
 
 

@@ -450,15 +450,15 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                if (SelectedEditableSubItems.Count > 0)
+                if (item.SubItems != null && item.SubItems.Count > 0)
                 {
-                    ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
+                    ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode!, KeyItem = "密度" })).Result;
                     foreach (var subItem in SelectedEditableSubItems)
                     {
                         List<string> res = new List<string>();
-                        if (IsNumeric(subItem.FirstTestResult) && IsNumeric(subItem.SecondTestResult))
+                        if (IsNumeric(subItem.FirstTestResult!) && IsNumeric(subItem.SecondTestResult!))
                         {
-                            res = new List<string> { subItem.FirstTestResult, subItem.SecondTestResult };
+                            res = new List<string> { subItem.FirstTestResult!, subItem.SecondTestResult! };
 
                             var ave = Math.Round(res.Select(r => r.TryConvertToDecimal()).ToList().Average(), 4, MidpointRounding.ToEven);
 
@@ -467,7 +467,7 @@ namespace Lims.WPF.ViewModels
                             if (DensityItem != null)
                             {
                                 var densityContent = DensityItem?.TestResult;
-                                if (IsNumeric(densityContent))
+                                if (IsNumeric(densityContent!))
                                 {
                                     var density = densityContent.TryConvertToDecimal();
                                     if (density > 0)
@@ -480,7 +480,7 @@ namespace Lims.WPF.ViewModels
                             }
                             else
                             {
-                                subItem.Temp_TestResult = Math.Round(ave , 2, MidpointRounding.ToEven).ToString();
+                                subItem.Temp_TestResult = Math.Round(ave, 2, MidpointRounding.ToEven).ToString();
 
                             }
                             await _subItemService.UpdateAsync(subItem);
@@ -513,7 +513,7 @@ namespace Lims.WPF.ViewModels
                 }
                 else
                 {
-                    _messageBoxService.ShowMessage("请勾选需要操作的数据后操作！");
+                    _messageBoxService.ShowMessage("该项目不存在子项目！");
                 }
             }
             catch (Exception ex)

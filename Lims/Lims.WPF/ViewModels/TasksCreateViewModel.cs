@@ -339,14 +339,19 @@ namespace Lims.WPF.ViewModels
             }
             , "", this);
 
-            foreach (var item in itemList)
-            {
-                await _itemService.CreateAsync(item);
-            }
-            foreach (var subitem in subItemList)
-                await _subItemService.CreateAsync(subitem);
-            await ShowNotifaction(CurrentSampleCode, "任务指派成功！", "");
 
+            var itemResponse = await _itemService.CreateRangeAsync(itemList);
+            var subItemResponse = await _subItemService.CreateRangeAsync(subItemList);
+
+            if (itemResponse.Status && subItemResponse.Status)
+            {
+
+                await ShowNotifaction(CurrentSampleCode, "任务指派成功！", "");
+            }
+            else
+            {
+                await ShowNotifaction(CurrentSampleCode, "任务指派失败，请检查后重试！", "");
+            }
         }
         private int getNextTester(Dictionary<int, string> dic, int No)
         {

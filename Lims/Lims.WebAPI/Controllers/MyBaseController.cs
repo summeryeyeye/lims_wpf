@@ -16,14 +16,14 @@ namespace Lims.WebAPI.Controllers
             this.mapper = mapper;
             this.baseService = baseService;
         }
-        
+
         [HttpGet]
         public ActionResult GetMethods()
-        {         
-            Type t =this.GetType();//StatController是指定控制器的名称
-            var ControllerMethods = t.GetMethods().Where(m=>m.Module.Name=="Lims.WebAPI.dll");
+        {
+            Type t = this.GetType();//StatController是指定控制器的名称
+            var ControllerMethods = t.GetMethods().Where(m => m.Module.Name == "Lims.WebAPI.dll");
             List<string> strings = new List<string>();
-            foreach (var item in ControllerMethods)            
+            foreach (var item in ControllerMethods)
                 strings.Add(item.Name);
             return Ok(strings);
         }
@@ -42,10 +42,12 @@ namespace Lims.WebAPI.Controllers
         public async Task<ApiResponse> Update([FromBody] TDto param) => await baseService.EditAsync(mapper.Map<T>(param));
 
         [HttpPost]
-        public async Task<ApiResponse> UpdateRange([FromBody] List<TDto> param) => await baseService.EditRangeAsync(mapper.Map<List<T>>(param));
+        public async Task<ApiResponse> UpdateRange([FromBody] IEnumerable<TDto> param) => await baseService.EditRangeAsync(mapper.Map<IEnumerable<T>>(param));
         // POST api/<ItemsController>
         [HttpPost]
         public async Task<ApiResponse> Create([FromBody] TDto itemDto) => await baseService.CreateAsync(mapper.Map<T>(itemDto));
+        [HttpPost]
+        public async Task<ApiResponse> CreateRange([FromBody] IEnumerable<TDto> param) => await baseService.CreateRangeAsync(mapper.Map<IEnumerable<T>>(param));
         #endregion
     }
 }

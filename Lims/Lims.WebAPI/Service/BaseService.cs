@@ -24,6 +24,20 @@ namespace Lims.WebAPI.Service
             }
 
         }
+        public async Task<ApiResponse> CreateRangeAsync(IEnumerable<TEntity> entities)
+        {
+            try
+            {
+                var data = await _iBaseRepository.CreateRangeAsync(entities);
+
+                return new ApiResponse(true, data);
+            }
+            catch (Exception ex)
+            {
+                return new ApiResponse(ex.Message);
+            }
+
+        }
         public async Task<ApiResponse> DeleteAsync(string primmaryKey)
         {
             try
@@ -64,11 +78,11 @@ namespace Lims.WebAPI.Service
                 return new ApiResponse(ex.Message);
             }
         }
-        public async Task<ApiResponse> EditRangeAsync(List<TEntity> updateObjs)
+        public async Task<ApiResponse> EditRangeAsync(IEnumerable<TEntity> entities)
         {
             try
             {
-                var data = await _iBaseRepository.EditRangeAsync(updateObjs);
+                var data = await _iBaseRepository.EditRangeAsync(entities);
 
                 return new ApiResponse(true, data);
             }

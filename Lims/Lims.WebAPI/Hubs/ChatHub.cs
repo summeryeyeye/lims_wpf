@@ -11,11 +11,12 @@ namespace Lims.WebAPI.Hubs
         public ChatHub(TaskCount taskCount)
         {
             this._taskCount = taskCount;
+            _taskCount.ListenPostgresql();
+
         }
-        public override  Task OnConnectedAsync()
+        public override Task OnConnectedAsync()
         {
             Console.WriteLine($"ID:{Context.ConnectionId} 已连接");
-            _taskCount.ListenPostgresql();
             return base.OnConnectedAsync();
         }
 
@@ -24,9 +25,6 @@ namespace Lims.WebAPI.Hubs
             Console.WriteLine($"ID:{Context.ConnectionId} 已断开");
             return base.OnDisconnectedAsync(exception);
         }
-
-
-
-
     }
 }
+
