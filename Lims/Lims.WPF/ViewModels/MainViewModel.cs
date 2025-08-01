@@ -7,10 +7,12 @@ using Lims.Common.Dtos;
 using Lims.ToolsForClient;
 using Lims.ToolsForClient.Extensions;
 using Lims.WPF.Navigations;
+using Lims.WPF.Services;
 using Lims.WPF.Services.Interface;
 using Lims.WPF.Tools;
 using Lims.WPF.Views;
 using Microsoft.AspNetCore.SignalR.Client;
+using NPOI.SS.Formula.Functions;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
@@ -22,10 +24,12 @@ using System.Net.Http;
 using System.Security.Policy;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using Module = DevExpress.Mvvm.ModuleInjection.Module;
 namespace Lims.WPF.ViewModels
 {
@@ -35,6 +39,14 @@ namespace Lims.WPF.ViewModels
         private IUserService UserService => ServiceContainer.GetService<IUserService>();
         private ILoggerService LoggerService => ServiceContainer.GetService<ILoggerService>();
         private IReagentService ReagentService => ServiceContainer.GetService<IReagentService>();
+
+        private readonly string serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"]!.ToString();
+        private HubConnection? _hubConnection;
+        private SignalRClient _signalRClient;
+        public MainViewModel()
+        {
+
+        }
         public virtual int Delay
         {
             get; set;
@@ -61,18 +73,12 @@ namespace Lims.WPF.ViewModels
 
         }
 
-
+        #region 测试方法
         [Command]
         public void Test()
         {
-
-
-
-
-
-
         }
-
+        #endregion
 
         protected override async void OnInitializeInRuntime()
         {
@@ -87,108 +93,58 @@ namespace Lims.WPF.ViewModels
 
             if (await Login())
             {
-
-
-                //1.初始化
-                InitInfo();
-                //2.监听
-                Listen();
-                //3.连接
-                Link();
-
-
+                _signalRClient = new SignalRClient();
+                InitializeSignalR();
             }
         }
-        [Command]
-        public void OnWindowClosed()
+        private async void InitializeSignalR()
         {
-            // 关闭窗口时释放资源
-            Dispose();
-            // 退出应用程序
-            Application.Current.Shutdown();
-        }
-
-
-        public void Dispose()
-        {
-            // SignalR 断开连接并解绑事件
-            if (hubConnection != null)
+            var url = $"{serviceRoutePath}notificationHub";
+            _signalRClient.OnTaskStatusChanged += message =>
             {
-                hubConnection.Remove("TaskCount");
-                hubConnection.StopAsync().Wait();
-                hubConnection.DisposeAsync().AsTask().Wait();
-            }
-            // Messenger 解绑
-            Messenger.Default.Unregister(this);
+                Task.Run(() => HandleTaskStatusChange(message));
+            };
 
-            // 其他资源释放
-        }
-
-        private readonly string serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"]!.ToString();
-        private HubConnection? hubConnection;
-        /// <summary>
-        /// 初始化Connection对象
-        /// </summary>
-        private void InitInfo()
-        {
-            var url = $"{serviceRoutePath}TaskCount";
-            HubConnectionBuilder hubConnectionBuilder = new HubConnectionBuilder();
-            //hubConnectionBuilder.WithUrl(url, options => { });
-            hubConnection = new HubConnectionBuilder().WithUrl(url).WithAutomaticReconnect().Build();
-            //自定义重连规则实现
-            hubConnectionBuilder = (HubConnectionBuilder)hubConnectionBuilder
-                .WithAutomaticReconnect(new RetryPolicy());
-            hubConnection.KeepAliveInterval = TimeSpan.FromSeconds(60);
-        }
-        //实现IRetryPolicy接口
-        class RetryPolicy : IRetryPolicy
-        {
-            /// <summary>
-            /// 重连规则：重连次数<50：间隔1s;重试次数<250:间隔30s;重试次数>250:间隔1m
-            /// </summary>
-            /// <param name="retryContext"></param>
-            /// <returns></returns>
-            public TimeSpan? NextRetryDelay(RetryContext retryContext)
+            _signalRClient.OnInitialDataReceived += data =>
             {
-                var count = retryContext.PreviousRetryCount / 50;
-                if (count < 1)//重试次数<50,间隔1s
-                {
-                    return new TimeSpan(0, 0, 1);
-                }
-                else if (count < 5)//重试次数<250:间隔30s
-                {
-                    return new TimeSpan(0, 0, 30);
-                }
-                else //重试次数>250:间隔1m
-                {
-                    return new TimeSpan(0, 1, 0);
-                }
-            }
+                Task.Run(() => LoadInitialTaskStatusData(data));
+            };
+
+            _signalRClient.OnConnectionError += ex =>
+            {
+                Task.Run(() => ShowConnectionError(ex));
+            };
+
+            await _signalRClient.InitializeAsync(url)
+                   .ContinueWith(t =>
+                   {
+                       if (t.IsFaulted)
+                           Task.Run(() => ShowConnectionError(t.Exception));
+                   });
         }
-        /// <summary>
-        /// 监听
-        /// </summary>
-        private void Listen()
+        private void HandleTaskStatusChange(string jsonData)
         {
-            hubConnection!.On<string>("TaskCount", ReceiveInfos);
+            // 处理产品变更
+            RefreshTaskList(jsonData);
+        }
+
+        private void LoadInitialTaskStatusData(string jsonData)
+        {
+            // 加载初始数据
+            RefreshTaskList(jsonData);
+        }
+
+        private void ShowConnectionError(Exception ex)
+        {
+            // 显示连接错误
+           
         }
 
         /// <summary>
-        /// 连接
+        /// 刷新页面
         /// </summary>
-        private async void Link()
-        {
-            try
-            {
-                await hubConnection!.StartAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void ReceiveInfos(string data)
+        /// <param name="data"></param>
+        private void RefreshTaskList(string data)
         {
             if (string.IsNullOrWhiteSpace(data))
                 return;
@@ -238,6 +194,43 @@ namespace Lims.WPF.ViewModels
         }
 
 
+
+        [Command]
+        public async Task OnWindowClosed()
+        {
+            // 关闭窗口时释放资源
+          await  DisposeAsync();
+            // 退出应用程序
+            Application.Current.Shutdown();
+        }
+
+
+        public async Task DisposeAsync()
+        {
+            // SignalR 断开连接并解绑事件
+            if (_hubConnection != null)
+            {
+                // 异步释放资源
+                await Task.Run(async () =>
+                {
+                    await _signalRClient.DisposeAsync();
+
+                    // 其他资源释放...
+                });
+            }
+            // Messenger 解绑
+            Messenger.Default.Unregister(this);
+
+            // 其他资源释放
+        }
+
+
+        //实现IRetryPolicy接口
+
+
+
+
+
         private string? currentVersion;
 
         public string? CurrentVersion
@@ -251,11 +244,6 @@ namespace Lims.WPF.ViewModels
                 currentVersion = value;
                 RaisePropertyChanged(nameof(CurrentVersion));
             }
-        }
-
-        public MainViewModel()
-        {
-
         }
         public ObservableCollection<LoggerDto?>? MyLogsSource
         {

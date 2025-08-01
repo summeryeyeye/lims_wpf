@@ -52,10 +52,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 //1.添加SignalR服务
 builder.Services.AddSignalR();
-
-builder.Services.AddScoped<TaskCount>();
-
-//builder.Services.AddSwaggerGen();
+builder.Services.AddHostedService<PostgresNotificationService>();
 
 builder.Services.AddScoped<ISampleRepository, SampleRepository>();
 builder.Services.AddTransient<ISampleService, SampleService>();
@@ -87,6 +84,7 @@ builder.Services.AddTransient<IReagentService, ReagentService>();
 builder.Services.AddScoped<IParallelTestingRepository, ParallelTestingRepository>();
 builder.Services.AddTransient<IParallelTestingService, ParallelTestingService>();
 
+builder.Services.AddSingleton<ITaskStatusService, TaskStatusService>();
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {
@@ -101,42 +99,10 @@ var app = builder.Build();
 
 app.UseRouting();
 
-//启用https重定向
-//app.UseHttpsRedirection();
-
-//Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//在Use中注册单例实例
-/*
-app.Use(async (context, next) =>
-{
-    var hubContext = context.RequestServices
-                            .GetRequiredService<IHubContext<ChatHub>>();
-    TaskCount.Register(hubContext);//调用静态方法注册
-
-    if (next != null)
-    {
-        await next.Invoke();
-    }
-});
-*/
 app.MapControllers();
 
 //2.映射路由
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapHub<ChatHub>("/TaskCount");
-});
-
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();
 public class AppConfigurtaionServices
