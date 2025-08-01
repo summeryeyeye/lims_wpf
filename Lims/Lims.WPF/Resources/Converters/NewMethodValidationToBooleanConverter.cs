@@ -9,7 +9,7 @@ namespace Lims.WPF.Resources.Converters
         {
 
             var method = value as MethodStandardDto;
-            if (string.IsNullOrWhiteSpace(method.TestItem) || string.IsNullOrWhiteSpace(method.TestMethod) || string.IsNullOrWhiteSpace(method.Tester))
+            if (string.IsNullOrWhiteSpace(method!.TestItem) || string.IsNullOrWhiteSpace(method.TestMethod) || string.IsNullOrWhiteSpace(method.Tester))
                 return false;
             return true;
 

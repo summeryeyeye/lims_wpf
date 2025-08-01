@@ -9,11 +9,11 @@ namespace Lims.WPF.Resources
         {
             get; set;
         }
-        public virtual string Expression
+        public virtual string? Expression
         {
             get; set;
         }
-        public virtual string FieldName
+        public virtual string? FieldName
         {
             get; set;
         }
@@ -29,12 +29,12 @@ namespace Lims.WPF.Resources
 
     public class FormatConditionSelector : DataTemplateSelector
     {
-        public override DataTemplate SelectTemplate(object item, DependencyObject container)
+        public override DataTemplate? SelectTemplate(object item, DependencyObject container)
         {
             if (!(item is FormattingRule))
                 return null;
             var vm = item as FormattingRule;
-            switch (vm.Type)
+            switch (vm!.Type)
             {
                 case FormattingType.Urgent:
                     return UrgentTemplate;
@@ -47,15 +47,15 @@ namespace Lims.WPF.Resources
             }
         }
 
-        public DataTemplate CurrentUrgentTemplate
+        public DataTemplate? CurrentUrgentTemplate
         {
             get; set;
         }
-        public DataTemplate UrgentTemplate
+        public DataTemplate? UrgentTemplate
         {
             get; set;
         }
-        public DataTemplate SingleConclusionTemplate
+        public DataTemplate? SingleConclusionTemplate
         {
             get; set;
         }

@@ -4,7 +4,7 @@ namespace Lims.WPF.Resources.Converters
 {
     public class MyItemsViewItemsSourceConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
@@ -13,7 +13,7 @@ namespace Lims.WPF.Resources.Converters
                     return null;
                 var allItems = values[1] as IEnumerable<ItemDto>;
 
-                return allItems.Where(i => i.SampleCode == sample.SampleCode);
+                return allItems!.Where(i => i.SampleCode == sample.SampleCode);
             }
             catch (Exception)
             {

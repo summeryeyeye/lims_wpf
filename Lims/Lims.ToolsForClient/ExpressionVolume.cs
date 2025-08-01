@@ -268,7 +268,7 @@ namespace Lims.ToolsForClient
             {
                 throw new Exception("表达式不能已符号开头");
             }
-            Expression expression = null;
+            Expression? expression = null;
             foreach (var Add in str.Split('+'))
             {
                 if (Add.Contains('-'))
@@ -277,7 +277,7 @@ namespace Lims.ToolsForClient
                     bool IsFirst = true;
                     foreach (var Subtract in Add.Split('-'))
                     {
-                        Expression _expression = null;
+                        Expression? _expression = null;
                         if (Subtract.Contains('*'))
                         {
                             _expression = MultiplyAction(Subtract, parameterExpression);
@@ -297,7 +297,7 @@ namespace Lims.ToolsForClient
                         else
                         {
                             //不是第一次进入不可能是null
-                            expression = Expression.Subtract(expression, _expression);
+                            expression = Expression.Subtract(expression!, _expression);
                         }
                         IsFirst = false;
                     }
@@ -320,7 +320,7 @@ namespace Lims.ToolsForClient
                 }
             }
 
-            return expression;
+            return expression!;
         }
 
         /// <summary>
@@ -364,7 +364,7 @@ namespace Lims.ToolsForClient
             {
                 throw new Exception("符号不能相连");
             }
-            Expression expression = null;
+            Expression? expression = null;
             if (value == "L" || value == "W" || value == "H")
             {
                 //读取变量的属性

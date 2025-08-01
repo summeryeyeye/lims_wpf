@@ -12,7 +12,7 @@ namespace Lims.WPF.Resources.Converters
             {
                 var source = value as IEnumerable<ItemDto>;
 
-                return source.Where(s => s.TestProgress > (int)TestProgress.检测中).Count();
+                return source!.Where(s => s.TestProgress > (int)TestProgress.检测中).Count();
             }
             return 0;
         }

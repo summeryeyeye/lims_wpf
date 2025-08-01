@@ -31,7 +31,7 @@ namespace Lims.WPF.ViewModels
 
         public MyTestingTasksViewModel()
         {
-            AllowAutoRounding = Convert.ToBoolean(cfa.AppSettings.Settings["AllowAutoRounding"].Value);
+            AllowAutoRounding = Convert.ToBoolean(cfa!.AppSettings.Settings["AllowAutoRounding"].Value);
             AllowNoticeTestDate = Convert.ToBoolean(cfa.AppSettings.Settings["AllowNoticeTestDate"].Value);
         }
 
@@ -58,9 +58,9 @@ namespace Lims.WPF.ViewModels
                 var response = await _itemService.GetMyItemsAsync(itemFilterParam);
                 if (response.Status)
                 {
-                    TaskDatasSource = response.Result.OrderBy(t => t.AppointTime).Where(i => !i.IsOverDate)
-                        .ToObservableCollection();
-                    SamplesSource = TaskDatasSource.Select(i => i.Sample).DistinctBy(s => s.SampleCode)
+                    TaskDatasSource = response.Result!.OrderBy(t => t.AppointTime).Where(i => !i.IsOverDate)
+                        .ToObservableCollection()!;
+                    SamplesSource = TaskDatasSource.Select(i => i!.Sample).DistinctBy(s => s!.SampleCode)
                         .ToObservableCollection();
                 }
 
@@ -87,7 +87,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                ObservableCollection<ItemDto> source = selectedTaskDatas
+                ObservableCollection<ItemDto> source = selectedTaskDatas!
                     .Where(i => !string.IsNullOrWhiteSpace(i.Temp_TestResult)).ToObservableCollection();
 
                 TaskListPreviewSources = source;
@@ -116,7 +116,7 @@ namespace Lims.WPF.ViewModels
                                         foreach (var task in tasks)
                                         {
                                             SampleDto editingSample =
-                                                SamplesSource.FirstOrDefault(s => s.SampleCode == task.SampleCode);
+                                                SamplesSource!.FirstOrDefault(s => s!.SampleCode == task.SampleCode)!;
                                             int newProgress = task.PreTestProgress == (int)TestProgress.无
                                                 ? (int)TestProgress.数据一审
                                                 : task.PreTestProgress;
@@ -138,20 +138,20 @@ namespace Lims.WPF.ViewModels
                                             }
 
 
-                                            TaskDatasSource.Remove(task);
+                                            TaskDatasSource!.Remove(task);
                                             ItemsSource.Remove(task);
                                             //SamplesSource.FirstOrDefault(s=>s.SampleCode==task.SampleCode).Items.Remove(SamplesSource.FirstOrDefault(s=>s.SampleCode==task.SampleCode).Items.FirstOrDefault(i=>i.ItemId==task.ItemId));
                                         }
 
                                         await _itemService.UpdateRangeAsync(tasks.ToList());
 
-                                        var samples = tasks.Select(i => i.Sample).DistinctBy(s => s.SampleCode);
+                                        var samples = tasks.Select(i => i.Sample).DistinctBy(s => s!.SampleCode);
                                         foreach (var sample in samples)
                                         {
                                             //await  UpdateSampleTestProgress(sample);
                                             await ExcuteIfNullSample(
-                                                SamplesSource.FirstOrDefault(s => s.SampleCode == sample.SampleCode),
-                                                TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode));
+                                                SamplesSource!.FirstOrDefault(s => s!.SampleCode == sample!.SampleCode)!,
+                                                TaskDatasSource!.Where(i => i!.SampleCode == sample!.SampleCode)!);
                                         }
                                     })
                             },
@@ -180,7 +180,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void EditTestRemark()
         {
-            InputBoxText = FocusedItem.TestRemark;
+            InputBoxText = FocusedItem!.TestRemark;
             var dialogService = GetService<IDialogService>("InPutBoxViewDialogService");
             dialogService.ShowDialog(
                 new List<UICommand>
@@ -209,7 +209,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                SubmitableItems = ItemsSource.Where(i => !string.IsNullOrWhiteSpace(i.Temp_TestResult)).ToList();
+                SubmitableItems = ItemsSource.Where(i => !string.IsNullOrWhiteSpace(i!.Temp_TestResult)).ToList()!;
 
                 if (SubmitableItems != null && SubmitableItems.Count > 0)
                 {
@@ -233,7 +233,7 @@ namespace Lims.WPF.ViewModels
                                         //ItemDto[] items = new ItemDto[SubmitableItems.Count];
                                         //SubmitableItems.CopyTo(items, 0);
 
-                                        SampleDto editingSample = FocusedSample;
+                                        SampleDto? editingSample = FocusedSample;
 
                                         //var itemInfo = editingSample.ItemInfo;
 
@@ -261,20 +261,20 @@ namespace Lims.WPF.ViewModels
                                                     new List<SubItemDto>(item.SubItems));
                                             }
 
-                                            TaskDatasSource.Remove(
-                                                TaskDatasSource.FirstOrDefault(t => t.ItemId == item.ItemId));
+                                            TaskDatasSource!.Remove(
+                                                TaskDatasSource.FirstOrDefault(t => t!.ItemId == item.ItemId));
                                             ItemsSource.Remove(
-                                                ItemsSource.FirstOrDefault(i => i.ItemId == item.ItemId));
+                                                ItemsSource.FirstOrDefault(i => i!.ItemId == item.ItemId));
                                         }
 
                                         await _itemService.UpdateRangeAsync(SubmitableItems);
 
 
-                                        await ExcuteIfNullSample(editingSample,
-                                            TaskDatasSource.Where(i => i.SampleCode == editingSample.SampleCode));
+                                        await ExcuteIfNullSample(editingSample!,
+                                            TaskDatasSource!.Where(i => i!.SampleCode == editingSample!.SampleCode)!);
 
                                         await ShowNotifaction(
-                                            editingSample.SampleCode + "  " + editingSample.SampleName, "提交成功！", "");
+                                            editingSample!.SampleCode + "  " + editingSample.SampleName, "提交成功！", "");
                                         //UpdateGrid();
                                     })
                             },
@@ -303,7 +303,7 @@ namespace Lims.WPF.ViewModels
                     _messageBoxService.ShowMessage("该项目未同步检测日期，请添加后重试！");
                     return;
                 }
-            SampleDto editingSample = SamplesSource.FirstOrDefault(s => s.SampleCode == item.SampleCode);
+            SampleDto editingSample = SamplesSource!.FirstOrDefault(s => s!.SampleCode == item.SampleCode)!;
             if (editingSample == null)
                 return;
             int newProgress = item.PreTestProgress == (int)TestProgress.无
@@ -314,11 +314,11 @@ namespace Lims.WPF.ViewModels
             item.SingleConclusion = item.Temp_SingleConclusion;
             item.TestProgress = newProgress;
             item.ResultSubmitTime = DateTimeOffset.Now;
-            TaskDatasSource.Remove(item);
+            TaskDatasSource!.Remove(item);
             ItemsSource.Remove(item);
             await _itemService.UpdateAsync(item);
             await ExcuteIfNullSample(editingSample,
-                TaskDatasSource.Where(i => i.SampleCode == editingSample.SampleCode));
+                TaskDatasSource.Where(i => i!.SampleCode == editingSample.SampleCode)!);
 
             if (item.SubItems != null && item.SubItems.Count > 0)
             {
@@ -338,7 +338,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void ChangeItemInfo(ItemDto item)
         {
-            EdittingItem = (ItemDto)item.Clone();
+            EdittingItem = (ItemDto)item.Clone()!;
 
             IDialogService dialogService = GetService<IDialogService>("EditItemInfoViewDialogService");
             dialogService.ShowDialog(
@@ -351,8 +351,8 @@ namespace Lims.WPF.ViewModels
                             {
                                 await _itemService.UpdateAsync(EdittingItem);
 
-                                TaskDatasSource[TaskDatasSource.FindTaskDataIndex(item)] =
-                                    (await _itemService.GetSingleAsync(item.ItemId)).Result;
+                                TaskDatasSource![TaskDatasSource!.FindTaskDataIndex(item)] =
+                                    (await _itemService.GetSingleAsync(item.ItemId!)).Result;
                                 ItemsSource[ItemsSource.IndexOf(item)] = EdittingItem;
 
                                 await ShowNotifaction(EdittingItem.SampleCode + "  " + EdittingItem.TestItem,
@@ -382,7 +382,7 @@ namespace Lims.WPF.ViewModels
                         {
                             if (EditedUser != null && EdittingItem.Tester != EditedUser.UserName)
                             {
-                                SampleDto editingSample = FocusedSample;
+                                SampleDto? editingSample = FocusedSample;
                                 int newProgress = (int)TestProgress.待领取;
 
                                 EdittingItem.Tester = EditedUser.UserName;
@@ -396,21 +396,21 @@ namespace Lims.WPF.ViewModels
                                     LogLevel = LogLevel.WARN,
                                     ActionType = ActionType.变更项目分析人,
                                     PublisherIP = LoggerDto.GetLocalIP(),
-                                    PublisherName = CurrentUser.UserName,
+                                    PublisherName = CurrentUser!.UserName,
                                     ReceiverName = EditedUser.UserName,
                                     SampleCode = item.SampleCode,
                                     TestItem = item.TestItem,
                                     Message = "变更项目分析人",
                                 });
 
-                                TaskDatasSource.Remove(EdittingItem);
+                                TaskDatasSource!.Remove(EdittingItem);
                                 ItemsSource.Remove(item);
                                 if (editingSample != null)
                                 {
                                     if (ItemsSource.Count == 0)
                                     {
                                         pre_MyFocusedSampelRowIndex = FocusedSampleRowHandle;
-                                        SamplesSource.Remove(editingSample);
+                                        SamplesSource!.Remove(editingSample);
                                         FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
                                     }
                                     else
@@ -452,7 +452,7 @@ namespace Lims.WPF.ViewModels
             {
                 if (item.SubItems != null && item.SubItems.Count > 0)
                 {
-                    ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode!, KeyItem = "密度" })).Result;
+                    ItemDto? DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode!, KeyItem = "密度" })).Result;
                     foreach (var subItem in SelectedEditableSubItems)
                     {
                         List<string> res = new List<string>();
@@ -533,9 +533,9 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                string oldValue = e.Value == null ? string.Empty : e.Value.ToString();
+                string oldValue = e.Value == null ? string.Empty : e.Value.ToString()!;
                 var editingItem = e.Item as ItemDto;
-                ItemTempResultChanged(editingItem, oldValue);
+                ItemTempResultChanged(editingItem!, oldValue);
             }
             catch (Exception ex)
             {
@@ -547,7 +547,7 @@ namespace Lims.WPF.ViewModels
         public void SwitchAutoRounding()
         {
             AllowAutoRounding = !AllowAutoRounding;
-            cfa.AppSettings.Settings["AllowAutoRounding"].Value = AllowAutoRounding.ToString();
+            cfa!.AppSettings.Settings["AllowAutoRounding"].Value = AllowAutoRounding.ToString();
             cfa.Save();
             if (AllowAutoRounding)
                 showNotifaction("自动修约已开启！");
@@ -575,7 +575,7 @@ namespace Lims.WPF.ViewModels
         public void SwitchNoticeTestDate()
         {
             AllowNoticeTestDate = !AllowNoticeTestDate;
-            cfa.AppSettings.Settings["AllowNoticeTestDate"].Value = AllowNoticeTestDate.ToString();
+            cfa!.AppSettings.Settings["AllowNoticeTestDate"].Value = AllowNoticeTestDate.ToString();
             cfa.Save();
             if (AllowNoticeTestDate)
                 showNotifaction("检测日期提醒已开启！");

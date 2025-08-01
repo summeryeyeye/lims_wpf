@@ -7,7 +7,7 @@
         {
             try
             {
-                return value.ToString().Split('\\').Last();
+                return value.ToString()!.Split('\\').Last();
             }
             catch (Exception)
             {

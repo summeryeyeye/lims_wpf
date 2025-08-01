@@ -38,7 +38,7 @@ namespace Lims.WPF.ViewModels
             var response = await _sampleService.GetSamplesAsync(param);
 
             if (response.Status)
-                SamplesSource = response.Result.OrderByDescending(s => s.CreateTime).ToObservableCollection();
+                SamplesSource = response.Result!.OrderByDescending(s => s.CreateTime).ToObservableCollection()!;
             FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
             ShowMainDatasLoadingPanel = false;
         }

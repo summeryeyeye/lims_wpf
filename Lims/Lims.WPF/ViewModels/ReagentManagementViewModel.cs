@@ -20,7 +20,7 @@ namespace Lims.WPF.ViewModels
 
         protected override async Task LoadMainDatas(UserDto? user)
         {
-            Reagents = (await _iReagentService.GetAllAsync()).Result.ToObservableCollection();
+            Reagents = (await _iReagentService.GetAllAsync()).Result.ToObservableCollection()!;
             //throw new NotImplementedException();
         }
         public static ReagentManagementViewModel Create(string caption)

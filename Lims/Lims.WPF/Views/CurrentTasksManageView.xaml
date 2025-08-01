@@ -338,7 +338,7 @@
             </dxg:GridControl.Columns>
             <dxg:GridControl.View>
                 <dxg:TableView
-                    CheckBoxSelectorColumnWidth="40"
+                    CheckBoxSelectorColumnWidth='40'
                     Style="{StaticResource ItemsTableViewStyle}"
                     dxb:BarManager.DXContextMenu="{StaticResource itemViewPopupMenu}" />
             </dxg:GridControl.View>

@@ -19,7 +19,7 @@ namespace Lims.WPF.Views.Dialogs
             var chnFont = new Font("楷体", 12F);
 
 
-            this.Text = datas.FirstOrDefault().SampleCode;
+            this.Text = datas.FirstOrDefault()!.SampleCode;
             reportDataPreviewGrid.DataSource = datas.ToDataTable();
             reportDataPreviewView.OptionsView.ShowDetailButtons = false;
 

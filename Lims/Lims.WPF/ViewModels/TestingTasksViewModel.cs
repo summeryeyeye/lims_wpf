@@ -51,7 +51,7 @@ namespace Lims.WPF.ViewModels
         {
             if (_messageBoxService.ShowMessage("确认将所选样品标记为临时加急？", "临时加急", MessageButton.OKCancel, MessageIcon.Question, MessageResult.OK) == MessageResult.OK)
             {
-                SampleDto[] sampleDtos = new SampleDto[SelectedSamples.Count];
+                SampleDto[] sampleDtos = new SampleDto[SelectedSamples!.Count];
                 SelectedSamples.CopyTo(sampleDtos, 0);
 
                 foreach (var sample in sampleDtos)

@@ -66,12 +66,12 @@ namespace Lims.WPF.Resources.UserControls.Export
         static void UnsubscribeProgressEvents(PrintableControlLink link, EventHandler onExportProgress)
         {
             link.PrintingSystem.ProgressReflector.PositionChanged -= onExportProgress;
-            link.PrintingSystem.AfterBuildPages -= OnAfterBuildPages;
+            link.PrintingSystem.AfterBuildPages -= OnAfterBuildPages!;
         }
         static void SubscribeProgressEvents(PrintableControlLink link, EventHandler onExportProgress)
         {
             link.PrintingSystem.ProgressReflector.PositionChanged += onExportProgress;
-            link.PrintingSystem.AfterBuildPages += OnAfterBuildPages;
+            link.PrintingSystem.AfterBuildPages += OnAfterBuildPages!;
         }
         static void Export<T>(DataViewBase view, Func<PrintableControlLink, Action<Stream, T>> getExportToStreamMethod) where T : ExportOptionsBase, new()
         {
@@ -352,9 +352,9 @@ namespace Lims.WPF.Resources.UserControls.Export
     }
     public class PrintingIconImageSourceConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            string rawIconName = value as string;
+            string? rawIconName = value as string;
             if (rawIconName == null)
                 return null;
             string iconName = Regex.Replace(rawIconName, "[^a-zA-Z]", string.Empty);

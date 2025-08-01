@@ -17,7 +17,7 @@ namespace Lims.WPF.ViewModels
             {
                 ShowItemGridLoadingPanel = true;
                 ItemsSource = await GetItemsSource(sample);
-                sample.Items = ItemsSource;
+                sample.Items = ItemsSource!;
                 ShowItemGridLoadingPanel = false;
             }
             catch (System.Exception)
@@ -40,9 +40,9 @@ namespace Lims.WPF.ViewModels
             var itemResponse = await _itemService.GetAllItemsByTestProgressAsync(itemFileterParam);
             if (itemResponse.Status)
             {
-                TaskDatasSource = itemResponse.Result.OrderByDescending(t => t.SampleCode).ToObservableCollection();
+                TaskDatasSource = itemResponse.Result!.OrderByDescending(t => t.SampleCode).ToObservableCollection()!;
                 itemDtos = TaskDatasSource?.Copy();
-                SamplesSource = TaskDatasSource.Select(s => s.Sample).DistinctBy(s => s.SampleCode).OrderBy(s => s.SampleCode).ToObservableCollection();
+                SamplesSource = TaskDatasSource!.Select(s => s!.Sample).DistinctBy(s => s!.SampleCode).OrderBy(s => s!.SampleCode).ToObservableCollection();
             }
 
 
@@ -77,7 +77,7 @@ namespace Lims.WPF.ViewModels
         {
             if (sample != null)
             {
-                ItemsSource = (await GetAllItemsOfSample(sample)).ToObservableCollection();
+                ItemsSource = (await GetAllItemsOfSample(sample)).ToObservableCollection()!;
                 //ItemFilterParam itemFilterParam = new ItemFilterParam()
                 //{
                 //    SampleCode = sample.SampleCode,
@@ -121,15 +121,15 @@ namespace Lims.WPF.ViewModels
                             var editingSample =FocusedSample; //SamplesSource.FirstOrDefault(s=>s.SampleCode==edittingItem.SampleCode); 
 
 
-                           ReturnTask(edittingItem,editingSample,InputBoxText,edittingItem.TestProgress);
+                           ReturnTask(edittingItem,editingSample!,InputBoxText!,edittingItem.TestProgress);
 
-                            var edittingItems=await GetAllItemsOfSample(editingSample);
+                            var edittingItems=await GetAllItemsOfSample(editingSample!);
                             if (edittingItems.All(i=>i.TestProgress<(int)RelativeProgress))
                             {
-                              SamplesSource.Remove(editingSample);
+                              SamplesSource!.Remove(editingSample);
                             }else
                             {
-                                editingSample.Items=edittingItems.ToObservableCollection();
+                                editingSample!.Items=edittingItems.ToObservableCollection();
                             }
 
 
@@ -144,8 +144,8 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task EditChekingRemark(CellValueChangedArgs e)
         {
-            SampleDto sample = e.Item as SampleDto;
-            await _sampleService.UpdateAsync(sample);
+            SampleDto? sample = e.Item as SampleDto;
+            await _sampleService.UpdateAsync(sample!);
         }
     }
 }

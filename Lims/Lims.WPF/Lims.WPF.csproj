@@ -16,7 +16,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="综合数据.ico" />
+    <None Remove="Resources\CurrentMicroorganesmTesterModel.json" />
+    <None Remove="Resources\DefaultSampleInfo.json" />
+    <None Remove="Resources\任务随行单.docx" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="综合数据.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
@@ -32,7 +40,23 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Lims.ToolsForClient\Lims.ToolsForClient.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="CurrentMicroorganesmTesterModel.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="DefaultSampleInfo.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="任务随行单.docx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>

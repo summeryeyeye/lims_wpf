@@ -12,7 +12,7 @@
             get { return standardState; }
             set { standardState = value; RaisePropertiyChanged(nameof(StandardState)); }
         }
-        public string LastUpdater { get; set; }
+        public string? LastUpdater { get; set; }
     }
     public enum StandardState
     {

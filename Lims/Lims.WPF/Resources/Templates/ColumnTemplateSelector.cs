@@ -5,15 +5,15 @@ namespace Lims.WPF.Resources.Style.Templates
 {
     public class ColumnTemplateSelector : DataTemplateSelector
     {
-        public DataTemplate DefaultColumnTemplate
+        public DataTemplate? DefaultColumnTemplate
         {
             get; set;
         }
-        public DataTemplate LookupColumnTemplate
+        public DataTemplate? LookupColumnTemplate
         {
             get; set;
         }
-        public DataTemplate BindingColumnTemplate
+        public DataTemplate? BindingColumnTemplate
         {
             get; set;
         }

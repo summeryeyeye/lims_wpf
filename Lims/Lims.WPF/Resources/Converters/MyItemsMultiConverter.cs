@@ -4,13 +4,13 @@ namespace Lims.WPF.Resources.Converters
 {
     public class MyItemsMultiConverter : IMultiValueConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             try
             {
-                var sampleCode = (values[0] as SampleDto).SampleCode;
+                var sampleCode = (values[0] as SampleDto)!.SampleCode;
 
-                var arr = (values[1] as IEnumerable<ItemDto>).Where(t => t.SampleCode == sampleCode).Select(i => i.TestItem);
+                var arr = (values[1] as IEnumerable<ItemDto>)!.Where(t => t.SampleCode == sampleCode).Select(i => i.TestItem);
                 ;
                 return string.Join(',', arr);
             }

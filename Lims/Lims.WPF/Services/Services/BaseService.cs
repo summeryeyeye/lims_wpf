@@ -14,7 +14,7 @@ namespace Lims.WPF.Services.Services
             this.serviceName = serviceName;
 
 #if DEBUG
-            var serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"].ToString();
+            var serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"]!.ToString();
 #else
             var serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"].ToString();
 #endif

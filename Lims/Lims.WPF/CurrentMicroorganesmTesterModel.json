@@ -1,0 +1,17 @@
+{
+  "LastCode_A": "147",
+  "Tester_A": "王俊红",
+  "LastCode_B": "258",
+  "Tester_B": "聂啟玉",
+  "LastCode_C": "369",
+  "Tester_C": "刘平",
+  "Item": "测序",
+  "Tester_D": "刘平",
+  "TurnLastCode": "0",
+  "LastMicroorganismTester": 1,
+  "Testers": [
+    "王俊红",
+    "聂啟玉",
+    "刘平"
+  ]
+}

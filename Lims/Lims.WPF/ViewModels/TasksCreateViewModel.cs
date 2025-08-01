@@ -13,6 +13,7 @@ using NPOI.Util;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+
 using System.Windows.Input;
 
 namespace Lims.WPF.ViewModels
@@ -36,8 +37,9 @@ namespace Lims.WPF.ViewModels
 
             try
             {
-                var sampleInfo = await File.ReadAllTextAsync(limsPath + @"\工具库\配置文件\DefaultSampleInfo.json");
-                defaultsample = JsonConvert.DeserializeObject<SampleDto>(sampleInfo);
+
+                var sampleInfo = await File.ReadAllTextAsync(System.Windows.Forms.Application.StartupPath + @"DefaultSampleInfo.json");
+                defaultsample = JsonConvert.DeserializeObject<SampleDto>(sampleInfo)!;
             }
             catch (Exception)
             {
@@ -85,8 +87,8 @@ namespace Lims.WPF.ViewModels
                 RaisePropertyChanged(nameof(MenuNodes));
             }
         }
-        private string searchString;
-        public string SearchString
+        private string? searchString;
+        public string? SearchString
         {
             get
             => searchString;
@@ -108,17 +110,17 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        private SampleDto currentSample;
-        public SampleDto CurrentSample
-        {
-            get
-            => currentSample;
-            set
-            {
-                currentSample = value;
-                RaisePropertyChanged(nameof(CurrentSample));
-            }
-        }
+        //private SampleDto? currentSample;
+        //public SampleDto? CurrentSample
+        //{
+        //    get
+        //    => currentSample;
+        //    set
+        //    {
+        //        currentSample = value;
+        //        RaisePropertyChanged(nameof(CurrentSample));
+        //    }
+        //}
 
         private int selectedSampleStateIndex;
 
@@ -131,7 +133,7 @@ namespace Lims.WPF.ViewModels
             set
             {
 
-                CurrentSample.SampleState = SampleStates[value].SampleState;
+                CurrentSample!.SampleState = SampleStates[value].SampleState;
                 selectedSampleStateIndex = value;
                 SwitchSampleState();
 
@@ -147,8 +149,8 @@ namespace Lims.WPF.ViewModels
         {
             //清空预览栏，确保预览栏内项目的样品状态信息一致
             PreviewSources.Clear();
-            GetRootNodes(SearchString);
-            await SearchByItemOrMethod(SearchString);
+            GetRootNodes(SearchString!);
+            await SearchByItemOrMethod(SearchString!);
         }
 
 
@@ -185,35 +187,37 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task CreateTasks()
         {
-            string configPath = limsPath + @"\工具库\配置文件\CurrentMicroorganesmTesterModel.json";
+
+
+            string configPath = System.Windows.Forms.Application.StartupPath + @"CurrentMicroorganesmTesterModel.json";
             string json = File.ReadAllText(configPath);
-            CurrentMicroorganesmTesterModel = JsonConvert.DeserializeObject<MicroorganismTesterModel>(json);
+            CurrentMicroorganesmTesterModel = JsonConvert.DeserializeObject<MicroorganismTesterModel>(json)!;
 
 
 
 
             DateTimeOffset currentTime = DateTimeOffset.Now;
             string preIdentityCode = currentTime.ToString("yyyyMMddHHmmss");
-            bool IsCreateNewItem = false;
+            //bool IsCreateNewItem = false;
             if (PreviewSources.Count == 0)
             {
                 _messageBoxService.ShowMessage("请添加项目后重试!");
                 return;
             }
 
-            ObservableCollection<ItemDto> existItems = null;
-            var sampleModel = (await _sampleService.GetSingleAsync(CurrentSampleCode)).Result;
+            ObservableCollection<ItemDto>? existItems = null;
+            var sampleModel = (await _sampleService.GetSingleAsync(CurrentSampleCode!)).Result;
             if (sampleModel != null)
             {
                 var response = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = CurrentSampleCode }));
                 if (response.Status)
-                    existItems = response.Result;
+                    existItems = response.Result!;
                 if (_messageBoxService.ShowMessage("编号已存在,是否继续?", "警告", MessageButton.OKCancel) == MessageResult.Cancel)
                     return;
             }
             else
             {
-                CurrentSample.CreateTime = currentTime;
+                CurrentSample!.CreateTime = currentTime;
 
                 await _sampleService.CreateAsync(CurrentSample);
                 IsExistedSample = true;
@@ -225,11 +229,8 @@ namespace Lims.WPF.ViewModels
             ObservableCollection<ItemDto> itemList = new();
             ObservableCollection<SubItemDto> subItemList = new();
 
-            //string configPath = limsPath + @"\工具库\配置文件\CurrentMicroorganesmTesterModel.json";
-            //var json = File.ReadAllText(configPath);
-
             Dictionary<int, string> dic = new Dictionary<int, string>();
-            for (int i = 0; i < CurrentMicroorganesmTesterModel.Testers.Count; i++)
+            for (int i = 0; i < CurrentMicroorganesmTesterModel!.Testers!.Count; i++)
             {
                 dic[i + 1] = CurrentMicroorganesmTesterModel.Testers[i];
             }
@@ -243,8 +244,8 @@ namespace Lims.WPF.ViewModels
 
                 dataIndex = PreviewSources.IndexOf(item) + 1;
                 itemId = preIdentityCode + dataIndex.ToString("D4") + string.Empty.PadRight(3, '0');
-                ItemDto itemModel = (ItemDto)item.Clone();
-                string tester = item.Tester;
+                ItemDto itemModel = (ItemDto)item.Clone()!;
+                string tester = item.Tester!;
 
                 #region 微生物分析人
                 try
@@ -253,19 +254,19 @@ namespace Lims.WPF.ViewModels
                     {
                         int lastInt = GetLastInt(CurrentSampleCode);
 
-                        if (item.TestItem.Contains(CurrentMicroorganesmTesterModel.Item))
+                        if (item.TestItem!.Contains(CurrentMicroorganesmTesterModel.Item!))
                         {
-                            tester = CurrentMicroorganesmTesterModel.Tester_D;
+                            tester = CurrentMicroorganesmTesterModel.Tester_D!;
                         }
                         else
                         {
-                            if (CurrentMicroorganesmTesterModel.LastCode_A.Contains(lastInt.ToString()))
-                                tester = CurrentMicroorganesmTesterModel.Tester_A;
-                            else if (CurrentMicroorganesmTesterModel.LastCode_B.Contains(lastInt.ToString()))
-                                tester = CurrentMicroorganesmTesterModel.Tester_B;
-                            else if (CurrentMicroorganesmTesterModel.LastCode_C.Contains(lastInt.ToString()))
-                                tester = CurrentMicroorganesmTesterModel.Tester_C;
-                            else if (CurrentMicroorganesmTesterModel.TurnLastCode.Contains(lastInt.ToString()))
+                            if (CurrentMicroorganesmTesterModel.LastCode_A!.Contains(lastInt.ToString()))
+                                tester = CurrentMicroorganesmTesterModel.Tester_A!;
+                            else if (CurrentMicroorganesmTesterModel.LastCode_B!.Contains(lastInt.ToString()))
+                                tester = CurrentMicroorganesmTesterModel.Tester_B!;
+                            else if (CurrentMicroorganesmTesterModel.LastCode_C!.Contains(lastInt.ToString()))
+                                tester = CurrentMicroorganesmTesterModel.Tester_C!;
+                            else if (CurrentMicroorganesmTesterModel.TurnLastCode!.Contains(lastInt.ToString()))
                             {
                                 isNeedChangeTester = true;
                                 tester = dic[getNextTester(dic, Convert.ToInt32(lastTester))];
@@ -294,7 +295,7 @@ namespace Lims.WPF.ViewModels
                 itemModel.Tester = tester;
                 itemModel.AppointTime = currentTime;
                 itemList.Add(itemModel);
-                IsCreateNewItem = true;
+                //IsCreateNewItem = true;
 
                 if (item.SubItems != null && item.SubItems.Count > 0)
                 {
@@ -324,7 +325,7 @@ namespace Lims.WPF.ViewModels
                 CurrentMicroorganesmTesterModel.LastMicroorganismTester = getNextTester(dic, Convert.ToInt32(lastTester));
 
                 json = JsonConvert.SerializeObject(CurrentMicroorganesmTesterModel, Newtonsoft.Json.Formatting.Indented);
-                configPath = limsPath + @"\工具库\配置文件\CurrentMicroorganesmTesterModel.json";
+                configPath = System.Windows.Forms.Application.StartupPath + @"CurrentMicroorganesmTesterModel.json";
                 File.WriteAllText(configPath, json);
 
             }
@@ -333,7 +334,7 @@ namespace Lims.WPF.ViewModels
             new List<UICommand> {
                 new UICommand{Caption = "打印任务随行单",IsDefault = true,IsCancel = false,Command = new DelegateCommand(new Action(async () =>
                 {
-                    await  打印任务随行单(itemList,Printers[CurrentPrinterIndex]);
+                    await  打印任务随行单(itemList,Printers![CurrentPrinterIndex]);
                 }))},
                 new UICommand{Caption = "不打印",IsDefault = false,IsCancel = true,}
             }
@@ -359,7 +360,7 @@ namespace Lims.WPF.ViewModels
                 No = 0;
             return No + 1;
         }
-        public MicroorganismTesterModel CurrentMicroorganesmTesterModel
+        public MicroorganismTesterModel? CurrentMicroorganesmTesterModel
         {
             get; set;
         }
@@ -376,7 +377,7 @@ namespace Lims.WPF.ViewModels
                  new UICommand{Caption = "保存",IsDefault = true,IsCancel = false,Command=new DelegateCommand(() =>
                  {
                      string json=JsonConvert.SerializeObject(CurrentMicroorganesmTesterModel, Newtonsoft.Json.Formatting.Indented);
-                     string configPath = limsPath + @"\工具库\配置文件\CurrentMicroorganesmTesterModel.json";
+                     string configPath = System.Windows.Forms.Application.StartupPath+ @"CurrentMicroorganesmTesterModel.json";
                      File.WriteAllText(configPath, json);
                      DXMessageBox.Show("保存成功！");
                  })},
@@ -387,10 +388,10 @@ namespace Lims.WPF.ViewModels
         {
             int lastInt = 0;
             string validCode = string.Empty;
-            if (Regex.IsMatch(sampleCode, @"^[0-9]{4}-[0-9]{5}$"))
-                validCode = sampleCode.Split('-')[1];
-            else if (Regex.IsMatch(sampleCode, @"^[0-9]{5}-[0-9]{4}$"))
-                validCode = sampleCode.Split('-')[0];
+            if (Regex.IsMatch(sampleCode!, @"^[0-9]{4}-[0-9]{5}$"))
+                validCode = sampleCode!.Split('-')[1];
+            else if (Regex.IsMatch(sampleCode!, @"^[0-9]{5}-[0-9]{4}$"))
+                validCode = sampleCode!.Split('-')[0];
 
             lastInt = Convert.ToInt32(validCode.Last().ToString());
             return lastInt;
@@ -437,10 +438,10 @@ namespace Lims.WPF.ViewModels
 
                 currentSampleCode = value;
                 RaisePropertyChanged(nameof(CurrentSampleCode));
-                if (sampleCodeCorrectReg.IsMatch(value))
+                if (sampleCodeCorrectReg.IsMatch(value!))
                 {
                     SampleCodeValidate = true;
-                    CurrentSample.SampleCode = value;
+                    CurrentSample!.SampleCode = value;
                     FindExistSample(value);
                 }
                 else
@@ -462,13 +463,13 @@ namespace Lims.WPF.ViewModels
             {
                 IsExistedSample = false;
 
-                var sample = (await _sampleService.GetSingleAsync(sampleCode)).Result;
+                var sample = (await _sampleService.GetSingleAsync(sampleCode!)).Result;
 
                 if (sample != null)
                 {
                     IsExistedSample = true;
 
-                    CurrentSample.SampleName = sample.SampleName;
+                    CurrentSample!.SampleName = sample.SampleName;
                     CurrentSample.IsUrgent = sample.IsUrgent;
                     CurrentSample.TaskType = sample.TaskType;
                     CurrentSample.SampleState = sample.SampleState;
@@ -483,9 +484,9 @@ namespace Lims.WPF.ViewModels
                         PreviewSources.Clear();
 
 
-                        foreach (var i in existItems.Result)
+                        foreach (var i in existItems.Result!)
                         {
-                            var methodResponse = await _methodStandardService.GetSingleAsync(i.MethodStandardId);
+                            var methodResponse = await _methodStandardService.GetSingleAsync(i!.MethodStandardId);
                             if (methodResponse.Result == null)
                                 _messageBoxService.ShowMessage($"该检测方法（检测项目：{i.TestItem} 方法名称：{i.TestMethod} Id：{i.MethodStandardId}）已失效，请联系管理员变更!");
                             else
@@ -509,18 +510,18 @@ namespace Lims.WPF.ViewModels
                             }
                         }
 
-                        var itemsHasSubItems = existItems.Result.Where(i => i.SubItems != null && i.SubItems.Count > 0);
+                        var itemsHasSubItems = existItems.Result.Where(i => i!.SubItems != null && i.SubItems.Count > 0);
 
 
                         foreach (var i in itemsHasSubItems)
                         {
-                            foreach (var s in i.SubItems)
+                            foreach (var s in i!.SubItems!)
                             {
                                 s.TestResult = string.Empty;
                                 s.Temp_TestResult = string.Empty;
                             }
                         }
-                        PreviewSources.AddRange(existItems.Result);
+                        PreviewSources!.AddRange(existItems.Result);
                     }
                 }
             }
@@ -541,7 +542,7 @@ namespace Lims.WPF.ViewModels
             {
                 if (response.Result != null)
                 {
-                    _ProductStandardDBInfos = response.Result.OrderBy(p => p.Id).ToList();
+                    _ProductStandardDBInfos = response.Result.OrderBy(p => p.Id).ToList()!;
 
                     SearchString = string.Empty;
 
@@ -558,7 +559,7 @@ namespace Lims.WPF.ViewModels
         public void GetChildrenNodes(ProductNode node)
         {
 
-            string sampleState = CurrentSample.SampleState; //RadioButton.Content;
+            string sampleState = CurrentSample!.SampleState!; //RadioButton.Content;
             bool isChecked = node.IsChecked;
 
             node.IsChecked = !isChecked;
@@ -590,7 +591,7 @@ namespace Lims.WPF.ViewModels
         }
         private void _GuidToNode(ProductNode node)
         {
-            string sampleState = CurrentSample.SampleState;// RadioButton.Content;
+            string sampleState = CurrentSample!.SampleState!;// RadioButton.Content;
 
             if ((node.ProductLevel != ProductLevel.Null && node.ProductLevel == menuNodes.Last().ProductLevel) || (node.ProductLevel != ProductLevel.Null && node.ProductLevel == menuNodes.Last().ProductLevel))
                 return;
@@ -605,7 +606,7 @@ namespace Lims.WPF.ViewModels
 
             if (node.ProductLevel == ProductLevel.SampleState)
             {
-                GetRootNodes(SearchString);
+                GetRootNodes(SearchString!);
             }
         }
         [Command]
@@ -644,14 +645,14 @@ namespace Lims.WPF.ViewModels
             TestItemsSource.Clear();
             if (!string.IsNullOrWhiteSpace(searchParam))
             {
-                var response1 = (await _methodStandardService.GetMethodStandardsBySearchWordAsync(new MethodStandardFilterParam() { SearchWord = searchParam, SampleState = currentSample.SampleState }));
+                var response1 = (await _methodStandardService.GetMethodStandardsBySearchWordAsync(new MethodStandardFilterParam() { SearchWord = searchParam, SampleState = CurrentSample!.SampleState }));
                 if (response1.Status)
                 {
-                    var results1 = response1.Result.DistinctBy(i => i.TestItem);
+                    var results1 = response1.Result!.DistinctBy(i => i.TestItem);
                     SampleStates[selectedSampleStateIndex].MethodsCount = results1.Count();
 
                     var response2 = (await _methodStandardService.GetMethodStandardsBySearchWordAsync(new MethodStandardFilterParam() { SearchWord = searchParam, SampleState = SampleStates[Math.Abs(selectedSampleStateIndex - 1)].SampleState }));
-                    var results2 = response2.Result.DistinctBy(i => i.TestItem);
+                    var results2 = response2.Result!.DistinctBy(i => i.TestItem);
                     SampleStates[Math.Abs(selectedSampleStateIndex - 1)].MethodsCount = results2.Count();
 
                     foreach (var i in results1)
@@ -682,25 +683,25 @@ namespace Lims.WPF.ViewModels
                 return;
 
             MethodsSource.Clear();
-            MethodsSource = (await _methodStandardService.GetMethodStandardsByTestItemAsync(new MethodStandardFilterParam() { SampleState = currentSample.SampleState, TestItem = itemNode.Text })).Result.ToObservableCollection();
+            MethodsSource = (await _methodStandardService.GetMethodStandardsByTestItemAsync(new MethodStandardFilterParam() { SampleState = CurrentSample!.SampleState, TestItem = itemNode.Text })).Result.ToObservableCollection();
 
             foreach (var t in TestItemsSource)
                 t.IsChecked = false;
             itemNode.IsChecked = true;
         }
-        public MethodStandardDto SelectedMethod
+        public MethodStandardDto? SelectedMethod
         {
             get; set;
         }
         [Command]
-        public void GetRootNodes(string searchParam)
+        public void GetRootNodes(string? searchParam)
         {
             ProductStandards = new ObservableCollection<ProductNode>();
             MenuNodes.Clear();
 
 
             //bool _searchBySampleState = SearchBySampleState;
-            string _sampleState = CurrentSample?.SampleState;// RadioButton.Content;
+            string _sampleState = CurrentSample!.SampleState!;// RadioButton.Content;
 
             //_sampleState = "固体";
             ProductNode rootNode = new()
@@ -712,11 +713,11 @@ namespace Lims.WPF.ViewModels
 
             menuNodes.Add(rootNode);
 
-            SearchResultProductInfos = _ProductStandardDBInfos.Where(s => s.SampleState == _sampleState && s.ExecuteStandard.Contains(searchParam) && s.ExecuteStandard.Trim().Length > 1).ToObservableCollection();
+            SearchResultProductInfos = _ProductStandardDBInfos.Where(s => s!.SampleState == _sampleState && s.ExecuteStandard!.Contains(searchParam!) && s.ExecuteStandard.Trim().Length > 1).ToObservableCollection()!;
             var products = SearchResultProductInfos.DistinctBy(s => s.ExecuteStandard).Select(s => s.ExecuteStandard);
 
             SampleStates[selectedSampleStateIndex].ProductsCount = products.Count();
-            var data = _ProductStandardDBInfos.Where(s => s.SampleState == SampleStates[Math.Abs(selectedSampleStateIndex - 1)].SampleState && s.ExecuteStandard.Contains(searchParam) && s.ExecuteStandard.Trim().Length > 1).DistinctBy(s => s.ExecuteStandard).Count();
+            var data = _ProductStandardDBInfos.Where(s => s!.SampleState == SampleStates[Math.Abs(selectedSampleStateIndex - 1)].SampleState && s.ExecuteStandard!.Contains(searchParam!) && s.ExecuteStandard.Trim().Length > 1).DistinctBy(s => s!.ExecuteStandard).Count();
 
             SampleStates[Math.Abs(selectedSampleStateIndex - 1)].ProductsCount = data;
 
@@ -736,7 +737,7 @@ namespace Lims.WPF.ViewModels
         public void AddToPreviewSubItems(IEnumerable<SubItem> subItems)
         {
             var checkedItems = subItems.Where(s => s.IsChecked).ToList();
-            if (EdittingItem.SubItems == null)
+            if (EdittingItem!.SubItems == null)
             {
                 EdittingItem.SubItems = new();
             }
@@ -747,7 +748,7 @@ namespace Lims.WPF.ViewModels
                 EdittingItem.SubItems.Add(subItem);
             }
         }
-        SampleDto defaultsample;
+        SampleDto? defaultsample;
         [Command]
         /// <summary>
         /// 初始化样品信息
@@ -756,20 +757,20 @@ namespace Lims.WPF.ViewModels
         {
             CurrentSample = defaultsample.Copy();
 
-            CurrentSampleCode = defaultsample.SampleCode;
+            CurrentSampleCode = defaultsample!.SampleCode;
         }
         [Command]
         public async void SaveAsInitializedInfo()
         {
             var defaultsample = new SampleDto();
-            defaultsample.IsUrgent = CurrentSample.IsUrgent;
+            defaultsample.IsUrgent = CurrentSample!.IsUrgent;
             defaultsample.TaskType = CurrentSample.TaskType;
             defaultsample.SampleCode = CurrentSampleCode;
-            defaultsample.SampleState = currentSample.SampleState;
+            defaultsample.SampleState = CurrentSample.SampleState;
             defaultsample.SampleName = CurrentSample.SampleName;
 
             string json = JsonConvert.SerializeObject(defaultsample, Newtonsoft.Json.Formatting.Indented);
-            string configPath = limsPath + @"\工具库\配置文件\DefaultSampleInfo.json";
+            string configPath = System.Windows.Forms.Application.StartupPath + @"DefaultSampleInfo.json";
 
 
             File.WriteAllText(configPath, json);
@@ -778,7 +779,7 @@ namespace Lims.WPF.ViewModels
         }
 
 
-        public SubItemClass SelectedStandardSubItem
+        public SubItemClass? SelectedStandardSubItem
         {
             get; set;
         }
@@ -792,11 +793,11 @@ namespace Lims.WPF.ViewModels
             var response = await _subItemStandardService.GetSubItemStandardsByTestItemAsync(new SubItemStandardFilterParam() { ParentNames = itemModel.TestItem });
             if (response.Status)
             {
-                var subItemStandards = response.Result.OrderBy(s => s.Id);
+                var subItemStandards = response.Result!.OrderBy(s => s.Id);
 
                 foreach (var item in subItemStandards.DistinctBy(s => s.SubitemType))
                 {
-                    StandardSubItems.Add(new SubItemClass { Text = item.SubitemType });
+                    StandardSubItems.Add(new SubItemClass { Text = item.SubitemType! });
                 }
                 foreach (var item in StandardSubItems)
                 {
@@ -846,13 +847,13 @@ namespace Lims.WPF.ViewModels
                     {
                         //if (!PreviewSources.Any(i => i.MethodStandardId == method.Result.Id))
                         //{
-                        PreviewSources.Add(new ItemDto(node.MethodStandardId, newSources.FirstOrDefault(s => s.TestItem == node.Text).ProductUnit, node.Text, node.ProductStandardId, newSources.First(s => s.TestItem == node.Text).IndexRequest)
+                        PreviewSources.Add(new ItemDto(node.MethodStandardId, newSources.FirstOrDefault(s => s.TestItem == node.Text)!.ProductUnit!, node.Text!, node.ProductStandardId, newSources.First(s => s.TestItem == node.Text).IndexRequest!)
                         {
                             TestProgress = (int)TestProgress.待领取,
-                            Tester = method.Result.Tester,
+                            Tester = method.Result!.Tester,
                             MethodStandard = method.Result,
                             ProductStandard = node.ProductStandard,
-                            SampleFormOrState = node.ProductStandard.ProductForm,
+                            SampleFormOrState = node.ProductStandard!.ProductForm,
                         });
                         node.IsChecked = false;
                         // }
@@ -874,7 +875,7 @@ namespace Lims.WPF.ViewModels
         {
             if (SelectedMethod == null || PreviewSources.Any(p => p.MethodStandardId == SelectedMethod.Id))
                 return;
-            PreviewSources.Add(new ItemDto(SelectedMethod.Id, SelectedMethod.TestUnit, SelectedMethod.TestItem, 0, "")
+            PreviewSources.Add(new ItemDto(SelectedMethod.Id, SelectedMethod.TestUnit!, SelectedMethod.TestItem!, 0, "")
             {
                 MethodStandard = SelectedMethod,
                 TestProgress = (int)TestProgress.待领取,
@@ -882,7 +883,7 @@ namespace Lims.WPF.ViewModels
                 SampleFormOrState = SampleStates[SelectedSampleStateIndex].SampleState,
             });
         }
-        public SubItem SelectedPreviewSubItem
+        public SubItem? SelectedPreviewSubItem
         {
             get; set;
         }
@@ -922,7 +923,7 @@ namespace Lims.WPF.ViewModels
                 case Key.Delete:
                     if (_messageBoxService.ShowMessage("确定移除选中项?", "移除", MessageButton.OKCancel, MessageIcon.Warning, MessageResult.OK) == MessageResult.OK)
                     {
-                        PreviewSources.Remove(focusedItem);
+                        PreviewSources.Remove(focusedItem!);
                     }
                     break;
 
@@ -949,7 +950,7 @@ namespace Lims.WPF.ViewModels
                     SelectedPreviewSubItems.CopyTo(subItems);
                     foreach (SubItemDto subItem in subItems)
                     {
-                        EdittingItem.SubItems.Remove(subItem);
+                        EdittingItem!.SubItems!.Remove(subItem);
                     }
                     break;
 
@@ -963,7 +964,7 @@ namespace Lims.WPF.ViewModels
             switch (e.Key)
             {
                 case Key.Enter:
-                    var searchStr = (e.OriginalSource as TextBox).Text;
+                    var searchStr = (e.OriginalSource as TextBox)!.Text;
                     SearchByProduct(searchStr);
                     break;
                 default:
@@ -1015,7 +1016,7 @@ namespace Lims.WPF.ViewModels
             {
                 try
                 {
-                    CurrentSample.SampleName = menuNodes[1].Text.Split(' ')[2];
+                    CurrentSample!.SampleName = menuNodes[1].Text!.Split(' ')[2];
                 }
                 catch (Exception)
                 {
@@ -1028,17 +1029,17 @@ namespace Lims.WPF.ViewModels
         {
             productStandards.Clear();
             newSources = sources.ToList();
-            string sampleState = CurrentSample.SampleState;// RadioButton.Content;
+            string sampleState = CurrentSample!.SampleState!;// RadioButton.Content;
             ProductLevel level = node.ProductLevel;
             foreach (var item in menuNodes)
             {
-                newSources = newSources.Where(s => s.GetType().GetProperty(item.ProductLevel.ToString()).GetValue(s, null).ToString() == item.Text).ToList();
+                newSources = newSources.Where(s => s.GetType().GetProperty(item.ProductLevel.ToString())!.GetValue(s, null)!.ToString() == item.Text).ToList();
             }
 
-            newSources = newSources.Where(s => s.GetType().GetProperty(level.ToString()).GetValue(s, null).ToString() == node.Text).ToList();
+            newSources = newSources.Where(s => s.GetType().GetProperty(level.ToString())!.GetValue(s, null)!.ToString() == node.Text).ToList();
             level++;
             _currentProductLevel = level;
-            var texts = newSources.Select(s => s.GetType().GetProperty(level.ToString()).GetValue(s, null).ToString()).Distinct();
+            var texts = newSources.Select(s => s.GetType().GetProperty(level.ToString())!.GetValue(s, null)!.ToString()).Distinct();
 
             ObservableCollection<ProductNode> nds = new();
             foreach (var text in texts)
@@ -1051,9 +1052,9 @@ namespace Lims.WPF.ViewModels
                 };
                 if (level == ProductLevel.TestItem)
                 {
-                    pn.MethodStandardId = newSources.FirstOrDefault(s => s.TestItem == text).TestMethodId;
-                    pn.ProductStandardId = newSources.FirstOrDefault(s => s.TestItem == text).Id;
-                    pn.ProductStandard = newSources.FirstOrDefault(s => s.TestItem == text);
+                    pn.MethodStandardId = newSources.FirstOrDefault(s => s.TestItem == text)!.TestMethodId;
+                    pn.ProductStandardId = newSources.FirstOrDefault(s => s.TestItem == text)!.Id;
+                    pn.ProductStandard = newSources.FirstOrDefault(s => s.TestItem == text)!;
                 }
                 nds.Add(pn);
             }
@@ -1070,9 +1071,9 @@ namespace Lims.WPF.ViewModels
         {
             CreattingMethod = new()
             {
-                SampleState = CurrentSample.SampleState,
-                TestItem = method.Text,
-                LastUpdater = CurrentUser.UserName,
+                SampleState = CurrentSample!.SampleState!,
+                TestItem = method.Text!,
+                LastUpdater = CurrentUser!.UserName!,
             };
 
             var dialogService = GetService<IDialogService>("CreateMethodViewDialogService");
@@ -1108,7 +1109,7 @@ namespace Lims.WPF.ViewModels
                 editingMethods = value;
             }
         }
-        public SubItemStandardDto CreattingStandardSubItem
+        public SubItemStandardDto? CreattingStandardSubItem
         {
             get; set;
         }
@@ -1117,7 +1118,7 @@ namespace Lims.WPF.ViewModels
         {
             CreattingStandardSubItem = new()
             {
-                ParentNames = FocusedItem.TestItem,
+                ParentNames = FocusedItem!.TestItem,
             };
             if (SelectedStandardSubItem != null)
                 CreattingStandardSubItem.SubitemType = SelectedStandardSubItem.Text;
@@ -1163,17 +1164,17 @@ namespace Lims.WPF.ViewModels
             SubItems = new ObservableCollection<SubItem>();
         }
 
-        public string Text
+        public string? Text
         {
             get; set;
         }
 
-        public string ParentNames
+        public string? ParentNames
         {
             get; set;
         }
 
-        public ObservableCollection<SubItem> SubItems
+        public ObservableCollection<SubItem>? SubItems
         {
             get; set;
         }
@@ -1201,12 +1202,12 @@ namespace Lims.WPF.ViewModels
             //构造函数
         }
 
-        private string content;
+        private string? content;
 
         /// <summary>
         /// 单选框相关
         /// </summary>
-        public string Content
+        public string? Content
         {
             get => content;
             set
@@ -1251,7 +1252,7 @@ namespace Lims.WPF.ViewModels
 
         private string background = "#87CEFA";
 
-        public string Background
+        public string? Background
         {
             get
             {
@@ -1259,7 +1260,7 @@ namespace Lims.WPF.ViewModels
             }
             set
             {
-                background = value;
+                background = value!;
             }
         }
 
@@ -1327,7 +1328,7 @@ namespace Lims.WPF.ViewModels
                 }
             }
         }
-        public string Alignment
+        public string? Alignment
         {
             get
             {
@@ -1375,7 +1376,7 @@ namespace Lims.WPF.ViewModels
         {
             get; set;
         }
-        public ProductStandardDto ProductStandard
+        public ProductStandardDto? ProductStandard
         {
             get; set;
         }
@@ -1414,7 +1415,7 @@ namespace Lims.WPF.ViewModels
                 }
             }
         }
-        public string Alignment
+        public string? Alignment
         {
             get
             {
@@ -1470,8 +1471,8 @@ namespace Lims.WPF.ViewModels
     }
     public class MicroorganismTesterModel
     {
-        private string lastCode_A;
-        public string LastCode_A
+        private string? lastCode_A;
+        public string? LastCode_A
         {
             get
             {
@@ -1482,8 +1483,8 @@ namespace Lims.WPF.ViewModels
                 lastCode_A = value;
             }
         }
-        private string tester_A;
-        public string Tester_A
+        private string? tester_A;
+        public string? Tester_A
         {
             get
             {
@@ -1494,8 +1495,8 @@ namespace Lims.WPF.ViewModels
                 tester_A = value;
             }
         }
-        private string lastCode_B;
-        public string LastCode_B
+        private string? lastCode_B;
+        public string? LastCode_B
         {
             get
             {
@@ -1506,8 +1507,8 @@ namespace Lims.WPF.ViewModels
                 lastCode_B = value;
             }
         }
-        private string tester_B;
-        public string Tester_B
+        private string? tester_B;
+        public string? Tester_B
         {
             get
             {
@@ -1518,8 +1519,8 @@ namespace Lims.WPF.ViewModels
                 tester_B = value;
             }
         }
-        private string lastCode_C;
-        public string LastCode_C
+        private string? lastCode_C;
+        public string? LastCode_C
         {
             get
             {
@@ -1530,8 +1531,8 @@ namespace Lims.WPF.ViewModels
                 lastCode_C = value;
             }
         }
-        private string tester_C;
-        public string Tester_C
+        private string? tester_C;
+        public string? Tester_C
         {
             get
             {
@@ -1542,8 +1543,8 @@ namespace Lims.WPF.ViewModels
                 tester_C = value;
             }
         }
-        private string item;
-        public string Item
+        private string? item;
+        public string? Item
         {
             get
             {
@@ -1554,8 +1555,8 @@ namespace Lims.WPF.ViewModels
                 item = value;
             }
         }
-        private string tester_D;
-        public string Tester_D
+        private string? tester_D;
+        public string? Tester_D
         {
             get
             {
@@ -1566,8 +1567,8 @@ namespace Lims.WPF.ViewModels
                 tester_D = value;
             }
         }
-        private string turnLastCode;
-        public string TurnLastCode
+        private string? turnLastCode;
+        public string? TurnLastCode
         {
             get
             {

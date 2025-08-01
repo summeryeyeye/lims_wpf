@@ -13,7 +13,7 @@ namespace Lims.ToolsForClient
 
             // column names
 
-            PropertyInfo[] oProps = null;
+            PropertyInfo[]? oProps = null;
 
             // Could add a check to verify that there is an element 0
 
@@ -25,7 +25,7 @@ namespace Lims.ToolsForClient
                 if (oProps == null)
                 {
 
-                    oProps = ((Type)rec.GetType()).GetProperties();
+                    oProps = ((Type)rec!.GetType()).GetProperties();
 
                     foreach (PropertyInfo pi in oProps)
                     {

@@ -13,7 +13,7 @@ namespace Lims.WPF.Tools
             GetCells();
         }
 
-        public List<OriginalCell> Cells { get; set; }
+        public List<OriginalCell>? Cells { get; set; }
 
 
         private void GetCells()
@@ -41,6 +41,6 @@ namespace Lims.WPF.Tools
         }
         public int Row { get; set; }
         public int Column { get; set; }
-        public string Text { get; set; }
+        public string? Text { get; set; }
     }
 }

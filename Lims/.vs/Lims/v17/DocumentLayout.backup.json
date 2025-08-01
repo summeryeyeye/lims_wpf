@@ -1,28 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.wpf\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\app.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.webapi\\singleton\\postgresnotificationservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\singleton\\postgresnotificationservice .cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.wpf\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F6C2164D-5B25-4C30-8BFE-5C4858425F6F}|Lims.WPF\\Lims.WPF.csproj|solutionrelative:lims.wpf\\viewmodels\\mainviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.webapi\\hubs\\notificationhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\hubs\\notificationhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|c:\\users\\administrator\\documents\\github\\202507280756\\lims_wpf\\lims\\lims.webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C44ACB18-7A83-4800-B062-FBEFCB7FDB2B}|Lims.WebAPI\\Lims.WebAPI.csproj|solutionrelative:lims.webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -30,79 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": -1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "PostgresNotificationService .cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WebAPI\\Singleton\\PostgresNotificationService .cs",
-              "RelativeDocumentMoniker": "Lims.WebAPI\\Singleton\\PostgresNotificationService .cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WebAPI\\Singleton\\PostgresNotificationService .cs",
-              "RelativeToolTip": "Lims.WebAPI\\Singleton\\PostgresNotificationService .cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAEwBwAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T07:17:48.984Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "NotificationHub.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WebAPI\\Hubs\\NotificationHub.cs",
-              "RelativeDocumentMoniker": "Lims.WebAPI\\Hubs\\NotificationHub.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WebAPI\\Hubs\\NotificationHub.cs",
-              "RelativeToolTip": "Lims.WebAPI\\Hubs\\NotificationHub.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAgwB8AAABOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T07:24:47.661Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MainViewModel.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MainViewModel.cs",
-              "RelativeDocumentMoniker": "Lims.WPF\\ViewModels\\MainViewModel.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\ViewModels\\MainViewModel.cs",
-              "RelativeToolTip": "Lims.WPF\\ViewModels\\MainViewModel.cs",
-              "ViewState": "AgIAAIAAAAAAAAAAAAAiwI0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-31T07:52:54.472Z",
-              "IsPinned": true,
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "App.config",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\App.config",
-              "RelativeDocumentMoniker": "Lims.WPF\\App.config",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WPF\\App.config",
-              "RelativeToolTip": "Lims.WPF\\App.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAeAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
-              "WhenOpened": "2025-08-01T03:26:11.413Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WebAPI\\Program.cs",
-              "RelativeDocumentMoniker": "Lims.WebAPI\\Program.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\GitHub\\202507280756\\lims_wpf\\Lims\\Lims.WebAPI\\Program.cs",
-              "RelativeToolTip": "Lims.WebAPI\\Program.cs",
-              "ViewState": "AgIAACwAAAAAAAAAAAAEwDQAAAAPAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T02:00:03.674Z",
-              "EditorCaption": ""
             }
           ]
         }

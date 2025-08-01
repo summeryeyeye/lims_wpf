@@ -34,7 +34,7 @@ namespace Lims.WPF.ViewModels
             set
             {
                 sample_BeginDate = value;
-                LoadMainDatas(CurrentUser);
+                Task.Run(async () => { await LoadMainDatas(CurrentUser); });
             }
         }
         protected override async Task LoadMainDatas(UserDto? user)
@@ -55,7 +55,7 @@ namespace Lims.WPF.ViewModels
                     var response = await _sampleService.GetSamplesAsync(param);
 
                     if (response.Status)
-                        SamplesSource = response.Result.OrderByDescending(s => s.CreateTime).ToObservableCollection();
+                        SamplesSource = response.Result!.OrderByDescending(s => s.CreateTime).ToObservableCollection()!;
                 }
                 else
                 {
@@ -67,9 +67,9 @@ namespace Lims.WPF.ViewModels
                     var response = await _itemService.GetAllItemsByTestProgressAsync(param);
                     if (response.Status)
                     {
-                        TaskDatasSource = response.Result.OrderByDescending(t => t.ResultSubmitTime).ToObservableCollection();
+                        TaskDatasSource = response.Result!.OrderByDescending(t => t.ResultSubmitTime).ToObservableCollection()!;
                         itemDtos = TaskDatasSource?.Copy();
-                        SamplesSource = TaskDatasSource.Select(s => s.Sample).DistinctBy(s => s.SampleCode).OrderBy(s => s.SampleCode).ToObservableCollection();
+                        SamplesSource = TaskDatasSource!.Select(s => s!.Sample).DistinctBy(s => s!.SampleCode).OrderBy(s => s!.SampleCode).ToObservableCollection();
                     }
 
                 }
@@ -108,15 +108,15 @@ namespace Lims.WPF.ViewModels
 
 
 
-        private MethodStandardDto edittingStandardMethod;
+        private MethodStandardDto? edittingStandardMethod;
 
-        public MethodStandardDto EdittingStandardMethod
+        public MethodStandardDto? EdittingStandardMethod
         {
             get => edittingStandardMethod;
             set
             {
                 edittingStandardMethod = value;
-                EdittingItem.ReportUnit = value.TestUnit;
+                EdittingItem!.ReportUnit = value!.TestUnit;
                 RaisePropertiesChanged(nameof(EdittingStandardMethod));
 
 
@@ -130,10 +130,10 @@ namespace Lims.WPF.ViewModels
         public async Task ChangeItemInfo(ItemDto item)
         {
             if (item == null) return;
-            EdittingItem = (ItemDto)item.Clone();
-            var response = await _methodStandardService.GetMethodStandardsByKeyItemAsync(new MethodStandardFilterParam() { KeyItem = item.MethodStandard.KeyItem, SampleState = item.Sample.SampleState });
+            EdittingItem = (ItemDto)item.Clone()!;
+            var response = await _methodStandardService.GetMethodStandardsByKeyItemAsync(new MethodStandardFilterParam() { KeyItem = item.MethodStandard!.KeyItem, SampleState = item.Sample!.SampleState });
             CurrentMethods = response.Result;
-            EdittingStandardMethod = CurrentMethods.FirstOrDefault(s => s.Id == item.MethodStandardId);
+            EdittingStandardMethod = CurrentMethods!.FirstOrDefault(s => s.Id == item.MethodStandardId)!;
 
 
             var dialogService = GetService<IDialogService>("EditItemInfoViewDialogService");
@@ -143,7 +143,7 @@ namespace Lims.WPF.ViewModels
                         {
                                 EdittingItem.MethodStandardId=EdittingStandardMethod.Id;
                                 EdittingItem.MethodStandard=EdittingStandardMethod;
-                                EdittingItem.TestMethod=edittingStandardMethod.TestMethod;
+                                EdittingItem.TestMethod=edittingStandardMethod!.TestMethod;
                                 //EdittingItem.ReportUnit=edittingStandardMethod.TestUnit;
                                 await _itemService.UpdateAsync(EdittingItem);
                                 item=EdittingItem;
@@ -162,7 +162,7 @@ namespace Lims.WPF.ViewModels
                 LogLevel = LogLevel.INFO,
                 ActionType = ActionType.变更项目信息,
                 PublisherIP = LoggerDto.GetLocalIP(),
-                PublisherName = CurrentUser.UserName,
+                PublisherName = CurrentUser!.UserName,
                 ReceiverName = item.Tester,
                 SampleCode = item.SampleCode,
                 TestItem = item.TestItem,
@@ -179,7 +179,7 @@ namespace Lims.WPF.ViewModels
 
 
 
-            if (ItemsSource.Max(i => i.TestProgress) != 107 || ItemsSource.Max(i => i.TestProgress) != 107)
+            if (ItemsSource.Max(i => i!.TestProgress) != 107 || ItemsSource.Max(i => i!.TestProgress) != 107)
             {
                 _messageBoxService.ShowMessage("只能修改已完成三审的任务！");
                 return;
@@ -188,10 +188,10 @@ namespace Lims.WPF.ViewModels
             {
 
                 foreach (var item in ItemsSource)
-                    item.TestProgress = 106;
+                    item!.TestProgress = 106;
                 //edittingSample.MinTestProgress = 106;
                 //edittingSample.MaxTestProgress = 106;
-                await _itemService.UpdateRangeAsync(ItemsSource.ToList());
+                await _itemService.UpdateRangeAsync(ItemsSource!);
                 await _sampleService.UpdateAsync(edittingSample);
                 await ShowNotifaction(edittingSample.SampleCode, "该样品下所有项目已退回至任务三审！", "");
             }
@@ -209,7 +209,7 @@ namespace Lims.WPF.ViewModels
             var data = _iOpenFileDialogService.ShowDialog();
 
         }
-        public UserDto EditedUser
+        public UserDto? EditedUser
         {
             get; set;
         }
@@ -247,7 +247,7 @@ namespace Lims.WPF.ViewModels
                                     LogLevel=LogLevel.WARN,
                                     ActionType=ActionType.变更项目分析人,
                                     PublisherIP=LoggerDto.GetLocalIP(),
-                                    PublisherName=CurrentUser.UserName,
+                                    PublisherName=CurrentUser!.UserName,
                                     ReceiverName=EditedUser.UserName,
                                     SampleCode=EdittingItem.SampleCode,
                                     TestItem=EdittingItem.TestItem,
@@ -272,20 +272,20 @@ namespace Lims.WPF.ViewModels
             MessageResult result = _messageBoxService.ShowMessage($"确定删除 {item.SampleCode} {item.TestItem} ？", "删除", MessageButton.YesNo, MessageIcon.Warning, MessageResult.Cancel);
             if (result == MessageResult.Yes)
             {
-                var tempItem = (ItemDto)item.Clone();
-                var sample = SamplesSource.FirstOrDefault(s => s.SampleCode == tempItem.SampleCode);
+                var tempItem = (ItemDto)item.Clone()!;
+                var sample = SamplesSource!.FirstOrDefault(s => s!.SampleCode == tempItem.SampleCode);
 
-                foreach (var s in tempItem.SubItems)
-                    await _subItemService.DeleteAsync(s.ItemId);
+                foreach (var s in tempItem.SubItems!)
+                    await _subItemService.DeleteAsync(s.ItemId!);
                 /* 
                 tempItem.TestProgress = (int)TestProgress.已删除;
                 await _itemService.UpdateAsync(tempItem);
                 */
-                await _itemService.DeleteAsync(tempItem.ItemId);
+                await _itemService.DeleteAsync(tempItem.ItemId!);
 
                 ItemsSource.Remove(item);
 
-                sample.Items = (await GetAllItemsOfSample(sample)).ToObservableCollection();
+                sample!.Items = (await GetAllItemsOfSample(sample)).ToObservableCollection();
                 FocusedSample = sample;
                 if (ItemsSource.Count > 0)
                 {
@@ -293,9 +293,9 @@ namespace Lims.WPF.ViewModels
                 }
                 else
                 {
-                    await _sampleService.DeleteAsync(tempItem.SampleCode);
+                    await _sampleService.DeleteAsync(tempItem.SampleCode!);
                     pre_MyFocusedSampelRowIndex = FocusedSampleRowHandle;
-                    SamplesSource.Remove(SamplesSource.FirstOrDefault(s => s.SampleCode == tempItem.SampleCode));
+                    SamplesSource!.Remove(SamplesSource.FirstOrDefault(s => s!.SampleCode == tempItem.SampleCode));
                     FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
                     await ShowNotifaction(tempItem.SampleCode, "该样品下无其他项目,样品已自动删除!", "");
                 }
@@ -306,7 +306,7 @@ namespace Lims.WPF.ViewModels
                     LogLevel = LogLevel.WARN,
                     ActionType = ActionType.删除任务,
                     PublisherIP = LoggerDto.GetLocalIP(),
-                    PublisherName = CurrentUser.UserName,
+                    PublisherName = CurrentUser!.UserName,
                     ReceiverName = tempItem.Tester,
                     SampleCode = tempItem.SampleCode,
                     TestItem = tempItem.TestItem,
@@ -330,22 +330,22 @@ namespace Lims.WPF.ViewModels
             {
                 SubItemDto[] subItems = new SubItemDto[SelectedPreviewSubItems.Count];
                 SelectedPreviewSubItems.CopyTo(subItems, 0);
-                var item = (await _itemService.GetSingleAsync(subItems[0].ItemId)).Result;
+                var item = (await _itemService.GetSingleAsync(subItems[0].ItemId!)).Result;
 
                 //SelectedPreviewSubItems.CopyTo(subItems, 0);
                 foreach (var subItem in subItems)
                 {
-                    await _subItemService.DeleteAsync(subItem.SubItemId);
-                    EdittingItem.SubItems.Remove(EdittingItem.SubItems.FirstOrDefault(s => s.SubItemId == subItem.SubItemId));
+                    await _subItemService.DeleteAsync(subItem.SubItemId!);
+                    EdittingItem!.SubItems!.Remove(EdittingItem.SubItems.FirstOrDefault(s => s.SubItemId == subItem.SubItemId)!);
 
-                    if (item.TestProgress <= (int)TestProgress.检测中)
+                    if (item!.TestProgress <= (int)TestProgress.检测中)
                     {
                         await _loggerService.CreateAsync(new LoggerDto(DateTimeOffset.Now)
                         {
                             LogLevel = LogLevel.WARN,
                             ActionType = ActionType.删除任务,
                             PublisherIP = LoggerDto.GetLocalIP(),
-                            PublisherName = CurrentUser.UserName,
+                            PublisherName = CurrentUser!.UserName,
                             ReceiverName = EdittingItem.Tester,
                             SampleCode = EdittingItem.SampleCode,
                             TestItem = subItem.TestItem,
@@ -359,7 +359,7 @@ namespace Lims.WPF.ViewModels
                             LogLevel = LogLevel.INFO,
                             ActionType = ActionType.删除任务,
                             PublisherIP = LoggerDto.GetLocalIP(),
-                            PublisherName = CurrentUser.UserName,
+                            PublisherName = CurrentUser!.UserName,
                             ReceiverName = EdittingItem.Tester,
                             SampleCode = EdittingItem.SampleCode,
                             TestItem = subItem.TestItem,
@@ -369,7 +369,7 @@ namespace Lims.WPF.ViewModels
 
                 }
 
-                await ShowNotifaction(EdittingItem.SampleCode + "  " + EdittingItem.TestItem, "删除子项目完成！", "");
+                await ShowNotifaction(EdittingItem!.SampleCode + "  " + EdittingItem.TestItem, "删除子项目完成！", "");
             }
         }
         /// <summary>
@@ -393,10 +393,10 @@ namespace Lims.WPF.ViewModels
                 {
                     var sample = samples.ToArray()[i];
 
-                    var tempSample = (SampleDto)sample.Clone();
+                    var tempSample = (SampleDto)sample.Clone()!;
 
                     pre_MyFocusedSampelRowIndex = FocusedSampleRowHandle;
-                    SamplesSource.Remove(sample);
+                    SamplesSource!.Remove(sample);
                     FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
 
                     var response = await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sample.SampleCode });
@@ -405,15 +405,15 @@ namespace Lims.WPF.ViewModels
                         var items = response.Result;
 
 
-                        foreach (var item in items)
+                        foreach (var item in items!)
                         {
                             LoggerDto logger = new LoggerDto(DateTimeOffset.Now)
                             {
                                 LogLevel = LogLevel.WARN,
                                 ActionType = ActionType.删除任务,
                                 PublisherIP = LoggerDto.GetLocalIP(),
-                                PublisherName = CurrentUser.UserName,
-                                ReceiverName = item.Tester,
+                                PublisherName = CurrentUser!.UserName,
+                                ReceiverName = item!.Tester,
                                 SampleCode = item.SampleCode,
                                 TestItem = item.TestItem,
                                 Message = "样品已删除",
@@ -423,12 +423,12 @@ namespace Lims.WPF.ViewModels
 
                         foreach (var item in items)
                         {
-                            foreach (var s in item.SubItems)
-                                await _subItemService.DeleteAsync(s.SubItemId);
-                            await _itemService.DeleteAsync(item.ItemId);
+                            foreach (var s in item!.SubItems!)
+                                await _subItemService.DeleteAsync(s.SubItemId!);
+                            await _itemService.DeleteAsync(item.ItemId!);
                         }
 
-                        await _sampleService.DeleteAsync(tempSample!.SampleCode);
+                        await _sampleService.DeleteAsync(tempSample.SampleCode!);
 
                         await ShowNotifaction(tempSample.SampleCode + "  " + tempSample.SampleName, "样品已删除", "");
                     }
@@ -448,7 +448,7 @@ namespace Lims.WPF.ViewModels
             var response = await _subItemStandardService.GetSubItemStandardsByTestItemAsync(new SubItemStandardFilterParam() { ParentNames = itemModel.TestItem });
             if (response.Status)
             {
-                var subItemStandards = response.Result.OrderBy(s => s.Id);
+                var subItemStandards = response.Result!.OrderBy(s => s.Id);
 
                 foreach (var item in subItemStandards.DistinctBy(s => s.SubitemType))
                 {
@@ -497,8 +497,8 @@ namespace Lims.WPF.ViewModels
                 var checkedItems = subItems.Where(s => s.IsChecked);
                 DateTimeOffset currentTime = DateTimeOffset.Now;
 
-                var response = await _subItemService.GetSubItemByItemIdAsync(new SubItemFilterParam() { ItemId = EdittingItem.ItemId });
-                if (response.Result.Count > 0)
+                var response = await _subItemService.GetSubItemByItemIdAsync(new SubItemFilterParam() { ItemId = EdittingItem!.ItemId });
+                if (response.Result!.Count > 0)
                 {
                     var subitems = response.Result;
                     decimal maxId = Convert.ToDecimal(subitems.Last().SubItemId);
@@ -518,7 +518,7 @@ namespace Lims.WPF.ViewModels
                             //ReportUnit = EdittingItem.ReportUnit,
                         };
 
-                        EdittingItem.SubItems.Add(subItem);
+                        EdittingItem.SubItems!.Add(subItem);
                         await _subItemService.CreateAsync(subItem);
                         hasNewSubItems = true;
                         checkedItem.IsChecked = false;
@@ -527,7 +527,7 @@ namespace Lims.WPF.ViewModels
                 else
                 {
                     EdittingItem.SubItems = new();
-                    string parentIDpre = EdittingItem.ItemId.Substring(0, 14);
+                    string parentIDpre = EdittingItem.ItemId!.Substring(0, 14);
                     int secondDataIndex = 0;
                     int codeIndex = Convert.ToInt32(EdittingItem.ItemId.Substring(14, 7));
                     foreach (var checkedItem in checkedItems)
@@ -556,8 +556,8 @@ namespace Lims.WPF.ViewModels
                 {
                     EdittingItem.TestProgress = (int)TestProgress.待领取;
                     await _itemService.UpdateAsync(EdittingItem);
-                    var edittingSample = SamplesSource.FirstOrDefault(s => s.SampleCode == EdittingItem.SampleCode);
-                    await _sampleService.UpdateAsync(edittingSample);
+                    var edittingSample = SamplesSource!.FirstOrDefault(s => s!.SampleCode == EdittingItem.SampleCode);
+                    await _sampleService.UpdateAsync(edittingSample!);
                     //await UpdateSampleTestProgress(edittingSample);
                 }
             }
@@ -594,7 +594,7 @@ namespace Lims.WPF.ViewModels
 
         public ObservableCollection<SubItemDto> SelectedPreviewSubItems { get; set; } = new();
 
-        public SampleDto EdittingSample
+        public SampleDto? EdittingSample
         {
             get; set;
         }
@@ -616,8 +616,8 @@ namespace Lims.WPF.ViewModels
 
             CanChangeUrgent = absTime.TotalDays < 1;
 
-            EdittingSample = (SampleDto)sampleModel.Clone();
-            SelectedSampleStateIndex = EdittingSample.SampleState == "固体" ? 0 : 1;
+            EdittingSample = (SampleDto)sampleModel.Clone()!;
+            SelectedSampleStateIndex = EdittingSample!.SampleState == "固体" ? 0 : 1;
             var editedSampleStateIndex = SelectedSampleStateIndex;
             var dialogService = GetService<IDialogService>("ChangeSampleInfoDialogService");
             dialogService.ShowDialog(
@@ -626,7 +626,7 @@ namespace Lims.WPF.ViewModels
                         {
                             string state=SelectedSampleStateIndex==0?"固体":"液体";
                             EdittingSample.SampleState=state;
-                            int index=SamplesSource.IndexOf(sampleModel);
+                            int index=SamplesSource!.IndexOf(sampleModel);
                             SamplesSource[index]=EdittingSample;
                             await _sampleService.UpdateAsync(EdittingSample);
 
@@ -710,9 +710,9 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void AddToRetestingItems(ItemDto item)
         {
-            if (RetestingItems.Contains(RetestingItems.FirstOrDefault(i => i.TestItem == item.TestItem)))
+            if (RetestingItems.Contains(RetestingItems.FirstOrDefault(i => i.TestItem == item.TestItem)!))
                 return;
-            ItemDto itemModel = (ItemDto)item.Clone();
+            ItemDto itemModel = (ItemDto)item.Clone()!;
             itemModel.SubItems = new();
             if (item.SubItems != null && item.SubItems.Count > 0)
             {
@@ -721,7 +721,7 @@ namespace Lims.WPF.ViewModels
                     new List<UICommand> {
                         new UICommand{Caption = "确认",IsDefault = true,IsCancel = false,Command = new DelegateCommand(  () =>
                         {
-                            SubItemDto[] subItemModels=new   SubItemDto[item.SelectedRetestSubItems.Count];
+                            SubItemDto[] subItemModels=new   SubItemDto[item.SelectedRetestSubItems!.Count];
                             item.SelectedRetestSubItems.CopyTo(subItemModels,0);
 
                             foreach (var subitem in subItemModels)
@@ -737,9 +737,9 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void AddAllToRetestingItems()
         {
-            foreach (var item in AllItemsOfFocusedSample)
+            foreach (var item in AllItemsOfFocusedSample!)
             {
-                AddToRetestingItems(item);
+                AddToRetestingItems(item!);
             }
         }
 
@@ -784,7 +784,7 @@ namespace Lims.WPF.ViewModels
                 RetestSamples = response.Result;
 
             var existSamples = (await _sampleService.GetAllAsync()).Result;
-            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sampleModel.SampleCode })).Result;
+            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sampleModel.SampleCode })).Result!;
 
             var dialogService = GetService<IDialogService>("RetestSampleViewDialogService");
             dialogService.ShowDialog(
@@ -797,9 +797,9 @@ namespace Lims.WPF.ViewModels
                             var existItems = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam(){SampleCode=newSampleCode})).Result;
 
                             DateTimeOffset currentTime=DateTimeOffset.Now;
-                            if (!existSamples.Any(s=>s.SampleCode==newSampleCode))
+                            if (!existSamples!.Any(s=>s.SampleCode==newSampleCode))
                             {
-                                SampleDto newSample=(SampleDto)sampleModel.Clone();
+                                SampleDto newSample=(SampleDto)sampleModel.Clone()!;
                                 newSample.SampleCode=newSampleCode;
                                 newSample.IsUrgent=IsRetestUrgent;
                                 newSample.CreateTime=currentTime;
@@ -827,9 +827,9 @@ namespace Lims.WPF.ViewModels
                                 item.SampleCode= newSampleCode;
 
 
-                                if (!existItems.Any(i=>i.TestItem==item.TestItem))
+                                if (!existItems!.Any(i=>i!.TestItem==item.TestItem))
                                 {
-                                    itemId=preIdentityCode + (i+existItems.Count+1).ToString("D4") + string.Empty.PadRight(3, '0'); ;
+                                    itemId=preIdentityCode + (i+existItems!.Count+1).ToString("D4") + string.Empty.PadRight(3, '0'); ;
                                     item.ItemId= itemId;
 
                                     item.AppointTime= currentTime;
@@ -848,7 +848,7 @@ namespace Lims.WPF.ViewModels
                                     await _itemService.CreateAsync(item);
                                 }
                                 else{
-                                    ItemDto existItem=existItems.FirstOrDefault(i=>i.TestItem==item.TestItem);
+                                    ItemDto existItem=existItems!.FirstOrDefault(i=>i!.TestItem==item.TestItem)!;
                                     itemId=existItem.ItemId;
                                     existItem.TestProgress= (int)TestProgress.待领取;
                                     await _itemService.UpdateAsync(existItem);
@@ -863,14 +863,14 @@ namespace Lims.WPF.ViewModels
                                         maxSubItemId=existSubItems.Last().ItemId;
                                     }
 
-                                    string parentIDpre = itemId.Substring(0, 14);
+                                    string parentIDpre = itemId!.Substring(0, 14);
 
                                     //var subItems = await _iSubItemService.QueryAsync(s => s.ParentId == focusedPreviewItem.ItemId);
                                     int secondDataIndex = 0;
                                     string? subItemId;
                                     foreach (var subItem in item.SubItems)
                                     {
-                                         if (!existSubItems.Any(s=>s.TestItem==subItem.TestItem))
+                                         if (!existSubItems!.Any(s=>s.TestItem==subItem.TestItem))
                                         {
                                             subItem.ItemId = itemId;
                                             subItem.CreateTime = currentTime;
@@ -878,7 +878,7 @@ namespace Lims.WPF.ViewModels
                                             subItem.TestResult= null;
                                             subItem.Temp_TestResult= null;
 
-                                            int codeIndex = Convert.ToInt32(item.ItemId.Substring(14, 7));
+                                            int codeIndex = Convert.ToInt32(item.ItemId!.Substring(14, 7));
                                             var str = string.Empty.PadLeft(8 - (codeIndex - 500 + secondDataIndex).ToString().Length, '0');
 
                                             subItemId =maxSubItemId==null? parentIDpre + string.Empty.PadLeft(7 - (codeIndex - 500 + secondDataIndex).ToString().Length, '0') + (codeIndex - 500 + secondDataIndex).ToString():(Convert.ToDecimal(maxSubItemId)+secondDataIndex).ToString() ;
@@ -918,7 +918,7 @@ namespace Lims.WPF.ViewModels
 
                             if (response.Status)
                             {
-                             await 打印任务随行单(response.Result.OrderBy(s=>s.ItemId).ToObservableCollection(), Printers[CurrentPrinterIndex]);
+                             await 打印任务随行单(response.Result!.OrderBy(s=>s.ItemId).ToObservableCollection(), Printers![CurrentPrinterIndex]);
                             }
                         }))},
                         new UICommand{Caption = "取消",IsDefault = false,IsCancel = true,}

@@ -6,14 +6,14 @@ namespace Lims.WPF.Resources.Converters
     [ValueConversion(typeof(IEnumerable<ItemDto>), typeof(bool))]
     public class SubmitableItemsToIsEnableConverter : IValueConverter
     {
-        private string UserName = UserDto.Inatance.UserName; // "杨升";
+        private string UserName = UserDto.Inatance!.UserName!; // "杨升";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
                 var items = value as IEnumerable<ItemDto>;
-                if (items.Any(i => i.Tester == UserName && i.TestProgress == ((int)TestProgress.检测中) && !string.IsNullOrWhiteSpace(i.Temp_TestResult)))
+                if (items!.Any(i => i.Tester == UserName && i.TestProgress == ((int)TestProgress.检测中) && !string.IsNullOrWhiteSpace(i.Temp_TestResult)))
                 {
                     return true;
                 }

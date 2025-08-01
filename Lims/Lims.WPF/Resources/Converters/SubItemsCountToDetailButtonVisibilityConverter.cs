@@ -11,7 +11,7 @@ namespace Lims.WPF.Resources.Converters
             {
                 var row = value as ItemDto;
 
-                if (row.SubItems != null && row.SubItems.Count > 0)
+                if (row!.SubItems != null && row.SubItems.Count > 0)
                 {
                     return "Visible";
                 }
@@ -20,7 +20,7 @@ namespace Lims.WPF.Resources.Converters
             //throw new NotImplementedException();
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return null;
         }

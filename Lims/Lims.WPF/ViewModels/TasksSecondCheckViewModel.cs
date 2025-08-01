@@ -30,12 +30,12 @@ namespace Lims.WPF.ViewModels
         protected virtual async Task PassChecking(SampleDto sample)
         {
             //var newProgress = (int)RelativeProgress + 1;
-            foreach (var item in sample.Items)
+            foreach (var item in sample.Items!)
                 item.TestProgress = (int)TestProgress.数据三审;
             await _itemService.UpdateRangeAsync(sample.Items.ToList());
             sample.SecondAuditTime = DateTimeOffset.Now;
             //await UpdateSampleTestProgress(sample);
-            SamplesSource.Remove(sample);
+            SamplesSource!.Remove(sample);
             await ShowNotifaction(sample.SampleCode, "审核完成！", "");
         }
         [Command]
@@ -43,7 +43,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).ToObservableCollection();
+                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).ToObservableCollection()!;
                 var dialogService = GetService<IDialogService>("AllItemsOfSamplePreviewDialogService");
                 dialogService.ShowDialog(
                     new List<UICommand> {

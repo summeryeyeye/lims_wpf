@@ -13,12 +13,12 @@ namespace Lims.ToolsForClient
         //委托
         public delegate void ExportResult(bool res);
 
-        public event ExportResult ExportResultEvent;
+        public event ExportResult? ExportResultEvent;
 
         /// <summary>
                 /// 要导出的Excel对象
                 /// </summary>
-        private HSSFWorkbook workbook = null;
+        private HSSFWorkbook? workbook = null;
 
         /// <summary>
         /// 要导出的Excel对象属性
@@ -67,12 +67,12 @@ namespace Lims.ToolsForClient
                 /// <param name="strFileName">保存路径</param>
                 /// <param name="titles">列名</param>
         [Obsolete]
-        public void ExportToFile<T>(List<T> list, string strHeaderText, string strFileName, string[] titles = null)
+        public void ExportToFile<T>(List<T> list, string strHeaderText, string strFileName, string[]? titles = null)
         {
             try
             {
                 //转换数据源
-                DataTable dtSource = ListToDataTable(list, titles);
+                DataTable dtSource = ListToDataTable(list, titles!);
                 //开始导出
                 Export(dtSource, strHeaderText, strFileName);
                 System.GC.Collect();
@@ -130,7 +130,7 @@ namespace Lims.ToolsForClient
             {
                 for (int j = 0; j < dtSource.Columns.Count; j++)
                 {
-                    int intTemp = Encoding.GetEncoding(936).GetBytes(dtSource.Rows[i][j].ToString()).Length;
+                    int intTemp = Encoding.GetEncoding(936).GetBytes(dtSource.Rows[i][j].ToString()!).Length;
                     if (intTemp > arrColWidth[j])
                     {
                         arrColWidth[j] = intTemp;
@@ -194,7 +194,7 @@ namespace Lims.ToolsForClient
                 foreach (DataColumn column in dtSource.Columns)
                 {
                     ICell newCell = dataRow.CreateCell(column.Ordinal);
-                    string drValue = row[column].ToString();
+                    string? drValue = row[column].ToString();
                     switch (column.DataType.ToString())
                     {
                         case "System.String"://字符串类型

@@ -1,0 +1,20 @@
+{
+  "SampleCode": "2025-0",
+  "SampleName": "",
+  "SampleState": "固体",
+  "IsUrgent": false,
+  "TaskType": "一般检验",
+  "EnterpriseOfSender": null,
+  "SampleRemark": null,
+  "CreateTime": "2025-01-13T10:59:04.4941926+08:00",
+  "FirstAuditTime": null,
+  "SecondAuditTime": null,
+  "CompleteTime": null,
+  "CheckRemark": null,
+  "MinTestProgress": 0,
+  "MaxTestProgress": 0,
+  "MoistureContent": null,
+  "Density": null,
+  "Items": null,
+  "CurrentUrgent": false
+}

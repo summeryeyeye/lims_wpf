@@ -3,14 +3,14 @@
     public class ProductStandardDto : StandardBaseDto
     {
         public int Id { get; set; }
-        public string TestItem { get; set; }
+        public string? TestItem { get; set; }
 
-        public string ExecuteStandard { get; set; }
+        public string? ExecuteStandard { get; set; }
 
-        public string ProductType { get; set; }
-        public string ProductClass { get; set; }
-        public string ProductForm { get; set; }
-        public string IndexRequest { get; set; }        
+        public string? ProductType { get; set; }
+        public string? ProductClass { get; set; }
+        public string? ProductForm { get; set; }
+        public string? IndexRequest { get; set; }        
         public string? ProductUnit { get; set; }
 
 
@@ -20,11 +20,11 @@
             get { return testMethodId; }
             set { testMethodId = value; RaisePropertiyChanged(nameof(TestMethodId)); }
         }
-        public string SampleState
+        public string? SampleState
         {
             get
             {
-                return ProductForm.Contains("液") ? "液体" : "固体";
+                return ProductForm!.Contains("液") ? "液体" : "固体";
             }
         }
 

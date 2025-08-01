@@ -10,9 +10,9 @@ namespace Lims.WPF.Resources.Converters
             if (value != null)
             {
                 var items = value as IEnumerable<ItemDto>;
-                string userName = UserDto.Inatance.UserName; // "杨升"; //ModuleViewModelBase._user.UserName;
+                string userName = UserDto.Inatance!.UserName!; // "杨升"; //ModuleViewModelBase._user.UserName;
                 int progress = System.Convert.ToInt32(parameter);
-                var arr = items.Where(i => i.Tester == userName && i.TestProgress == progress).Select(i => i.TestItem);
+                var arr = items!.Where(i => i.Tester == userName && i.TestProgress == progress).Select(i => i.TestItem);
                 return string.Join(',', arr);
             }
             return string.Empty;

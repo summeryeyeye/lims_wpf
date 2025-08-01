@@ -10,6 +10,6 @@
         {
 
         }
-        public string Content { get; private set; }
+        public string? Content { get; private set; }
     }
 }

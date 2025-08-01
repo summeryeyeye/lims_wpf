@@ -7,14 +7,14 @@ namespace Lims.WPF.Resources.UserControls
 {
     public class MyGridControl : DevExpress.XtraGrid.GridControl
     {
-        GridView gv = null;
+        GridView? gv = null;
         Point m_mouseDownLocation;
         int m_dragHandle;
-        DragForm m_dragRowShadow;
+        DragForm? m_dragRowShadow;
 
         public MyGridControl()
         {
-            Load += MyGridControl_Load;
+            Load += MyGridControl_Load!;
         }
         private void MyGridControl_Load(object sender, EventArgs e)
         {
@@ -29,7 +29,7 @@ namespace Lims.WPF.Resources.UserControls
         {
             if (ev.Button == MouseButtons.Left)
             {
-                var _hit = gv.CalcHitInfo(ev.Location);
+                var _hit = gv!.CalcHitInfo(ev.Location);
                 if (_hit.RowHandle >= 0)
                 {
                     m_dragHandle = _hit.RowHandle;
@@ -76,7 +76,7 @@ namespace Lims.WPF.Resources.UserControls
         {
             if (m_dragRowShadow != null)
             {
-                var _hit = gv.CalcHitInfo(ev.Location);
+                var _hit = gv!.CalcHitInfo(ev.Location);
                 EndDrag(_hit.RowHandle);
             }
             base.OnMouseUp(ev);
@@ -84,7 +84,7 @@ namespace Lims.WPF.Resources.UserControls
 
         private void BeginDrag(int _handle)
         {
-            var _info = (DevExpress.XtraGrid.Views.Grid.ViewInfo.GridViewInfo)gv.GetViewInfo();
+            var _info = (DevExpress.XtraGrid.Views.Grid.ViewInfo.GridViewInfo)gv!.GetViewInfo();
 
             Rectangle _bound = _info.GetGridRowInfo(_handle).Bounds;
             _bound.Location = PointToScreen(_bound.Location);
@@ -100,10 +100,10 @@ namespace Lims.WPF.Resources.UserControls
                 m_dragRowShadow.Dispose();
                 m_dragRowShadow = null;
 
-                int _rowIndex = gv.GetDataSourceRowIndex(m_dragHandle);
+                int _rowIndex = gv!.GetDataSourceRowIndex(m_dragHandle);
 
                 DataRow _row = ((DataTable)DataSource).Rows[_rowIndex];
-                object[] _values = _row.ItemArray;
+                object[] _values = _row.ItemArray!;
 
                 base.BeginUpdate();
 

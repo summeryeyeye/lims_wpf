@@ -9,7 +9,7 @@ namespace Lims.WPF.Resources.Converters
         {
             if (value != null)
             {
-                TaskType type = (TaskType)Enum.Parse(typeof(TaskType), value.ToString());
+                TaskType type = (TaskType)Enum.Parse(typeof(TaskType), value.ToString()!);
                 return (int)type;
             }
             return 0;

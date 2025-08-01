@@ -14,7 +14,6 @@ using RestSharp;
 using Spire.Doc;
 using Spire.Doc.Documents;
 using System.Configuration;
-using System.Diagnostics;
 using System.Drawing.Printing;
 using System.Windows.Input;
 
@@ -62,9 +61,9 @@ namespace Lims.WPF.ViewModels
             var response = await _userService.GetAllAsync();
             if (response.Status)
             {
-                Users = response.Result.ToObservableCollection();
-                Testers = Users.Where(u => u.CanTest).ToObservableCollection();
-                MethodTesters = Testers.DistinctBy(t => t.SuperiorName).Select(t => t.SuperiorName).ToObservableCollection();
+                Users = response.Result.ToObservableCollection()!;
+                Testers = Users.Where(u => u!.CanTest).ToObservableCollection();
+                MethodTesters = Testers.DistinctBy(t => t!.SuperiorName).Select(t => t!.SuperiorName).ToObservableCollection();
             }
 
         }
@@ -117,19 +116,7 @@ namespace Lims.WPF.ViewModels
             OnlyViewUrgent = false;
             await LoadMainDatas(CurrentUser);
             //刷新数据,同时刷新菜单栏项目数
-        }
-
-        //protected async Task UpdateSampleTestProgress(SampleDto sample)
-        //{
-        //    var response = await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode });
-        //    if (response.Status)
-        //    {
-        //        var items = response.Result;
-        //        sample.MinTestProgress = items.Min(i => i.TestProgress);
-        //        sample.MaxTestProgress = items.Max(i => i.TestProgress);
-        //        _ = await _sampleService.UpdateAsync(sample);
-        //    }
-        //}
+        }               
 
         public List<FormattingRule> SampleFormatConditionRules
         {
@@ -183,9 +170,9 @@ namespace Lims.WPF.ViewModels
         /// 样品数据源
         /// </summary>
 
-        private ObservableCollection<SampleDto?> samplesSource = new ObservableCollection<SampleDto?>();
+        private ObservableCollection<SampleDto?>? samplesSource = new ObservableCollection<SampleDto?>();
 
-        public ObservableCollection<SampleDto?> SamplesSource
+        public ObservableCollection<SampleDto?>? SamplesSource
         {
             get => samplesSource;
             set
@@ -227,8 +214,8 @@ namespace Lims.WPF.ViewModels
 
 
         #region 只看加急
-        protected Collection<ItemDto?> itemDtos;
-        protected Collection<SampleDto?> sampleDtos;
+        protected ObservableCollection<ItemDto?>? itemDtos;
+        protected ObservableCollection<SampleDto?>? sampleDtos;
         private bool onlyViewUrgent;
         public bool OnlyViewUrgent
         {
@@ -250,11 +237,11 @@ namespace Lims.WPF.ViewModels
             {
                 try
                 {
-                    itemDtos = TaskDatasSource?.Copy();
-                    TaskDatasSource = TaskDatasSource?.Where(i => i.Sample.IsUrgent || i.Sample.CurrentUrgent).ToObservableCollection();
+                    itemDtos = TaskDatasSource.Copy();
+                    TaskDatasSource = TaskDatasSource?.Where(i => i!.Sample!.IsUrgent || i.Sample.CurrentUrgent).ToObservableCollection();
 
-                    sampleDtos = SamplesSource?.Copy();
-                    SamplesSource = SamplesSource?.Where(s => s.IsUrgent || s.CurrentUrgent).ToObservableCollection();
+                    sampleDtos = SamplesSource.Copy();
+                    SamplesSource = SamplesSource?.Where(s => s!.IsUrgent || s.CurrentUrgent).ToObservableCollection()!;
                 }
                 catch (Exception)
                 {
@@ -263,8 +250,8 @@ namespace Lims.WPF.ViewModels
             }
             else
             {
-                TaskDatasSource = itemDtos?.ToObservableCollection();
-                SamplesSource = sampleDtos?.ToObservableCollection();
+                TaskDatasSource = itemDtos;
+                SamplesSource = sampleDtos;
             }
         }
 
@@ -303,8 +290,8 @@ namespace Lims.WPF.ViewModels
 
 
 
-        private ObservableCollection<StandardFileItem> standardFileItems;
-        public ObservableCollection<StandardFileItem> StandardFileItems
+        private ObservableCollection<StandardFileItem>? standardFileItems;
+        public ObservableCollection<StandardFileItem>? StandardFileItems
         {
             get { return standardFileItems; }
             set { standardFileItems = value; RaisePropertyChanged(nameof(StandardFileItems)); }
@@ -397,7 +384,7 @@ namespace Lims.WPF.ViewModels
             }
             set => printers = value;
         }
-        public string limsPath = ConfigurationManager.AppSettings["LimsPath"].ToString();
+        public string limsPath = ConfigurationManager.AppSettings["LimsPath"]!.ToString();
         protected async Task 打印任务随行单(ObservableCollection<ItemDto> previewSources, Printer selectedPrinter)
         {
             await ShowNotifaction("", "打印程序已启动，请稍等！！", "");
@@ -408,7 +395,7 @@ namespace Lims.WPF.ViewModels
             if (printSources != null)
             {
 
-                string tasksTempDocPath = limsPath + @"\工具库\其他模板\任务随行单.docx";
+                string tasksTempDocPath = System.Windows.Forms.Application.StartupPath+ @"任务随行单.docx";
 
                 try
                 {
@@ -435,7 +422,7 @@ namespace Lims.WPF.ViewModels
                     TableRow row = table.Rows[10].Clone();
                     foreach (ItemDto item in printSources)
                     {
-                        SampleDto? sample = (await _sampleService.GetSingleAsync(item.SampleCode)).Result;
+                        SampleDto? sample = (await _sampleService.GetSingleAsync(item!.SampleCode!)).Result;
                         if (item.SampleCode != preRow.SampleCode)//号不同换行
                         {
                             tRow++;
@@ -473,7 +460,7 @@ namespace Lims.WPF.ViewModels
 
 
                         table[tRow, 0].FirstParagraph.Text = item.SampleCode;
-                        table[tRow, 1].FirstParagraph.Text = sample.SampleName;
+                        table[tRow, 1].FirstParagraph.Text = sample!.SampleName!;
                         itemName += itemName == "" ? item.TestItem : ',' + item.TestItem;
                         if (item.SubItems != null && item.SubItems.Count > 0)
                         {
@@ -483,12 +470,12 @@ namespace Lims.WPF.ViewModels
                             }
                         }
                         table[tRow, 2].FirstParagraph.Text = itemName;
-                        table[tRow, 3].FirstParagraph.Text = item.ProductStandardId != 0 ? item.ProductStandard?.ExecuteStandard : item.MethodStandard.TestMethod;
+                        table[tRow, 3].FirstParagraph.Text = item.ProductStandardId != 0 ? item.ProductStandard?.ExecuteStandard : item!.MethodStandard!.TestMethod;
                         preRow = item;
                     }
 
                     PrintDocument printDoc = document.PrintDocument;
-                    printDoc.PrinterSettings.PrinterName = selectedPrinter.PrinterName;
+                    printDoc.PrinterSettings.PrinterName = selectedPrinter!.PrinterName!;
                     printDoc.Print();
                 }
                 catch (Exception e)
@@ -546,7 +533,7 @@ namespace Lims.WPF.ViewModels
             {
                 SampleState = "固体",
                 //TestItem = method.Text,
-                LastUpdater = CurrentUser.UserName
+                LastUpdater = CurrentUser!.UserName!
             };
 
             var dialogService = GetService<IDialogService>("CreateMethodViewDialogService");

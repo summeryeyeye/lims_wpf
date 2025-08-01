@@ -7,15 +7,15 @@ namespace Lims.ToolsForClient.Extensions
     {
         public static void FindAndRemove(this Collection<ItemDto> items, ItemDto item)
         {
-            items.Remove(items.FirstOrDefault(t => t.ItemId == item.ItemId));
+            items.Remove(items.FirstOrDefault(t => t.ItemId == item.ItemId)!);
         }
         public static ItemDto FindTaskData(this Collection<ItemDto> items, ItemDto item)
         {
-            return items.FirstOrDefault(t => t.ItemId == item.ItemId);
+            return items.FirstOrDefault(t => t.ItemId == item.ItemId)!;
         }
         public static int FindTaskDataIndex(this Collection<ItemDto> items, ItemDto item)
         {
-            return items.IndexOf(items.FirstOrDefault(t => t.ItemId == item.ItemId));
+            return items.IndexOf(items.FirstOrDefault(t => t.ItemId == item.ItemId)!);
         }
         public static void AddRange<T>(this Collection<T> tasks1, IEnumerable<T> items2)
         {

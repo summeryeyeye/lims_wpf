@@ -12,7 +12,7 @@ namespace Lims.WPF.Resources.Converters
             try
             {
                 var items = value as IEnumerable<ItemDto>;
-                count = items.Where(i => i.TestProgress <= (int)TestProgress.检测中).Count();
+                count = items!.Where(i => i.TestProgress <= (int)TestProgress.检测中).Count();
             }
             catch (Exception)
             {

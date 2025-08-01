@@ -14,8 +14,8 @@ namespace Lims.WPF.Resources.Converters
                 {
                     //string[] progresses = new string[] { "数据一审", "数据二审", "数据三审", "已完成" };
                     var items = value as IEnumerable<ItemDto>;
-                    int count = items.Count();
-                    int filledCount = items.Where(i => i.TestProgress > (int)TestProgress.检测中).Count();
+                    int count = items!.Count();
+                    int filledCount = items!.Where(i => i.TestProgress > (int)TestProgress.检测中).Count();
                     return System.Convert.ToInt32(((double)filledCount / count * 100));
                 }
                 catch (Exception)

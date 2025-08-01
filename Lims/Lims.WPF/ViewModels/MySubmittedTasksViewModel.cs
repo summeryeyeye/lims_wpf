@@ -20,7 +20,7 @@ namespace Lims.WPF.ViewModels
             ItemFilterParam itemFilterParam = new ItemFilterParam()
             {
                 TestProgress = (int)RelativeProgress,
-                Tester = user.UserName,
+                Tester = user!.UserName,
                 Operation = Operation.Higher,
                 MinDate = Sample_BeginDate,
                 MaxDate = Sample_EndDate,
@@ -29,8 +29,8 @@ namespace Lims.WPF.ViewModels
             var response = await _itemService.GetMyItemsAsync(itemFilterParam);
             if (response.Status)
             {
-                TaskDatasSource = response.Result.OrderByDescending(t => t.ResultSubmitTime).ToObservableCollection();
-                SamplesSource = TaskDatasSource.Select(s => s.Sample).DistinctBy(s => s.SampleCode).OrderBy(s => s.SampleCode).ToObservableCollection();
+                TaskDatasSource = response.Result!.OrderByDescending(t => t.ResultSubmitTime).ToObservableCollection()!;
+                SamplesSource = TaskDatasSource.Select(s => s!.Sample).DistinctBy(s => s!.SampleCode).OrderBy(s => s!.SampleCode).ToObservableCollection();
             }
             FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
             ShowMainDatasLoadingPanel = false;
@@ -60,13 +60,13 @@ namespace Lims.WPF.ViewModels
                 ItemFilterParam itemFilterParam = new ItemFilterParam()
                 {
                     SampleCode = sample.SampleCode,
-                    Tester = CurrentUser.UserName,
+                    Tester = CurrentUser!.UserName,
                     TestProgress = (int)RelativeProgress,
                     Operation = Operation.Higher,
                     MinDate = Sample_BeginDate,
                     MaxDate = Sample_EndDate
                 };
-                ItemsSource = (await _itemService.GetMyItemsBySampleCodeAsync(itemFilterParam)).Result.ToObservableCollection();
+                ItemsSource = (await _itemService.GetMyItemsBySampleCodeAsync(itemFilterParam)).Result.ToObservableCollection()!;
             }
         }
 
@@ -83,13 +83,13 @@ namespace Lims.WPF.ViewModels
                 //SampleDto sample = (await _sampleService.GetSingleAsync(edittingItem.SampleCode)).Result;
 
 
-                var items = await GetAllItemsOfSample(edittingItem.Sample);
+                var items = await GetAllItemsOfSample(edittingItem.Sample!);
                 if (items != null && items?.Min(i => i.TestProgress) > (int)TestProgress.检测中)
                 {
                     _messageBoxService.ShowMessage("该样品下所有项目都已提交至数据一审,不支持自主撤销提交!");
                     return;
                 }
-                var editingSample = SamplesSource.FirstOrDefault(s => s.SampleCode == edittingItem.SampleCode);
+                var editingSample = SamplesSource!.FirstOrDefault(s => s!.SampleCode == edittingItem.SampleCode);
                 ;
 
                 //int preTestProgress = edittingItem.TestProgress;
@@ -99,18 +99,18 @@ namespace Lims.WPF.ViewModels
 
                 await _itemService.UpdateAsync(edittingItem);
                 ItemsSource.Remove(edittingItem);
-                TaskDatasSource.Remove(edittingItem);
+                TaskDatasSource!.Remove(edittingItem);
 
-                await ExcuteIfNullSample(editingSample, TaskDatasSource.Where(i => i.SampleCode == editingSample.SampleCode));
+                await ExcuteIfNullSample(editingSample!, TaskDatasSource.Where(i => i!.SampleCode == editingSample!.SampleCode)!);
                 await ShowNotifaction(edittingItem.SampleCode + "  " + edittingItem.TestItem, "撤销成功！", "");
             }
         }
 
 
 
-        private MethodStandardDto selectedMethodStandard;
+        private MethodStandardDto? selectedMethodStandard;
 
-        public MethodStandardDto SelectedMethodStandard
+        public MethodStandardDto? SelectedMethodStandard
         {
             get
             {

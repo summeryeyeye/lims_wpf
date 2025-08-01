@@ -7,11 +7,11 @@ namespace Lims.WPF.Resources.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value != null && value.ToString().Trim().Length == 10)
+            if (value != null && value.ToString()!.Trim().Length == 10)
             {
                 Regex sampleCodeCorrectReg = new Regex(@"^[0-9]{4}-[0-9]{5}$|^[0-9]{5}-[0-9]{4}$");
 
-                string sampleCode = value.ToString().Trim();
+                string sampleCode = value.ToString()!.Trim();
                 return sampleCodeCorrectReg.IsMatch(sampleCode);
             }
             return false;

@@ -32,12 +32,12 @@ namespace Lims.WPF.ViewModels
             try
             {
                 ShowMainDatasLoadingPanel = true;
-                ItemDto[] tasks = new ItemDto[selectedTaskDatas.Count];
+                ItemDto[] tasks = new ItemDto[selectedTaskDatas!.Count];
                 selectedTaskDatas.CopyTo(tasks, 0);
                 foreach (var task in tasks)
                 {
                     task.TestProgress = (int)TestProgress.检测中;
-                    TaskDatasSource.Remove(task);
+                    TaskDatasSource!.Remove(task);
                 }
                 await _itemService.UpdateRangeAsync(tasks.ToList());
             }

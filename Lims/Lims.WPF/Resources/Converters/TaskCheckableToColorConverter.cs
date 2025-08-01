@@ -12,9 +12,9 @@ namespace Lims.WPF.Resources.Converters
             if (values[0] != DependencyProperty.UnsetValue && values[0] != null)
             {
                 var sample = values[0] as SampleDto;
-                var items = sample.Items;
+                var items = sample!.Items;
                 //if (items.Count > 0)
-                if (items.Min(i => i.TestProgress) < (int)(values[1] as TestProgress?))
+                if (items!.Min(i => i.TestProgress) < (int)(values[1] as TestProgress?)!)
                     return Color.FromRgb(255, 255, 255);
             }
 

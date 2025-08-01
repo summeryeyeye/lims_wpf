@@ -29,7 +29,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task UpdateMethodStandardState(int standarState)
         {
-            FocusedMethod.StandardState = (StandardState)standarState;
+            FocusedMethod!.StandardState = (StandardState)standarState;
             await _methodStandardService.UpdateAsync(FocusedMethod);
         }
 
@@ -92,8 +92,8 @@ namespace Lims.WPF.ViewModels
         }
 
         #region MyRegion
-        private ObservableCollection<ProductStandardDto> products;
-        public ObservableCollection<ProductStandardDto> Products
+        private ObservableCollection<ProductStandardDto>? products;
+        public ObservableCollection<ProductStandardDto>? Products
         {
             get => products; set
             {
@@ -101,13 +101,13 @@ namespace Lims.WPF.ViewModels
                 RaisePropertyChanged(nameof(Products));
             }
         }
-        public ProductStandardDto FocussedProduct
+        public ProductStandardDto? FocussedProduct
         {
             get; set;
         }
 
-        private ObservableCollection<MethodStandardDto> methods;
-        public ObservableCollection<MethodStandardDto> Methods
+        private ObservableCollection<MethodStandardDto>? methods;
+        public ObservableCollection<MethodStandardDto>? Methods
         {
             get => methods; set
             {
@@ -129,7 +129,7 @@ namespace Lims.WPF.ViewModels
 
             foreach (var product in products)
             {
-                product.TestMethodId = FocusedMethod.Id;
+                product.TestMethodId = FocusedMethod!.Id;
                 SelectedProducts.Remove(product);
             }
             await _productStandardService.UpdateRangeAsync(products.ToList());
@@ -139,7 +139,7 @@ namespace Lims.WPF.ViewModels
         public async Task MethodEdit(CellValueChangedArgs e)
         {
             var method = e.Item as MethodStandardDto;
-            method.LastUpdater = CurrentUser.UserName;
+            method!.LastUpdater = CurrentUser!.UserName!;
             await _methodStandardService.UpdateAsync(method);
 
         }
@@ -149,7 +149,7 @@ namespace Lims.WPF.ViewModels
             Products = (await _productStandardService.GetAllAsync()).Result.ToObservableCollection();
             Methods = (await _methodStandardService.GetAllAsync()).Result.ToObservableCollection();
         }
-        public MethodStandardDto FocusedMethod
+        public MethodStandardDto? FocusedMethod
         {
             get;
             set;
@@ -162,21 +162,21 @@ namespace Lims.WPF.ViewModels
                 case Key.Delete:
                     if (_messageBoxService.ShowMessage("确定删除该方法?", "", MessageButton.OKCancel) == MessageResult.OK)
                     {
-                        var response = await _itemService.GetAllItemsByMethodStandardIdAsync(new Common.Parameters.ItemFilterParam { MethodStandardId = FocusedMethod.Id });
-                        if (response.Status && response.Result.Count > 0)
+                        var response = await _itemService.GetAllItemsByMethodStandardIdAsync(new Common.Parameters.ItemFilterParam { MethodStandardId = FocusedMethod!.Id });
+                        if (response.Status && response.Result!.Count > 0)
                         {
                             _messageBoxService.ShowMessage("存在项目引用该方法，请更正后重试!");
                             return;
                         }
 
                         await _methodStandardService.DeleteAsync(FocusedMethod.Id);
-                        Methods.Remove(FocusedMethod);
+                        Methods!.Remove(FocusedMethod);
                     }
                     break;
             }
         }
 
-        public ObservableCollection<SubItemStandardDto> SubItemStandardsSource
+        public ObservableCollection<SubItemStandardDto>? SubItemStandardsSource
         {
             get; set;
         }
@@ -197,7 +197,7 @@ namespace Lims.WPF.ViewModels
         public async Task StandardSubItemChangedEdit(CellValueChangedArgs e)
         {
             var standardSubItem = e.Item as SubItemStandardDto;
-            await _subItemStandardService.UpdateAsync(standardSubItem);
+            await _subItemStandardService.UpdateAsync(standardSubItem!);
         }
 
         #endregion

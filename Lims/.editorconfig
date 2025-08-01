@@ -1,4 +1,4 @@
 ﻿[*.cs]
 
-# Default severity for all analyzer diagnostics
-dotnet_analyzer_diagnostic.severity = suggestion
+# CS8766: 返回类型中引用类型的为 Null 性与隐式实现的成员不匹配(可能是由于为 Null 性特性)。
+dotnet_diagnostic.CS8766.severity = silent

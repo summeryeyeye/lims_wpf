@@ -41,8 +41,8 @@ namespace Lims.WPF.ViewModels
         private IReagentService ReagentService => ServiceContainer.GetService<IReagentService>();
 
         private readonly string serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"]!.ToString();
-        private HubConnection? _hubConnection;
-        private SignalRClient _signalRClient;
+        //private HubConnection? _hubConnection;
+        private SignalRClient? _signalRClient;
         public MainViewModel()
         {
 
@@ -93,14 +93,14 @@ namespace Lims.WPF.ViewModels
 
             if (await Login())
             {
-                _signalRClient = new SignalRClient();
                 InitializeSignalR();
             }
         }
         private async void InitializeSignalR()
         {
+            _signalRClient = new SignalRClient();
             var url = $"{serviceRoutePath}notificationHub";
-            _signalRClient.OnTaskStatusChanged += message =>
+            _signalRClient!.OnTaskStatusChanged += message =>
             {
                 Task.Run(() => HandleTaskStatusChange(message));
             };
@@ -137,7 +137,7 @@ namespace Lims.WPF.ViewModels
         private void ShowConnectionError(Exception ex)
         {
             // 显示连接错误
-           
+
         }
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace Lims.WPF.ViewModels
         public async Task OnWindowClosed()
         {
             // 关闭窗口时释放资源
-          await  DisposeAsync();
+            await DisposeAsync();
             // 退出应用程序
             Application.Current.Shutdown();
         }
@@ -208,8 +208,9 @@ namespace Lims.WPF.ViewModels
         public async Task DisposeAsync()
         {
             // SignalR 断开连接并解绑事件
-            if (_hubConnection != null)
+            if (_signalRClient != null)
             {
+
                 // 异步释放资源
                 await Task.Run(async () =>
                 {
@@ -218,6 +219,7 @@ namespace Lims.WPF.ViewModels
                     // 其他资源释放...
                 });
             }
+
             // Messenger 解绑
             Messenger.Default.Unregister(this);
 

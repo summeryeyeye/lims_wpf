@@ -23,12 +23,12 @@ namespace Lims.WPF.ViewModels
             ItemFilterParam itemFilterParam = new ItemFilterParam()
             {
                 TestProgress = (int)RelativeProgress,
-                Tester = user.UserName,
+                Tester = user!.UserName,
                 Operation = Operation.Equal,
             };
             var response = await _itemService.GetMyItemsAsync(itemFilterParam);
             if (response.Status)
-                TaskDatasSource = response.Result.OrderByDescending(t => t.AppointTime).ToObservableCollection();
+                TaskDatasSource = response.Result!.OrderByDescending(t => t.AppointTime).ToObservableCollection()!;
             //await base.LoadMainDatas();
             ShowMainDatasLoadingPanel = false;
         }
@@ -43,12 +43,12 @@ namespace Lims.WPF.ViewModels
             try
             {
                 ShowMainDatasLoadingPanel = true;
-                ItemDto[] tasks = new ItemDto[selectedTaskDatas.Count];
+                ItemDto[] tasks = new ItemDto[selectedTaskDatas!.Count];
                 selectedTaskDatas.CopyTo(tasks, 0);
                 foreach (var task in tasks)
                 {
                     task.TestProgress = (int)TestProgress.检测中;
-                    TaskDatasSource.Remove(task);
+                    TaskDatasSource!.Remove(task);
                 }
                 await _itemService.UpdateRangeAsync(tasks.ToList());
             }

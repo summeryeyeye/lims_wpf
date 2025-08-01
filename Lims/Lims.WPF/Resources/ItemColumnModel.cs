@@ -6,11 +6,11 @@ namespace Lims.WPF.Resources
 {
     public class ItemColumnModel
     {
-        public string Header
+        public string? Header
         {
             get; set;
         }
-        public string FieldName
+        public string? FieldName
         {
             get; set;
         }
@@ -20,12 +20,12 @@ namespace Lims.WPF.Resources
             get; set;
         }
 
-        public System.Windows.Style Style
+        public System.Windows.Style? Style
         {
             get; set;
         }
 
-        public DataTemplate DataTemplate
+        public DataTemplate? DataTemplate
         {
             get; set;
         }
@@ -76,7 +76,7 @@ namespace Lims.WPF.Resources
             Header = header;
         }
         public int Width { get; set; } = 120;
-        public string Header
+        public string? Header
         {
             get;
         }
@@ -110,7 +110,7 @@ namespace Lims.WPF.Resources
             }
         }
 
-        public object CellTemplate
+        public object? CellTemplate
         {
             get; set;
         }
@@ -145,9 +145,9 @@ namespace Lims.WPF.Resources
             }
         }
 
-        private object converter;
+        private object? converter;
 
-        public object Converter
+        public object? Converter
         {
             get
             {

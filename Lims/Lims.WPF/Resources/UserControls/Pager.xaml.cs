@@ -135,7 +135,7 @@ namespace Lims.WPF.Resources.UserControls
 
         public static void OnTotalPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pager p = d as Pager;
+            Pager? p = d as Pager;
             if (p != null)
             {
                 Run rTotalPage = (Run)p.FindName("rTotalPage");
@@ -146,7 +146,7 @@ namespace Lims.WPF.Resources.UserControls
 
         public static void OnTotalItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pager p = d as Pager;
+            Pager? p = d as Pager;
             if (p != null)
             {
                 Run rTotalItem = (Run)p.FindName("rTotalItem");
@@ -157,7 +157,7 @@ namespace Lims.WPF.Resources.UserControls
 
         private static void OnCurrentPageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pager p = d as Pager;
+            Pager? p = d as Pager;
 
             if (p != null)
             {

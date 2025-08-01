@@ -37,7 +37,7 @@ namespace Lims.WPF.Services
                     };
 
                     var content = response.Content;
-                    return JsonConvert.DeserializeObject<ApiResponse<T>>(response.Content, settings);
+                    return JsonConvert.DeserializeObject<ApiResponse<T>>(response.Content, settings)!;
                 }
                 else
                     return new ApiResponse<T>()

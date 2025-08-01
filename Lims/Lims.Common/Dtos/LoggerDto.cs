@@ -46,7 +46,7 @@ namespace Lims.Common.Dtos
             set { isReaded = value; RaisePropertiyChanged(nameof(IsReaded)); }
         }
 
-        public static string GetLocalIP()
+        public static string? GetLocalIP()
         {
             string result = RunApp("route", "print", true);
             Match m = Regex.Match(result, @"0.0.0.0\s+0.0.0.0\s+(\d+.\d+.\d+.\d+)\s+(\d+.\d+.\d+.\d+)");
@@ -60,7 +60,7 @@ namespace Lims.Common.Dtos
                 {
                     System.Net.Sockets.TcpClient c = new System.Net.Sockets.TcpClient();
                     c.Connect("www.baidu.com", 80);
-                    string ip = (c.Client.LocalEndPoint as System.Net.IPEndPoint).Address.ToString();
+                    string ip = (c.Client.LocalEndPoint as System.Net.IPEndPoint)!.Address.ToString();
                     c.Close();
                     return ip;
                 }

@@ -4,13 +4,13 @@
     {
         public int Id { get; set; }
 
-        public string TestItem { get; set; }
+        public string? TestItem { get; set; }
 
-        public string TestMethod { get; set; }
+        public string? TestMethod { get; set; }
 
-        public string Tester { get; set; }
+        public string? Tester { get; set; }
 
-        public string SampleState { get; set; }
+        public string? SampleState { get; set; }
 
         public string? TestUnit { get; set; }
 

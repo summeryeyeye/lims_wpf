@@ -6,16 +6,16 @@ namespace Lims.WPF.Resources.Converters
     [ValueConversion(typeof(IEnumerable<ItemDto>), typeof(string))]
     public class MyItemsInCellConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value != null)
             {
                 var items = value as IEnumerable<ItemDto>;
-                string paras = parameter.ToString();
-                string UserName = UserDto.Inatance.UserName; //"杨升"; //ModuleViewModelBase._user.UserName;
+                string paras = parameter.ToString()!;
+                string UserName = UserDto.Inatance!.UserName!; //"杨升"; //ModuleViewModelBase._user.UserName;
                 DataTable dt = new();
 
-                var arr = items.Where(i => i.Tester == UserName && (bool)dt.Compute(i.TestProgress + paras, "")).Select(i => i.TestItem);
+                var arr = items!.Where(i => i.Tester == UserName && (bool)dt.Compute(i.TestProgress + paras, "")).Select(i => i.TestItem);
 
 
                 return string.Join(",", arr);

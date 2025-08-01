@@ -15,7 +15,7 @@ namespace Lims.WPF.Resources.Converters
                 if (sample == null)
                     return false;
 
-                if (sample.Items.Min(i => i.TestProgress) < (int)(values[1] as TestProgress?))
+                if (sample.Items!.Min(i => i.TestProgress) < (int)(values[1] as TestProgress?)!)
                     return false;
             }
 

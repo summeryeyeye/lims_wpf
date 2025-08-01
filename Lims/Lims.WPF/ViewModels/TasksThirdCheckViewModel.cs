@@ -25,7 +25,7 @@ namespace Lims.WPF.ViewModels
         protected virtual async Task PassChecking(SampleDto sample)
         {
             //var newProgress = (int)RelativeProgress + 1;
-            foreach (var item in sample.Items)
+            foreach (var item in sample.Items!)
                 item.TestProgress = (int)TestProgress.已完成;
             await _itemService.UpdateRangeAsync(sample.Items.ToList());
 
@@ -33,7 +33,7 @@ namespace Lims.WPF.ViewModels
             await _sampleService.UpdateAsync(sample);
 
             //await UpdateSampleTestProgress(sample);
-            SamplesSource.Remove(sample);
+            SamplesSource!.Remove(sample);
             await ShowNotifaction(sample.SampleCode, "审核完成！", "");
         }
         [Command]
@@ -41,7 +41,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).ToObservableCollection();
+                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).ToObservableCollection()!;
                 var dialogService = GetService<IDialogService>("AllItemsOfSamplePreviewDialogService");
                 dialogService.ShowDialog(
                     new List<UICommand> {
@@ -67,7 +67,7 @@ namespace Lims.WPF.ViewModels
             MessageResult result = _messageBoxService.ShowMessage($"确定批量审核选中样品(已选中 {samples.Count()} 个样品)？", "审核", MessageButton.OKCancel, MessageIcon.Question, MessageResult.Cancel);
             if (result != MessageResult.OK)
                 return;
-            if (!CurrentUser.CanThirdCheck)
+            if (!CurrentUser!.CanThirdCheck)
                 return;
             await ShowNotifaction("", "进程已启动,请稍等！", "");
 
@@ -83,14 +83,14 @@ namespace Lims.WPF.ViewModels
 
                 await _sampleService.UpdateAsync(sample);
 
-                foreach (var i in sample.Items)
+                foreach (var i in sample.Items!)
                 {
                     i.TestProgress = (int)RelativeProgress + 1;
                     await _itemService.UpdateAsync(i);
                 }
 
 
-                SamplesSource.Remove(SamplesSource.FirstOrDefault(s => s.SampleCode == sample.SampleCode));
+                SamplesSource!.Remove(SamplesSource.FirstOrDefault(s => s!.SampleCode == sample.SampleCode));
 
                 //await UpdateSampleTestProgress(sample);
 

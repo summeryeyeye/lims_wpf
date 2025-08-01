@@ -30,9 +30,9 @@ namespace Lims.WPF.ViewModels
         protected override Task<ObservableCollection<ItemDto?>> GetItemsSource(SampleDto sample)
         {
             if (TaskDatasSource != null)
-                return Task.FromResult(TaskDatasSource.Where(i => i?.SampleCode == sample.SampleCode).OrderBy(i => i.ItemId).ToObservableCollection());
+                return Task.FromResult(TaskDatasSource.Where(i => i?.SampleCode == sample.SampleCode).OrderBy(i => i!.ItemId).ToObservableCollection());
             else
-                return null;
+                return null!;
         }
 
 
@@ -52,8 +52,8 @@ namespace Lims.WPF.ViewModels
             {
                 if (response.Result != null)
                 {
-                    TaskDatasSource = response.Result.OrderBy(t => t.AppointTime).ToObservableCollection();
-                    SamplesSource = TaskDatasSource.Select(i => i.Sample).DistinctBy(s => s?.SampleCode).ToObservableCollection();
+                    TaskDatasSource = response.Result.OrderBy(t => t.AppointTime).ToObservableCollection()!;
+                    SamplesSource = TaskDatasSource.Select(i => i!.Sample).DistinctBy(s => s?.SampleCode).ToObservableCollection();
                 }
             }
             FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
@@ -128,9 +128,9 @@ namespace Lims.WPF.ViewModels
                                 {
                                     task.TestDate = testDate;
 
-                                    TaskDatasSource.FirstOrDefault(i => i.ItemId == task.ItemId).TestDate = testDate;
+                                    TaskDatasSource!.FirstOrDefault(i => i !.ItemId == task.ItemId)!.TestDate = testDate;
 
-                                    selectedTasks.Remove(selectedTasks.FirstOrDefault(i => i.ItemId == task.ItemId));
+                                    selectedTasks.Remove(selectedTasks !.FirstOrDefault(i => i.ItemId == task.ItemId) !);
                                 }
                                 var items = tasks.Cast<ItemDto>().ToList();
                                 await _itemService.UpdateRangeAsync(items);
@@ -160,7 +160,7 @@ namespace Lims.WPF.ViewModels
                             var testDate = SelectedTestDate;
                             focusedItem.TestDate = testDate;
 
-                            TaskDatasSource.FirstOrDefault(i => i.ItemId == focusedItem.ItemId).TestDate = testDate;
+                            TaskDatasSource!.FirstOrDefault(i => i!.ItemId == focusedItem.ItemId)!.TestDate = testDate;
 
                             await _itemService.UpdateAsync(focusedItem);
                             await ShowNotifaction("", "同步检测日期完成!", "");
@@ -202,7 +202,7 @@ namespace Lims.WPF.ViewModels
 
                                     await _itemService.UpdateAsync(EdittingItem);
 
-                                    TaskDatasSource.Remove(item);
+                                    TaskDatasSource!.Remove(item);
 
 
                                     result=true;
@@ -256,7 +256,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                MethodStandardDto std = item.MethodStandard;
+                MethodStandardDto std = item.MethodStandard!;
                 // await OriginalRecordPrint(std, item);
                 if (await OriginalRecordPrint(std, item))
                     await ShowNotifaction("", "打印成功!", "");
@@ -276,7 +276,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void TaskList_PrintOriginalRecord()
         {
-            ItemDto[] itemModels = new ItemDto[selectedTaskDatas.Count];
+            ItemDto[] itemModels = new ItemDto[selectedTaskDatas!.Count];
             selectedTaskDatas.CopyTo(itemModels, 0);
             int count = selectedTaskDatas.Count;
             int succeedItemsCount = 0;
@@ -291,7 +291,7 @@ namespace Lims.WPF.ViewModels
                     var dic=new Dictionary<string,int>();
                     foreach (var item in itemModels)
                     {
-                        MethodStandardDto std = item.MethodStandard;
+                        MethodStandardDto std = item.MethodStandard!;
                         if (std != null && !string.IsNullOrEmpty(std.OriginalRecordTemplateFilePath))
                         {
                             if (!string.IsNullOrEmpty(std.OriginalRecordGroup ))
@@ -304,7 +304,7 @@ namespace Lims.WPF.ViewModels
                                 }
                             }
 
-                            if (await OriginalRecordPrint(std, item,Printers[CurrentPrinterIndex].PrinterName))
+                            if (await OriginalRecordPrint(std, item,Printers![CurrentPrinterIndex].PrinterName!))
                             {
                                 dic[$"{item.SampleCode}-{std.OriginalRecordGroup}"] = 1;
                                 succeedItemsCount++;
@@ -332,7 +332,7 @@ namespace Lims.WPF.ViewModels
 
             List<string> fieldValues;
 
-            ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
+            ItemDto? DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
 
             ReportModel reportModel = new ReportModel();
             reportModel.SampleCode = item.SampleCode;
@@ -344,20 +344,21 @@ namespace Lims.WPF.ViewModels
             reportModel.SecondSampleWeight = item.ParallelTesting?.SecondSampleWeight;// item.SecondSampleWeight;
 
             //reportModel.Instruments = item.Instruments;
+
             //StringBuilder subInstruments = new StringBuilder();
             var instrumentsInfo = std.Instruments;
-            string myInstrumentsInfo = instrumentsInfo;
+            string? myInstrumentsInfo = instrumentsInfo;
 
             if (!string.IsNullOrEmpty(instrumentsInfo) && instrumentsInfo.Contains('：'))
             {
-                myInstrumentsInfo = instrumentsInfo.Split('|').FirstOrDefault(i => i.Contains(item.Tester)).Split('：')[1];
+                myInstrumentsInfo = instrumentsInfo.Split('|').FirstOrDefault(i => i.Contains(item.Tester!))!.Split('：')[1];
 
             }
             StringBuilder infoStr = new StringBuilder();
             #region 打印子项目
             if (std.IsPrintSubItem && item.SubItems != null && item.SubItems.Count > 0)
             {
-                if (std.KeyItem.Contains("活菌数"))
+                if (std.KeyItem!.Contains("活菌数"))
                 {
                     foreach (var subItem in item.SubItems)
                     {
@@ -377,9 +378,9 @@ namespace Lims.WPF.ViewModels
                                 {
                                     var info = new List<string>
                                                 {
-                                                    subStandard.Substratum,
-                                                    subStandard.BatchNumber,
-                                                    subStandard.Campany
+                                                    subStandard.Substratum!,
+                                                    subStandard.BatchNumber!,
+                                                    subStandard.Campany!
                                                 };
 
                                     infoStr.AppendLine($"{subStandard.SubitemName}({string.Join('-', info)})");
@@ -399,7 +400,7 @@ namespace Lims.WPF.ViewModels
                             var subRespone = await _subItemStandardService.GetSubItemStandardsBySubItemAsync(new SubItemStandardFilterParam() { SubitemName = subItem.TestItem });
                             if (subRespone.Status)
                             {
-                                subInstrumentInfos.Add(subRespone.Result.FirstOrDefault().Instruments);
+                                subInstrumentInfos.Add(subRespone.Result!.FirstOrDefault()!.Instruments!);
                             }
                         }
                     }
@@ -464,7 +465,7 @@ namespace Lims.WPF.ViewModels
             fieldValues = new List<string>();
             foreach (var p in properties.Select(p => p.GetValue(reportModel, null)))
             {
-                fieldValues.Add(p == null ? string.Empty : p.ToString());
+                fieldValues.Add(p == null ? string.Empty : p.ToString()!);
             }
             using (Document document = new Spire.Doc.Document())
             {
@@ -496,7 +497,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task OriginalRecordTemplateEdit()
         {
-            var response = await _methodStandardService.GetMethodStandardsByTesterAsync(new MethodStandardFilterParam() { TesterName = UserDto.Inatance.UserName, TesterGroup = UserDto.Inatance.UserGroup });
+            var response = await _methodStandardService.GetMethodStandardsByTesterAsync(new MethodStandardFilterParam() { TesterName = UserDto.Inatance!.UserName, TesterGroup = UserDto.Inatance.UserGroup });
             if (response.Status)
             {
                 MyEdittingStandards = response.Result.ToObservableCollection();
@@ -557,7 +558,7 @@ namespace Lims.WPF.ViewModels
 
             bool? result = dlg.ShowDialog();
 
-            if ((bool)result)
+            if ((bool)result!)
                 TemplateInfo.FileName = dlg.FileName;
 
         }
@@ -607,7 +608,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                if (_messageBoxService.ShowMessage($"已选择{selectedTaskDatas.Count}项，确定标记？", "标记", MessageButton.OKCancel, MessageIcon.Question, MessageResult.OK) == MessageResult.OK)
+                if (_messageBoxService.ShowMessage($"已选择{selectedTaskDatas!.Count}项，确定标记？", "标记", MessageButton.OKCancel, MessageIcon.Question, MessageResult.OK) == MessageResult.OK)
                 {
                     foreach (var data in selectedTaskDatas)
                         await MarkOriginalRecord(data, true);
@@ -629,7 +630,7 @@ namespace Lims.WPF.ViewModels
             item.IsOriginalRecordComplete = isMark;
             try
             {
-                TaskDatasSource[TaskDatasSource.FindTaskDataIndex(item)].IsOriginalRecordComplete = isMark;
+                TaskDatasSource![TaskDatasSource!.FindTaskDataIndex(item)]!.IsOriginalRecordComplete = isMark;
             }
             catch (Exception)
             {
@@ -638,7 +639,7 @@ namespace Lims.WPF.ViewModels
             await _itemService.UpdateAsync(item);
 
 
-            var editingSample = SamplesSource.FirstOrDefault(s => s?.SampleCode == item.SampleCode);
+            var editingSample = SamplesSource!.FirstOrDefault(s => s?.SampleCode == item.SampleCode);
             if (editingSample != null)
                 editingSample.Items = (await GetAllItemsOfSample(editingSample)).ToObservableCollection();
 
@@ -654,11 +655,11 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task ShowMoistureContentAndDensity()
         {
-            foreach (SampleDto sample in selectedSamples)
+            foreach (SampleDto sample in selectedSamples!)
             {
-                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "水分" })).Result;
+                ItemDto? MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "水分" })).Result;
                 var moistureContent = MoistureItem != null ? $"{MoistureItem.TestResult} {MoistureItem.ReportUnit}" : "/";
-                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "密度" })).Result;
+                ItemDto? DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "密度" })).Result;
                 var densityContent = DensityItem != null ? $"{DensityItem.TestResult} {DensityItem.ReportUnit}" : "/";
 
                 sample.MoistureContent = moistureContent;
@@ -683,9 +684,9 @@ namespace Lims.WPF.ViewModels
                 if (sample == null)
                     return;
 
-                ItemDto MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "水分" })).Result;
+                ItemDto? MoistureItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "水分" })).Result;
                 MoistureContent = MoistureItem != null ? $"{MoistureItem.TestItem}: {MoistureItem.TestResult} {MoistureItem.ReportUnit}" : string.Empty;
-                ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "密度" })).Result;
+                ItemDto? DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, KeyItem = "密度" })).Result;
                 Density = DensityItem != null ? $"{DensityItem.TestItem}: {DensityItem.TestResult} {DensityItem.ReportUnit}" : string.Empty;
                 if (string.IsNullOrEmpty(MoistureContent) && string.IsNullOrEmpty(Density))
                 {

@@ -2,7 +2,7 @@
 {
     public class ApiResponse
     {
-        public string Message
+        public string? Message
         {
             get; set;
         }
@@ -12,7 +12,7 @@
             get; set;
         }
 
-        public object Result
+        public object? Result
         {
             get; set;
         }

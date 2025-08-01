@@ -37,7 +37,7 @@ namespace Lims.Common.Dtos
         {
             get; set;
         }
-        public string userName { get; set; }
+        public string? userName { get; set; }
         public TaskCountDto(string userName)
         {
             this.userName = userName;

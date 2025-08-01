@@ -13,7 +13,7 @@ namespace Lims.WPF.Services.Interface
         //Task<ApiResponse<List<ItemDto>>> GetSamplesByTestProgressAsync(ItemFilterParam param);
         Task<ApiResponse<ObservableCollection<ItemDto>>> GetAllItemsByDateAsync(ItemFilterParam param);
         Task<ApiResponse<ObservableCollection<ItemDto>>> GetAllItemsByTestProgressAsync(ItemFilterParam param);
-        Task<ApiResponse<ObservableCollection<ItemDto?>>> GetAllItemsBySampleCodeAsync(ItemFilterParam param);
+        Task<ApiResponse<ObservableCollection<ItemDto>>> GetAllItemsBySampleCodeAsync(ItemFilterParam param);
         Task<ApiResponse<ObservableCollection<ItemDto>>> GetAllItemsByMethodStandardIdAsync(ItemFilterParam param);
         Task<ApiResponse<ObservableCollection<ItemDto>>> GetAllItemsBySampleCodesAsync(ItemFilterParam param);
         Task<ApiResponse<ItemDto>> GetFirstItemBySampleCodeAndKeyItemAsync(ItemFilterParam param);

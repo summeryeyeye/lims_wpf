@@ -8,8 +8,8 @@ namespace Lims.WPF.Resources.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var param = parameter as string;
-            if (Regex.IsMatch(param, @"\|{1}"))
-                return value != null && (bool)value ? param.Split('|')[0] : param.Split('|')[1];
+            if (Regex.IsMatch(param!, @"\|{1}"))
+                return value != null && (bool)value ? param!.Split('|')[0] : param!.Split('|')[1];
             return Binding.DoNothing;
 
         }

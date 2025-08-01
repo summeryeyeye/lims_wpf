@@ -11,7 +11,7 @@ namespace Lims.WPF.Resources.Converters
             //throw new NotImplementedException();
             if (value != null)
             {
-                if ((value as ItemDto).TestProgress == (int)TestProgress.数据一审)
+                if ((value as ItemDto)!.TestProgress == (int)TestProgress.数据一审)
                     return true;
             }
             return false;

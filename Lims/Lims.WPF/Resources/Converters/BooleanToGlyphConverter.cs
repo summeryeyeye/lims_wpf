@@ -9,11 +9,11 @@ namespace Lims.WPF.Resources.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var param = parameter as string;
-            if (Regex.IsMatch(param, @"\|{1}"))
+            if (Regex.IsMatch(param!, @"\|{1}"))
             {
                 return (bool)value
-                    ? new BitmapImage(new Uri(param.Split('|')[0]))
-                    : new BitmapImage(new Uri(param.Split('|')[1]));
+                    ? new BitmapImage(new Uri(param!.Split('|')[0]))
+                    : new BitmapImage(new Uri(param!.Split('|')[1]));
             }
             return Binding.DoNothing;
         }

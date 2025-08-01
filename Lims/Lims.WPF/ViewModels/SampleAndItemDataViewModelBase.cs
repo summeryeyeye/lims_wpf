@@ -183,7 +183,7 @@ namespace Lims.WPF.ViewModels
             var response = await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode });
             if (response.Status && response.Result != null)
             {
-                AllItemsOfFocusedSample = response.Result.OrderBy(i => i!.ItemId).ToObservableCollection();
+                AllItemsOfFocusedSample = response.Result.OrderBy(i => i!.ItemId).ToObservableCollection()!;
                 DevExpress.Mvvm.IDialogService dialogService = GetService<DevExpress.Mvvm.IDialogService>("AllItemsOfSamplePreviewDialogService");
                 dialogService.ShowDialog(
                     new List<UICommand> {
@@ -476,7 +476,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                FocusedSample = SamplesSource.FirstOrDefault(s => s!.SampleCode! == item.SampleCode)!;
+                FocusedSample = SamplesSource!.FirstOrDefault(s => s!.SampleCode! == item.SampleCode)!;
             }
             catch (Exception)
             {
