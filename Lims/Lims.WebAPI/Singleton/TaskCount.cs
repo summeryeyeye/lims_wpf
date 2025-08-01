@@ -49,10 +49,24 @@ namespace Lims.WebAPI.Singleton
             {
                 conn.Wait();
             }
-
-
-
         }
+        public void StopListening()
+        {
+            using (NpgsqlConnection con = new NpgsqlConnection(_connStr))
+            {
+                if (con.State != ConnectionState.Open)
+                    con.Open();
+                using (NpgsqlCommand cmd = new NpgsqlCommand("UNLISTEN item_changed;UNLISTEN sample_changed;UNLISTEN logger_changed;", con))
+                {
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
+
+
+
         public async void GetTaskCount()
         {
             using (NpgsqlConnection con = new NpgsqlConnection(_connStr))

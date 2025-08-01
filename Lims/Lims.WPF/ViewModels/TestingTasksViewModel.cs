@@ -20,7 +20,7 @@ namespace Lims.WPF.ViewModels
             ShowMainDatasLoadingPanel = true;
             pre_MyFocusedSampelRowIndex = FocusedSampleRowHandle;
 
-            SelectedTester = null;
+            SelectedTester = null!;
             ItemFilterParam itemFilterParam = new ItemFilterParam()
             {
                 TestProgress = (int)RelativeProgress + 1,
@@ -28,11 +28,11 @@ namespace Lims.WPF.ViewModels
             };
 
             var response = await _itemService.GetAllItemsByTestProgressAsync(itemFilterParam);
-            if (response.Status)
+            if (response.Status && response.Result != null)
             {
-                TaskDatasSource = response.Result.OrderByDescending(t => t.ResultSubmitTime).ToObservableCollection();
-                itemDtos = TaskDatasSource?.Copy();
-                SamplesSource = TaskDatasSource.Select(s => s.Sample).DistinctBy(s => s.SampleCode).OrderBy(s => s.SampleCode).ToObservableCollection();
+                TaskDatasSource = response.Result.OrderByDescending(t => t.ResultSubmitTime).ToObservableCollection()!;
+                itemDtos = TaskDatasSource.Copy();
+                SamplesSource = TaskDatasSource.Select(s => s!.Sample).DistinctBy(s => s!.SampleCode).OrderBy(s => s!.SampleCode).ToObservableCollection();
             }
             //userFilter(selectedTester);
             FocusedSampleRowHandle = pre_MyFocusedSampelRowIndex;
@@ -51,7 +51,7 @@ namespace Lims.WPF.ViewModels
         {
             if (_messageBoxService.ShowMessage("确认将所选样品标记为临时加急？", "临时加急", MessageButton.OKCancel, MessageIcon.Question, MessageResult.OK) == MessageResult.OK)
             {
-                SampleDto[] sampleDtos= new SampleDto[SelectedSamples.Count];
+                SampleDto[] sampleDtos = new SampleDto[SelectedSamples.Count];
                 SelectedSamples.CopyTo(sampleDtos, 0);
 
                 foreach (var sample in sampleDtos)
@@ -59,7 +59,7 @@ namespace Lims.WPF.ViewModels
                     sample.CurrentUrgent = true;
                     await _sampleService.UpdateAsync(sample);
 
-                    foreach (var item in sample.Items)
+                    foreach (var item in sample.Items!)
                     {
                         if (item.TestProgress < 104)
                             await _loggerService.CreateAsync(new LoggerDto(DateTimeOffset.Now)
@@ -67,7 +67,7 @@ namespace Lims.WPF.ViewModels
                                 LogLevel = LogLevel.INFO,
                                 ActionType = ActionType.变更样品信息,
                                 PublisherIP = LoggerDto.GetLocalIP(),
-                                PublisherName = CurrentUser.UserName,
+                                PublisherName = CurrentUser!.UserName,
                                 ReceiverName = item.Tester,
                                 SampleCode = sample.SampleCode,
                                 TestItem = item.TestItem,
@@ -86,14 +86,14 @@ namespace Lims.WPF.ViewModels
 
 
         [Command]
-        public override  void ShowAllItemsOfCurrentSample(SampleDto sample)
+        public override void ShowAllItemsOfCurrentSample(SampleDto sample)
         {
             ReportDataPreview(sample);
         }
 
-        private UserDto selectedTester;
+        private UserDto? selectedTester;
 
-        public UserDto SelectedTester
+        public UserDto? SelectedTester
         {
             get { return selectedTester; }
             set
@@ -110,7 +110,7 @@ namespace Lims.WPF.ViewModels
             try
             {
 
-                TaskDatasSource = itemDtos?.Where(i => i.Tester == tester.UserName).ToObservableCollection();
+                TaskDatasSource = itemDtos?.Where(i => i!.Tester == tester.UserName).ToObservableCollection();
             }
             catch (Exception)
             { }
@@ -121,7 +121,7 @@ namespace Lims.WPF.ViewModels
             {
                 try
                 {
-                    TaskDatasSource = itemDtos?.Where(i => i.Sample.IsUrgent || i.Sample.CurrentUrgent).ToObservableCollection();
+                    TaskDatasSource = itemDtos?.Where(i => i!.Sample!.IsUrgent || i.Sample.CurrentUrgent).ToObservableCollection();
 
                     //SamplesSource = SamplesSource?.Where(s => s.IsUrgent || s.CurrentUrgent).ToObservableCollection();
                 }
@@ -132,7 +132,7 @@ namespace Lims.WPF.ViewModels
             {
                 TaskDatasSource = itemDtos?.ToObservableCollection();
                 //SamplesSource = sampleDtos?.ToObservableCollection();
-                SelectedTester = null;
+                SelectedTester = null!;
             }
         }
     }

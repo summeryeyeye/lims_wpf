@@ -88,7 +88,7 @@ namespace Lims.WPF.ViewModels
                 else
                 {
                     SampleViewWidth = CurrentWidth;
-                    ItemViewHeight = CurrentHeight;
+                    ItemViewHeight = CurrentHeight!;
                 }
             }
         }
@@ -110,7 +110,7 @@ namespace Lims.WPF.ViewModels
 
         protected virtual async Task<List<ItemDto>> GetAllItemsOfSample(SampleDto sample)
         {
-            return sample == null ? new List<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, })).Result?.OrderBy(i => i.ItemId).ToList();
+            return sample == null ? new List<ItemDto>() : (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode, })).Result?.OrderBy(i => i!.ItemId).ToList()!;
         }
 
         protected async Task ExcuteIfNullSample(SampleDto sample, IEnumerable<ItemDto> currentItems)
@@ -139,12 +139,12 @@ namespace Lims.WPF.ViewModels
 
         protected virtual async Task<ObservableCollection<ItemDto?>> GetItemsSource(SampleDto sample)
         {
-            return (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sample.SampleCode })).Result.OrderBy(i => i.ItemId).ToObservableCollection();
+            return (await _itemService.GetAllItemsBySampleCodeAsync(new Common.Parameters.ItemFilterParam() { SampleCode = sample.SampleCode })).Result!.OrderBy(i => i!.ItemId).ToObservableCollection()!;
         }
         protected abstract override Task LoadMainDatas(UserDto? user);
 
 
-        public List<ItemDto> ReportDataSource
+        public List<ItemDto>? ReportDataSource
         {
             get; set;
         }
@@ -180,13 +180,17 @@ namespace Lims.WPF.ViewModels
         {
             if (sample == null)
                 return;
-            AllItemsOfFocusedSample = (await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode })).Result.ToObservableCollection();
-            DevExpress.Mvvm.IDialogService dialogService = GetService<DevExpress.Mvvm.IDialogService>("AllItemsOfSamplePreviewDialogService");
-            dialogService.ShowDialog(
-                new List<UICommand> {
+            var response = await _itemService.GetAllItemsBySampleCodeAsync(new ItemFilterParam() { SampleCode = sample.SampleCode });
+            if (response.Status && response.Result != null)
+            {
+                AllItemsOfFocusedSample = response.Result.OrderBy(i => i!.ItemId).ToObservableCollection();
+                DevExpress.Mvvm.IDialogService dialogService = GetService<DevExpress.Mvvm.IDialogService>("AllItemsOfSamplePreviewDialogService");
+                dialogService.ShowDialog(
+                    new List<UICommand> {
                         new UICommand{Caption = "关闭",IsDefault = false,IsCancel = true,}
-                }
-                , "", this);
+                    }
+                    , "", this);
+            }
         }
 
         [Command]
@@ -222,7 +226,7 @@ namespace Lims.WPF.ViewModels
         {
             if (sample != null)
             {
-                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).ToObservableCollection(); //TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode).ToObservableCollection();
+                AllItemsOfFocusedSample = (await GetAllItemsOfSample(sample)).OrderBy(i => i.ItemId)!.ToObservableCollection()!; //TaskDatasSource.Where(i => i.SampleCode == sample.SampleCode).ToObservableCollection();
                 if (AllItemsOfFocusedSample != null && AllItemsOfFocusedSample.Count > 0)
                 {
                     var items = new ItemDto[AllItemsOfFocusedSample.Count];
@@ -240,7 +244,7 @@ namespace Lims.WPF.ViewModels
                         }
                         try
                         {
-                            item.ExecuteStandard = item?.ExecuteStandard?.Split(' ')[0] + " " + item?.ExecuteStandard?.Split(' ')[1];
+                            item!.ExecuteStandard = item?.ExecuteStandard?.Split(' ')[0] + " " + item?.ExecuteStandard?.Split(' ')[1];
                         }
                         catch (Exception)
                         {
@@ -250,14 +254,14 @@ namespace Lims.WPF.ViewModels
                     ReportDataSource = items.ToList();
 
 
-                    var itemsWithSubItems = AllItemsOfFocusedSample.Where(i => i.SubItems != null && i.SubItems.Count > 0);
+                    var itemsWithSubItems = AllItemsOfFocusedSample.Where(i => i!.SubItems != null && i.SubItems.Count > 0);
 
                     foreach (var item in itemsWithSubItems)
                     {
-                        foreach (var subitem in item.SubItems)
+                        foreach (var subitem in item!.SubItems!)
                         {
 
-                            ReportDataSource.Add(new ItemDto(0, item.ReportUnit, subitem.TestItem, 0, subitem.IndexRequest)
+                            ReportDataSource.Add(new ItemDto(0, item.ReportUnit!, subitem.TestItem!, 0, subitem.IndexRequest!)
                             {
                                 SampleCode = item.SampleCode,
 
@@ -291,20 +295,20 @@ namespace Lims.WPF.ViewModels
                 , "", this);
         }
 
-        public List<BindingColumn> SubItemViewColumns
+        public List<BindingColumn>? SubItemViewColumns
         {
             get; set;
         }
 
 
-        public SubItemDto FocusedSubItem
+        public SubItemDto? FocusedSubItem
         {
             get; set;
         }
         [Command]
         public async void TestSubItemResultChanged(CellValueChangedArgs e)
         {
-            await _subItemService.UpdateAsync(FocusedSubItem);
+            await _subItemService.UpdateAsync(FocusedSubItem!);
         }
 
 
@@ -315,7 +319,7 @@ namespace Lims.WPF.ViewModels
                 new BindingColumn(SettingsType.Binding,"TestItem", "检测项目"),
                 //new BindingColumn(SettingsType.Binding,"ReportUnit","报告单位"),
                  new BindingColumn(SettingsType.Binding, "FirstTestResult", "平行一结果")
-                    { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
+                    { ReadOnly = false, Visible = item.MethodStandard!.KeyItem!.Contains("氨基酸") },
                 new BindingColumn(SettingsType.Binding, "SecondTestResult", "平行二结果")
                     { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
                 new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
@@ -328,9 +332,9 @@ namespace Lims.WPF.ViewModels
             };
         }
 
-        private ItemDto edittingItem;
+        private ItemDto? edittingItem;
 
-        public ItemDto EdittingItem
+        public ItemDto? EdittingItem
         {
             get => edittingItem;
             set
@@ -353,8 +357,8 @@ namespace Lims.WPF.ViewModels
                 tv.SearchString = tv.Grid.CurrentCellValue.ToString();
         }
 
-        protected ObservableCollection<ItemDto> selectedTaskDatas = new();
-        public ObservableCollection<ItemDto> SelectedTaskDatas
+        protected ObservableCollection<ItemDto>? selectedTaskDatas = new();
+        public ObservableCollection<ItemDto>? SelectedTaskDatas
         {
             get => selectedTaskDatas;
             set
@@ -363,8 +367,8 @@ namespace Lims.WPF.ViewModels
                 RaisePropertyChanged(nameof(SelectedTaskDatas));
             }
         }
-        protected ObservableCollection<SampleDto> selectedSamples = new();
-        public ObservableCollection<SampleDto> SelectedSamples
+        protected ObservableCollection<SampleDto>? selectedSamples = new();
+        public ObservableCollection<SampleDto>? SelectedSamples
         {
             get => selectedSamples;
             set
@@ -390,9 +394,9 @@ namespace Lims.WPF.ViewModels
         /// <summary>
         /// 选中样品下所有项目
         /// </summary>
-        private ObservableCollection<ItemDto?> itemsOfFocusedSample;
+        private ObservableCollection<ItemDto?>? itemsOfFocusedSample;
 
-        public ObservableCollection<ItemDto?> AllItemsOfFocusedSample
+        public ObservableCollection<ItemDto?>? AllItemsOfFocusedSample
         {
             get => itemsOfFocusedSample;
             set
@@ -402,20 +406,20 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        private SampleDto focusedSample;
+        private SampleDto? focusedSample;
 
         /// <summary>
         /// 选中的样品项
         /// </summary>
-        public SampleDto FocusedSample
+        public SampleDto? FocusedSample
         {
             get => focusedSample;
             set
             {
                 if (value != null && FocusedSample != value)
                     ShowItemsOfFocusedSample(value);
-                focusedSample = value;
-                CurrentSample = value;
+                focusedSample = value!;
+                CurrentSample = value!;
                 RaisePropertyChanged(nameof(FocusedSample));
             }
         }
@@ -435,12 +439,12 @@ namespace Lims.WPF.ViewModels
         }
 
 
-        protected ItemDto focusedItem;
+        protected ItemDto? focusedItem;
 
         /// <summary>
         /// 选中的项目
         /// </summary>
-        public ItemDto FocusedItem
+        public ItemDto? FocusedItem
         {
             get => focusedItem;
             set
@@ -451,9 +455,9 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        private ItemDto focusedTaskData;
+        private ItemDto? focusedTaskData;
 
-        public ItemDto FocusedTaskData
+        public ItemDto? FocusedTaskData
         {
             get => focusedTaskData;
             set
@@ -472,7 +476,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                FocusedSample = SamplesSource.FirstOrDefault(s => s.SampleCode == item.SampleCode);
+                FocusedSample = SamplesSource.FirstOrDefault(s => s!.SampleCode! == item.SampleCode)!;
             }
             catch (Exception)
             {
@@ -508,9 +512,9 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        private string moistureContent;
+        private string? moistureContent;
 
-        public string MoistureContent
+        public string? MoistureContent
         {
             get => moistureContent;
             set
@@ -520,9 +524,9 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        private string density;
+        private string? density;
 
-        public string Density
+        public string? Density
         {
             get => density;
             set
@@ -558,7 +562,7 @@ namespace Lims.WPF.ViewModels
 
         public abstract TestProgress GetRelativeProgress();
 
-        public string PrintHeader
+        public string? PrintHeader
         {
             get; set;
         }
@@ -571,7 +575,7 @@ namespace Lims.WPF.ViewModels
         {
             if ((tv.Parent as GridDataControlBase)?.ItemsSource != null)
             {
-                PrintHeader = $"{DateTimeOffset.Now:yyyy/MM/dd HH:mm:ss} ( {CurrentUser.UserName} )";
+                PrintHeader = $"{DateTimeOffset.Now:yyyy/MM/dd HH:mm:ss} ( {CurrentUser!.UserName!} )";
                 PrintableControlLink link = new(tv)
                 {
                     PageHeaderData = this,
@@ -633,7 +637,7 @@ namespace Lims.WPF.ViewModels
                 LogLevel = LogLevel.WARN,
                 ActionType = ActionType.退回任务,
                 PublisherIP = LoggerDto.GetLocalIP(),
-                PublisherName = CurrentUser.UserName,
+                PublisherName = CurrentUser!.UserName!,
                 ReceiverName = edittingItem.Tester,
                 SampleCode = editingSample.SampleCode,
                 TestItem = edittingItem.TestItem,
@@ -641,7 +645,7 @@ namespace Lims.WPF.ViewModels
             };
             await _loggerService.CreateAsync(log);
             var sample = edittingItem.Sample;
-            sample.CompleteTime = null;
+            sample!.CompleteTime = null;
             await _sampleService.UpdateAsync(sample);
         }
 
@@ -656,20 +660,20 @@ namespace Lims.WPF.ViewModels
             {
                 Filter = " Excel files(*.xlsx)|*.xlsx|All files(*.*)|*.*",
                 RestoreDirectory = true,
-                FileName = $"{CurrentUser.UserName}_下单表_{DateTimeOffset.Now:yyyyMMdd_HHmmss}",
+                FileName = $"{CurrentUser!.UserName!}_下单表_{DateTimeOffset.Now:yyyyMMdd_HHmmss}",
             };
 
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<ItemDto> allItems = new();
-                foreach (var item in selectedTaskDatas)
+                foreach (var item in selectedTaskDatas!)
                 {
                     allItems.Add(item);
                     if (item.SubItems != null)
                     {
                         foreach (var subItem in item.SubItems)
                         {
-                            allItems.Add(new ItemDto(0, item.ReportUnit, subItem.TestItem, 0, subItem.IndexRequest)
+                            allItems.Add(new ItemDto(0, item.ReportUnit!, subItem.TestItem!, 0, subItem.IndexRequest!)
                             {
                                 SampleCode = item.SampleCode,
                                 Sample = item.Sample,
@@ -683,26 +687,27 @@ namespace Lims.WPF.ViewModels
         }
 
         [Command]
+        [Obsolete]
         public async void 生成元素下单表()
         {
             System.Windows.Forms.SaveFileDialog saveFileDialog = new()
             {
                 Filter = " Excel files(*.xlsx)|*.xlsx|All files(*.*)|*.*",
                 RestoreDirectory = true,
-                FileName = $"{CurrentUser.UserName}_下单表_{DateTimeOffset.Now:yyyyMMdd_HHmmss}",
+                FileName = $"{CurrentUser!.UserName!}_下单表_{DateTimeOffset.Now:yyyyMMdd_HHmmss}",
             };
 
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<ItemDto> allItems = new();
-                foreach (var item in selectedTaskDatas)
+                foreach (var item in selectedTaskDatas!)
                 {
                     allItems.Add(item);
                     if (item.SubItems != null)
                     {
                         foreach (var subItem in item.SubItems)
                         {
-                            allItems.Add(new ItemDto(0, item.ReportUnit, subItem.TestItem, 0, subItem.IndexRequest)
+                            allItems.Add(new ItemDto(0, item.ReportUnit!, subItem.TestItem!, 0, subItem.IndexRequest!)
                             {
                                 SampleCode = item.SampleCode,
                                 Sample = item.Sample,
@@ -725,20 +730,20 @@ namespace Lims.WPF.ViewModels
             {
                 Filter = " Excel files(*.xlsx)|*.xlsx|All files(*.*)|*.*",
                 RestoreDirectory = true,
-                FileName = $"{CurrentUser.UserName}_结果统计表_{DateTimeOffset.Now:yyyyMMdd_HHmmss}",
+                FileName = $"{CurrentUser!.UserName!}_结果统计表_{DateTimeOffset.Now:yyyyMMdd_HHmmss}",
             };
 
             if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 List<ItemDto> allItems = new();
-                foreach (var item in selectedTaskDatas)
+                foreach (var item in selectedTaskDatas!)
                 {
                     allItems.Add(item);
                     if (item.SubItems != null)
                     {
                         foreach (var subItem in item.SubItems)
                         {
-                            allItems.Add(new ItemDto(0, subItem.IndexRequest, subItem.TestItem, 0, item.ReportUnit)
+                            allItems.Add(new ItemDto(0, subItem!.IndexRequest!, subItem!.TestItem!, 0, item!.ReportUnit!)
                             {
                                 SampleCode = item.SampleCode,
                                 Sample = item.Sample,
@@ -764,7 +769,7 @@ namespace Lims.WPF.ViewModels
         {
             List<微生物下单表Class> list = new();
             Type t = typeof(微生物下单表Class);
-            string?[] sampleCodes = selectedTaskDatas.Select(s => s.SampleCode).Distinct().OrderByDescending(s => s).ToArray();
+            string?[] sampleCodes = selectedTaskDatas!.Select(s => s.SampleCode).Distinct().OrderByDescending(s => s).ToArray();
 
             foreach (string? sampleCode in sampleCodes)
             {
@@ -782,43 +787,43 @@ namespace Lims.WPF.ViewModels
                 微生物下单表Class helper = new()
                 {
                     样品编号 = sampleCode,
-                    样品名称 = items.FirstOrDefault(i => i.SampleCode.Equals(sampleCode)).Sample.SampleName,
-                    枯草芽孢杆菌数 = items.Any(i => i.TestItem == "枯草芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "枯草芽孢杆菌数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "枯草芽孢杆菌数").ItemRemark + ")" : "",
+                    样品名称 = items!.FirstOrDefault(i => i.SampleCode!.Equals(sampleCode))!.Sample!.SampleName!,
+                    枯草芽孢杆菌数 = items.Any(i => i.TestItem == "枯草芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "枯草芽孢杆菌数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "枯草芽孢杆菌数")!.ItemRemark + ")" : "",
 
-                    地衣芽孢杆菌数 = items.Any(i => i.TestItem == "地衣芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "地衣芽孢杆菌数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "地衣芽孢杆菌数").ItemRemark + ")" : "",
+                    地衣芽孢杆菌数 = items.Any(i => i.TestItem == "地衣芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "地衣芽孢杆菌数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "地衣芽孢杆菌数")!.ItemRemark + ")" : "",
 
-                    巨大芽孢杆菌数 = items.Any(i => i.TestItem == "巨大芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "巨大芽孢杆菌数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "巨大芽孢杆菌数").ItemRemark + ")" : "",
+                    巨大芽孢杆菌数 = items.Any(i => i.TestItem == "巨大芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "巨大芽孢杆菌数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "巨大芽孢杆菌数")!.ItemRemark + ")" : "",
 
-                    杂菌率 = items.Any(i => i.TestItem == "杂菌率") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "杂菌率").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "杂菌率").ItemRemark + ")" : "",
+                    杂菌率 = items.Any(i => i.TestItem == "杂菌率") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "杂菌率")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "杂菌率")!.ItemRemark + ")" : "",
 
-                    粪大肠菌群数 = items.Any(i => i.TestItem == "粪大肠菌群数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "粪大肠菌群数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "粪大肠菌群数").ItemRemark + ")" : "",
+                    粪大肠菌群数 = items.Any(i => i.TestItem == "粪大肠菌群数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "粪大肠菌群数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "粪大肠菌群数")!.ItemRemark + ")" : "",
 
-                    胶冻样类芽孢杆菌数 = items.Any(i => i.TestItem == "胶冻样类芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "胶冻样类芽孢杆菌数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "胶冻样类芽孢杆菌数").ItemRemark + ")" : "",
+                    胶冻样类芽孢杆菌数 = items.Any(i => i.TestItem == "胶冻样类芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "胶冻样类芽孢杆菌数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "胶冻样类芽孢杆菌数")!.ItemRemark + ")" : "",
 
-                    蛔虫卵死亡率 = items.Any(i => i.TestItem == "蛔虫卵死亡率") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "蛔虫卵死亡率").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "蛔虫卵死亡率").ItemRemark + ")" : "",
+                    蛔虫卵死亡率 = items.Any(i => i.TestItem == "蛔虫卵死亡率") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "蛔虫卵死亡率")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "蛔虫卵死亡率")!.ItemRemark + ")" : "",
 
-                    解淀粉芽孢杆菌数 = items.Any(i => i.TestItem == "解淀粉芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "解淀粉芽孢杆菌数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "解淀粉芽孢杆菌数").ItemRemark + ")" : "",
+                    解淀粉芽孢杆菌数 = items.Any(i => i.TestItem == "解淀粉芽孢杆菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "解淀粉芽孢杆菌数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "解淀粉芽孢杆菌数")!.ItemRemark + ")" : "",
 
-                    酿酒酵母菌数 = items.Any(i => i.TestItem == "酿酒酵母菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "酿酒酵母菌数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "酿酒酵母菌数").ItemRemark + ")" : "",
+                    酿酒酵母菌数 = items.Any(i => i.TestItem == "酿酒酵母菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "酿酒酵母菌数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "酿酒酵母菌数")!.ItemRemark + ")" : "",
 
-                    霉菌杂菌数 = items.Any(i => i.TestItem == "霉菌杂菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "霉菌杂菌数").ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "霉菌杂菌数").ItemRemark + ")" : "",
+                    霉菌杂菌数 = items.Any(i => i.TestItem == "霉菌杂菌数") ? String.IsNullOrEmpty(items.FirstOrDefault(i => i.TestItem == "霉菌杂菌数")!.ItemRemark) ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "霉菌杂菌数")!.ItemRemark + ")" : "",
 
                     //黑曲霉 = items.Any(i => i.TestItem == "黑曲霉") ? items.FirstOrDefault(i => i.TestItem == "黑曲霉").ItemRemark == null ? "√" : "√" + "(" + items.FirstOrDefault(i => i.TestItem == "黑曲霉").ItemRemark + ")" : "",
 
-                    执行标准 = string.IsNullOrEmpty(items.FirstOrDefault().ExecuteStandard) ? "" : items.FirstOrDefault().ExecuteStandard.Split(' ')[1].Split("-")[0],
+                    执行标准 = string.IsNullOrEmpty(items.FirstOrDefault()!.ExecuteStandard) ? "" : items.FirstOrDefault()!.ExecuteStandard!.Split(' ')[1].Split("-")[0],
 
                     其他 = otherItemsStr.ToString(),
                 };
 
-                SampleDto sample = (await _sampleService.GetSingleAsync(sampleCode)).Result;
-                helper.样品状态 = sample.SampleState;
-                helper.业务类型 = sample.TaskType;
+                SampleDto sample = (await _sampleService.GetSingleAsync(sampleCode!)).Result!;
+                helper.样品状态 = sample.SampleState!;
+                helper.业务类型 = sample.TaskType!;
                 helper.是否加急 = sample.IsUrgent ? "√" : "";
-                helper.样品备注 = sample.SampleRemark;
+                helper.样品备注 = sample.SampleRemark!;
                 list.Add(helper);
             }
             //ExcelExportHelper excelExportHelper = new ExcelExportHelper();
-            ExcelExportHelper.ExportListToExcelXlsx(list, $"{DateTimeOffset.Now} {CurrentUser.UserName} 下单表", filepath);
+            ExcelExportHelper.ExportListToExcelXlsx(list, $"{DateTimeOffset.Now} {CurrentUser!.UserName} 下单表", filepath);
 
             ProcessStartInfo processStartInfo = new(filepath);
             Process process = new()
@@ -834,7 +839,7 @@ namespace Lims.WPF.ViewModels
             {
                 get; set;
             }
-            public string 样品名称
+            public string? 样品名称
             {
                 get; set;
             }
@@ -842,32 +847,32 @@ namespace Lims.WPF.ViewModels
             //{
             //    get; set;
             //}
-            public string 枯草芽孢杆菌数
+            public string? 枯草芽孢杆菌数
             {
                 get; set;
             }
 
-            public string 地衣芽孢杆菌数
+            public string? 地衣芽孢杆菌数
             {
                 get; set;
             }
 
-            public string 解淀粉芽孢杆菌数
+            public string? 解淀粉芽孢杆菌数
             {
                 get; set;
             }
 
-            public string 巨大芽孢杆菌数
+            public string? 巨大芽孢杆菌数
             {
                 get; set;
             }
 
-            public string 胶冻样类芽孢杆菌数
+            public string? 胶冻样类芽孢杆菌数
             {
                 get; set;
             }
 
-            public string 酿酒酵母菌数
+            public string? 酿酒酵母菌数
             {
                 get; set;
             }
@@ -877,52 +882,52 @@ namespace Lims.WPF.ViewModels
             //    get; set;
             //}
 
-            public string 霉菌杂菌数
+            public string? 霉菌杂菌数
             {
                 get; set;
             }
 
-            public string 杂菌率
+            public string? 杂菌率
             {
                 get; set;
             }
 
-            public string 粪大肠菌群数
+            public string? 粪大肠菌群数
             {
                 get; set;
             }
 
-            public string 蛔虫卵死亡率
+            public string? 蛔虫卵死亡率
             {
                 get; set;
             }
 
-            public string 其他
+            public string? 其他
             {
                 get; set;
             }
 
-            public string 样品状态
+            public string? 样品状态
             {
                 get; set;
             }
 
-            public string 是否加急
+            public string? 是否加急
             {
                 get; set;
             }
 
-            public string 业务类型
+            public string? 业务类型
             {
                 get; set;
             }
 
-            public string 样品备注
+            public string? 样品备注
             {
                 get; set;
             }
 
-            public string 执行标准
+            public string? 执行标准
             {
                 get; set;
             }
@@ -934,11 +939,11 @@ namespace Lims.WPF.ViewModels
             {
                 get; set;
             }
-            public string 样品名称
+            public string? 样品名称
             {
                 get; set;
             }
-            public string 取样量
+            public string? 取样量
             {
                 get; set;
             }
@@ -946,104 +951,104 @@ namespace Lims.WPF.ViewModels
             //{
             //    get; set;
             //}
-            public string K
+            public string? K
             {
                 get; set;
             }
 
-            public string Ca
+            public string? Ca
             {
                 get; set;
             }
 
-            public string Mg
+            public string? Mg
             {
                 get; set;
             }
 
-            public string Si
+            public string? Si
             {
                 get; set;
             }
 
-            public string B
+            public string? B
             {
                 get; set;
             }
 
-            public string Mo
+            public string? Mo
             {
                 get; set;
             }
 
-            public string S
+            public string? S
             {
                 get; set;
             }
 
-            public string Cu
+            public string? Cu
             {
                 get; set;
             }
 
-            public string Fe
+            public string? Fe
             {
                 get; set;
             }
 
-            public string Mn
+            public string? Mn
             {
                 get; set;
             }
 
-            public string Zn
+            public string? Zn
             {
                 get; set;
             }
 
-            public string Na
+            public string? Na
             {
                 get; set;
             }
-            public string Al
-            {
-                get; set;
-            }
-
-            public string Pb
+            public string? Al
             {
                 get; set;
             }
 
-            public string Cd
-            {
-                get; set;
-            }
-            public string Cr
+            public string? Pb
             {
                 get; set;
             }
 
-
-
-            public string 其他
+            public string? Cd
             {
                 get; set;
             }
-
-            public string 是否加急
-            {
-                get; set;
-            }
-
-            public string 业务类型
+            public string? Cr
             {
                 get; set;
             }
 
 
 
-            public string 执行标准
+            public string? 其他
+            {
+                get; set;
+            }
+
+            public string? 是否加急
+            {
+                get; set;
+            }
+
+            public string? 业务类型
+            {
+                get; set;
+            }
+
+
+
+            public string? 执行标准
             {
                 get; set;
             }
@@ -1056,7 +1061,7 @@ namespace Lims.WPF.ViewModels
         {
             List<元素下单表Class> list = new();
             Type t = typeof(元素下单表Class);
-            string?[] sampleCodes = selectedTaskDatas.Select(s => s.SampleCode).Distinct().OrderBy(s => s).ToArray();
+            string?[] sampleCodes = selectedTaskDatas!.Select(s => s.SampleCode).Distinct().OrderBy(s => s).ToArray();
 
             foreach (string? sampleCode in sampleCodes)
             {
@@ -1066,7 +1071,7 @@ namespace Lims.WPF.ViewModels
 
                 foreach (ItemDto item in items)
                 {
-                    if (t.GetProperties().All(p => p.Name != item.MethodStandard.KeyItem))
+                    if (t.GetProperties().All(p => p.Name != item.MethodStandard!.KeyItem))
                     {
                         otherItemsStr.Append(item.IndexRequest == null ? item.TestItem + ',' : item.TestItem + "(" + item.IndexRequest + ")" + ',');
                     }
@@ -1077,41 +1082,41 @@ namespace Lims.WPF.ViewModels
                     helper = new()
                     {
                         样品编号 = sampleCode,
-                        样品名称 = items.FirstOrDefault(i => i.SampleCode.Equals(sampleCode)).Sample.SampleName,
+                        样品名称 = items.FirstOrDefault(i => i.SampleCode!.Equals(sampleCode))!.Sample!.SampleName,
 
-                        K = items.Any(i => i.MethodStandard.KeyItem == "K") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "K").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "K").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        K = items.Any(i => i.MethodStandard!.KeyItem == "K") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "K")!.TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "K")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Ca = items.Any(i => i.MethodStandard.KeyItem == "Ca") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Ca").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Ca").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Ca = items.Any(i => i.MethodStandard!.KeyItem == "Ca") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Ca")!.TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Ca")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Mg = items.Any(i => i.MethodStandard.KeyItem == "Mg") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Mg").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Mg").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Mg = items.Any(i => i.MethodStandard!.KeyItem == "Mg") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Mg")!.TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Mg")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        B = items.Any(i => i.MethodStandard.KeyItem == "B") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "B").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "B").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        B = items.Any(i => i!.MethodStandard!.KeyItem == "B") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "B")!.TestItem! + "-" + items.FirstOrDefault(i => i!.MethodStandard!.KeyItem == "B")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Mo = items.Any(i => i.MethodStandard.KeyItem == "Mo") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Mo").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Mo").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Mo = items.Any(i => i!.MethodStandard!.KeyItem == "Mo") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Mo")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Mo")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        S = items.Any(i => i.MethodStandard.KeyItem == "S") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "S").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "S").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        S = items.Any(i => i!.MethodStandard!.KeyItem == "S") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "S")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "S")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Cu = items.Any(i => i.MethodStandard.KeyItem == "Cu") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Cu").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Cu").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Cu = items.Any(i => i!.MethodStandard!.KeyItem == "Cu") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Cu")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Cu")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Fe = items.Any(i => i.MethodStandard.KeyItem == "Fe") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Fe").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Fe").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Fe = items.Any(i => i!.MethodStandard!.KeyItem == "Fe") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Fe")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Fe")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Mn = items.Any(i => i.MethodStandard.KeyItem == "Mn") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Mn").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Mn").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Mn = items.Any(i => i!.MethodStandard!.KeyItem == "Mn") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Mn")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Mn")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Zn = items.Any(i => i.MethodStandard.KeyItem == "Zn") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Zn").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Zn").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Zn = items.Any(i => i!.MethodStandard!.KeyItem == "Zn") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Zn")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Zn")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Na = items.Any(i => i.MethodStandard.KeyItem == "Na") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Na").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Na").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Na = items.Any(i => i!.MethodStandard!.KeyItem == "Na") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Na")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Na")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Pb = items.Any(i => i.MethodStandard.KeyItem == "Pb") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Pb").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Pb").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Pb = items.Any(i => i!.MethodStandard!.KeyItem == "Pb") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Pb")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Pb")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Cd = items.Any(i => i.MethodStandard.KeyItem == "Cd") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Cd").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Cd").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Cd = items.Any(i => i!.MethodStandard!.KeyItem == "Cd") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Cd")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Cd")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Cr = items.Any(i => i.MethodStandard.KeyItem == "Cr") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Cr").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Cr").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Cr = items.Any(i => i!.MethodStandard!.KeyItem == "Cr") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Cr")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Cr")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Si = items.Any(i => i.MethodStandard.KeyItem == "Si") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Si").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Si").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Si = items.Any(i => i!.MethodStandard!.KeyItem == "Si") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Si")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Si")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        Al = items.Any(i => i.MethodStandard.KeyItem == "Al") ? items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Al").TestItem + "-" + items.FirstOrDefault(i => i.MethodStandard.KeyItem == "Al").TestMethod.Split(' ')[1].Split("-")[0] : "",
+                        Al = items.Any(i => i!.MethodStandard!.KeyItem == "Al") ? items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Al")!.TestItem! + "-" + items.FirstOrDefault(i => i.MethodStandard!.KeyItem == "Al")!.TestMethod!.Split(' ')[1].Split("-")[0] : "",
 
-                        执行标准 = string.IsNullOrEmpty(items.FirstOrDefault().ExecuteStandard) ? "" : items.FirstOrDefault().ExecuteStandard.Split(' ')[1].Split("-")[0],
+                        执行标准 = string.IsNullOrEmpty(items.FirstOrDefault()!.ExecuteStandard) ? "" : items.FirstOrDefault()!.ExecuteStandard!.Split(' ')[1].Split("-")[0],
 
                         其他 = otherItemsStr.ToString(),
                     };
@@ -1122,14 +1127,14 @@ namespace Lims.WPF.ViewModels
                 }
 
 
-                SampleDto sample = (await _sampleService.GetSingleAsync(sampleCode)).Result;
+                SampleDto sample = (await _sampleService.GetSingleAsync(sampleCode!)).Result!;
                 helper.业务类型 = sample.TaskType;
                 helper.是否加急 = sample.IsUrgent || sample.CurrentUrgent ? "√" : "";
                 //helper.样品备注 = sample.SampleRemark;
                 list.Add(helper);
             }
             //ExcelExportHelper excelExportHelper = new ExcelExportHelper();
-            ExcelExportHelper.ExportListToExcelXlsx(list, $"{DateTimeOffset.Now} {CurrentUser.UserName} 下单表", filepath);
+            ExcelExportHelper.ExportListToExcelXlsx(list, $"{DateTimeOffset.Now} {CurrentUser!.UserName} 下单表", filepath);
 
             ProcessStartInfo processStartInfo = new(filepath);
             Process process = new()
@@ -1151,7 +1156,7 @@ namespace Lims.WPF.ViewModels
             List<微生物结果统计Class> list = new();
             Type t = typeof(微生物结果统计Class);
             //string[] sampleCodes = selectedTaskDatas.Select(s => s.SampleCode).Distinct().OrderByDescending(s => s).ToArray();
-            IOrderedEnumerable<SampleDto> samples = selectedTaskDatas.Select(i => i.Sample).DistinctBy(i => i.SampleCode).OrderByDescending(s => s.SampleCode);
+            IOrderedEnumerable<SampleDto> samples = selectedTaskDatas!.Select(i => i.Sample).DistinctBy(i => i!.SampleCode).OrderByDescending(s => s!.SampleCode)!;
 
             foreach (SampleDto sample in samples)
             {
@@ -1174,7 +1179,7 @@ namespace Lims.WPF.ViewModels
 
             //ExcelExportHelper excelExportHelper = new ExcelExportHelper();
 
-            ExcelExportHelper.ExportListToExcelXlsx(list, $"{DateTimeOffset.Now} {CurrentUser.UserName} 统计表", filepath);
+            ExcelExportHelper.ExportListToExcelXlsx(list, $"{DateTimeOffset.Now} {CurrentUser!.UserName} 统计表", filepath);
 
             ProcessStartInfo processStartInfo = new(filepath);
             Process process = new()
@@ -1340,7 +1345,7 @@ namespace Lims.WPF.ViewModels
 
                 foreach (var subItem in item.SubItems)
                 {
-                    var res = new List<string> { subItem.FirstTestResult, subItem.SecondTestResult };
+                    var res = new List<string> { subItem!.FirstTestResult!, subItem!.SecondTestResult! };
 
 
 
@@ -1352,7 +1357,7 @@ namespace Lims.WPF.ViewModels
 
                         subItem.AverageTestResult = ave.ToString();
 
-                        ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result;
+                        ItemDto DensityItem = (await _itemService.GetFirstItemBySampleCodeAndKeyItemAsync(new ItemFilterParam() { SampleCode = item.SampleCode, KeyItem = "密度" })).Result!;
 
 
                         //已提交页面不修改Temp_TestResult
@@ -1592,7 +1597,7 @@ namespace Lims.WPF.ViewModels
             }
             catch (Exception)
             {
-                return null;
+                return null!;
                 // throw new Exception("剪切板为空/剪切板数据不匹配！");
             }
             return new HITACHIAA_Report(strList, sampleWeight);
@@ -1620,7 +1625,7 @@ namespace Lims.WPF.ViewModels
             }
             catch (Exception)
             {
-                return null;
+                return null!;
                 // throw new Exception("剪切板为空/剪切板数据不匹配！");
             }
             return new HITACHIAA_Report(strList, sampleWeight);
@@ -1645,7 +1650,7 @@ namespace Lims.WPF.ViewModels
 
             bool? result = dlg.ShowDialog();
 
-            if ((bool)result)
+            if ((bool)result!)
             {
                 if (dlg.FileNames.Length != 2)
                 {
@@ -1656,7 +1661,7 @@ namespace Lims.WPF.ViewModels
                 var filepaths = dlg.FileNames;
                 var filenames = dlg.SafeFileNames;
 
-                var LimsPath = ConfigurationManager.AppSettings["LimsPath"].ToString();
+                var LimsPath = ConfigurationManager.AppSettings["LimsPath"]!.ToString();
 
                 var desDic = LimsPath + @$"\\附件\\{item.SampleCode}\\{item.TestItem}";
                 if (!Directory.Exists(desDic))
@@ -1667,9 +1672,9 @@ namespace Lims.WPF.ViewModels
                 List<string> desFiles = new List<string>();
 
 
-                var response = await _iParallelTestingService.GetSingleAsync(item.ItemId);
+                var response = await _iParallelTestingService.GetSingleAsync(item.ItemId!);
 
-                var paratesting = new ParallelTestingDto(item.ItemId);
+                var paratesting = new ParallelTestingDto(item.ItemId!);
                 for (int i = 0; i < filepaths.Length; i++)
                 {
                     var filePath = filepaths[i];
@@ -1711,7 +1716,7 @@ namespace Lims.WPF.ViewModels
                 item.ParallelTesting = paratesting;
                 showNotifaction("附件添加成功！");
 
-                if (item.MethodStandard.KeyItem.Contains("氨基酸"))
+                if (item.MethodStandard!.KeyItem!.Contains("氨基酸"))
                 {
                     if (_messageBoxService.ShowMessage("是否填充数据？", "氨基酸", MessageButton.YesNo) == MessageResult.Yes)
                     {
@@ -1789,7 +1794,7 @@ namespace Lims.WPF.ViewModels
         {
             await Task.Run(() =>
             {
-                var LimsPath = ConfigurationManager.AppSettings["LimsPath"].ToString();
+                var LimsPath = ConfigurationManager.AppSettings["LimsPath"]!.ToString();
 
                 var desDic = LimsPath + @$"\\附件\\{item.SampleCode}\\{item.TestItem}";
                 if (!Directory.Exists(desDic))
@@ -2005,7 +2010,7 @@ namespace Lims.WPF.ViewModels
                 return;
             }
 
-            if (strAry.Length != selectedTaskDatas.Count)
+            if (strAry.Length != selectedTaskDatas!.Count)
             {
                 if (_messageBoxService.ShowMessage("剪切板上数据数量与勾选行数不一致，是否继续？", "警告", MessageButton.OKCancel,
                         MessageIcon.Warning, MessageResult.Cancel) != MessageResult.OK)
@@ -2062,7 +2067,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async void ClearItemTestResultColumn(ItemDto item)
         {
-            foreach (var s in selectedTaskDatas)
+            foreach (var s in selectedTaskDatas!)
             {
                 s.Temp_TestResult = string.Empty;
                 await _itemService.UpdateAsync(s);
@@ -2093,7 +2098,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public async Task Temp_TestSubItemResultChanged(CellValueChangedArgs e)
         {
-            await _subItemService.UpdateAsync(FocusedSubItem);
+            await _subItemService.UpdateAsync(FocusedSubItem!);
         }
         /// <summary>
         /// 双击检测项目事件
@@ -2102,7 +2107,7 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void EditedItemRowDoubleClick(RowClickArgs args)
         {
-            if (args.Item is ItemDto item && item != null && item.SubItems.Count > 0)
+            if (args.Item is ItemDto item && item != null && item.SubItems!.Count > 0)
             {
                 PopupMyEditedSubItemsView(item);
             }
@@ -2178,7 +2183,7 @@ namespace Lims.WPF.ViewModels
                 new BindingColumn(SettingsType.Binding, "TestItem", "检测项目"),
 
                 new BindingColumn(SettingsType.Binding, "FirstTestResult", "平行一")
-                        { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
+                        { ReadOnly = false, Visible = item.MethodStandard !.KeyItem !.Contains("氨基酸") },
                 new BindingColumn(SettingsType.Binding, "SecondTestResult", "平行二")
                         { ReadOnly = false, Visible = item.MethodStandard.KeyItem.Contains("氨基酸") },
 
@@ -2201,7 +2206,7 @@ new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
         protected UICommand AddTotalResultToItem(ItemDto item)
         {
 
-            SampleDto editingSample = SamplesSource?.FirstOrDefault(s => s.SampleCode == item.SampleCode);
+            SampleDto editingSample = SamplesSource?.FirstOrDefault(s => s!.SampleCode == item.SampleCode)!;
             return new UICommand
             {
                 Caption = "填充加和到父项目",
@@ -2211,20 +2216,20 @@ new BindingColumn(SettingsType.Binding, "AverageTestResult", "平均值")
                 {
                     decimal result = 0;
 
-                    foreach (SubItemDto subItem in item?.SubItems)
+                    foreach (SubItemDto subItem in item?.SubItems!)
                     {
-                        if (IsNumeric(subItem?.Temp_TestResult))
+                        if (IsNumeric(subItem?.Temp_TestResult!))
                         {
-                            result += Convert.ToDecimal(subItem.Temp_TestResult);
+                            result += Convert.ToDecimal(subItem!.Temp_TestResult);
                         }
                     }
                     var oldResult = result == 0 ? string.Empty : result.ToString();
                     IsNeedNumericalRevision(ref oldResult, item?.RoundRule);
 
-                    item.Temp_TestResult = oldResult.ToString();
-                    item.Temp_SingleConclusion = Judgement(item?.IndexRequest, item.Temp_TestResult);
+                    item!.Temp_TestResult = oldResult.ToString();
+                    item.Temp_SingleConclusion = Judgement(item?.IndexRequest, item!.Temp_TestResult);
                     await _itemService.UpdateAsync(item);
-                    await ExcuteIfNullSample(editingSample, TaskDatasSource?.Where(i => i.SampleCode == editingSample.SampleCode));
+                    await ExcuteIfNullSample(editingSample, TaskDatasSource!.Where(i => i!.SampleCode == editingSample.SampleCode)!);
 
                 })
             };

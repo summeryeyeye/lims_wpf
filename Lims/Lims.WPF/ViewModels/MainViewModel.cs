@@ -65,11 +65,6 @@ namespace Lims.WPF.ViewModels
         [Command]
         public void Test()
         {
-            Spire.Doc.Document document = new Spire.Doc.Document();
-            document.LoadFromFile(@"C:\Users\Administrator\Desktop\1092s-2.docx");
-
-            PrintDocument printDocument = document.PrintDocument;
-            printDocument.Print();
 
 
 
@@ -104,6 +99,15 @@ namespace Lims.WPF.ViewModels
 
             }
         }
+        [Command]
+        public void OnWindowClosed()
+        {
+            // 关闭窗口时释放资源
+            Dispose();
+            // 退出应用程序
+            Application.Current.Shutdown();
+        }
+
 
         public void Dispose()
         {
@@ -120,8 +124,8 @@ namespace Lims.WPF.ViewModels
             // 其他资源释放
         }
 
-        private readonly string serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"];
-        private HubConnection hubConnection;
+        private readonly string serviceRoutePath = ConfigurationManager.AppSettings["ServiceRoutePath"]!.ToString();
+        private HubConnection? hubConnection;
         /// <summary>
         /// 初始化Connection对象
         /// </summary>
@@ -166,7 +170,7 @@ namespace Lims.WPF.ViewModels
         /// </summary>
         private void Listen()
         {
-            hubConnection.On<string>("TaskCount", ReceiveInfos);
+            hubConnection!.On<string>("TaskCount", ReceiveInfos);
         }
 
         /// <summary>
@@ -176,7 +180,7 @@ namespace Lims.WPF.ViewModels
         {
             try
             {
-                await hubConnection.StartAsync();
+                await hubConnection!.StartAsync();
             }
             catch (Exception ex)
             {
@@ -253,7 +257,7 @@ namespace Lims.WPF.ViewModels
         {
 
         }
-        public ObservableCollection<LoggerDto?> MyLogsSource
+        public ObservableCollection<LoggerDto?>? MyLogsSource
         {
             get; set;
         }
@@ -271,7 +275,7 @@ namespace Lims.WPF.ViewModels
                 var response = await LoggerService.GetLoggersByFilterAsync(new Common.Parameters.LoggerFilterParam() { ReceiverName = UserDto.Inatance.UserName, LogLevel = (int)LogLevel.WARN });
                 if (response.Status)
                     if (response.Result != null)
-                        MyLogsSource = response.Result.OrderByDescending(l => l.CreateTime).ToObservableCollection();
+                        MyLogsSource = response.Result.OrderByDescending(l => l.CreateTime).ToObservableCollection()!;
             }
 
             var dialogService = GetService<IDialogService>("MyLogsViewDialogService");
@@ -310,9 +314,9 @@ namespace Lims.WPF.ViewModels
                 if (MyLogsSource != null)
                 {
                     foreach (var l in MyLogsSource)
-                        l.IsReaded = true;
+                        l!.IsReaded = true;
 
-                    await LoggerService.UpdateRangeAsync(MyLogsSource.ToList());
+                    await LoggerService.UpdateRangeAsync(MyLogsSource!);
                 }
             }
             catch (Exception)
@@ -326,7 +330,7 @@ namespace Lims.WPF.ViewModels
         /// </summary>
         /// <returns></returns>
         [Command]
-        public async  Task OpenCommonDisk()
+        public async Task OpenCommonDisk()
         {
             await Task.Run(() =>
             {
@@ -389,7 +393,7 @@ namespace Lims.WPF.ViewModels
             var response = await ReagentService.GetAllAsync();
             if (response.Status)
                 if (response.Result != null)
-                    Reagents = response.Result.OrderBy(i => i.Id).ToObservableCollection();
+                    Reagents = response.Result.OrderBy(i => i.Id).ToObservableCollection()!;
             var dialog = GetService<IDialogService>("ReagentIOManagementViewService");
             dialog.ShowDialog(
         new List<UICommand> {
@@ -547,7 +551,7 @@ namespace Lims.WPF.ViewModels
 
             if (AutoLogin)
             {
-                var user = (await UserService.GetSingleAsync(UserId)).Result;
+                var user = (await UserService.GetSingleAsync(UserId!)).Result;
                 if (user == null)
                 {
                     MessageBoxService.ShowMessage("账号不存在,请重试!");
@@ -582,7 +586,7 @@ namespace Lims.WPF.ViewModels
                     else if (result.Caption.ToString() == "登录")
                     {
 
-                        UserDto.Inatance = CurrentUser = (await UserService.GetSingleAsync(UserId)).Result;
+                        UserDto.Inatance = CurrentUser = (await UserService.GetSingleAsync(UserId!)).Result;
                         //CurrentUser = UserDto.Inatance;
                         if (CurrentUser == null)
                         {

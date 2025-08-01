@@ -15,9 +15,15 @@
     xmlns:dxg="http://schemas.devexpress.com/winfx/2008/xaml/grid"
     xmlns:dxe="http://schemas.devexpress.com/winfx/2008/xaml/editors"
     WindowState="Maximized"
-    mc:Ignorable="d"
+    mc:Ignorable="d"   
     d:DesignHeight="900"
     d:DesignWidth="1600">
+    <dxmvvm:Interaction.Behaviors>
+        <dxmvvm:EventToCommand
+            EventName="Closed"
+            Command="{Binding OnWindowClosedCommand}"
+            PassEventArgsToCommand="True" />        
+    </dxmvvm:Interaction.Behaviors>
     <Window.Resources>
         <Style
             TargetType="dxg:GridColumn"

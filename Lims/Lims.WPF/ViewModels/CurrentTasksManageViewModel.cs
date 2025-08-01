@@ -87,7 +87,7 @@ namespace Lims.WPF.ViewModels
         {
             ReportDataPreview(sample);
         }
-        public List<MethodStandardDto> CurrentMethods
+        public List<MethodStandardDto>? CurrentMethods
         {
             get; set;
         }

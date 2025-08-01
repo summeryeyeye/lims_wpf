@@ -217,9 +217,9 @@ namespace Lims.WPF.ViewModels
             }
         }
 
-        private SampleDto currentSample;
+        private SampleDto? currentSample;
 
-        public SampleDto CurrentSample
+        public SampleDto? CurrentSample
         {
             get { return currentSample; }
             set { currentSample = value; RaisePropertyChanged(nameof(CurrentSample)); }
